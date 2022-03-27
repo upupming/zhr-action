@@ -1,0 +1,12 @@
+name: '@zju-health-report/action'
+description: '浙江大学健康打卡脚本'
+inputs:
+  username:
+    description: '浙大通行证用户名'
+    required: true
+  password:
+    description: '浙大通行证密码'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/action.js'
