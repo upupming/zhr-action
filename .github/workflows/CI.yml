@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.32
+
+      - name: Install, Build
+        run: |
+          pnpm i
+          pnpm build
+
+      - name: remove dist from .gitignore
+        run: |
+          sed -i '/dist/d' ./.gitignore
+      - name: Release build result to GitHub release branch
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: release # The branch the action should deploy to.
+          folder: . # The folder the action should deploy.
+          git-config-name: 'github-actions[bot]'
+          git-config-email: 'github-actions[bot]@users.noreply.github.com'
