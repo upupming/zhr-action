@@ -1,7 +1,5 @@
 import puppeteer, { JSONObject } from 'puppeteer-core'
 import { Launcher } from 'chrome-launcher';
-import dotenv from 'dotenv'
-dotenv.config()
 
 declare global {
   interface Window {
@@ -73,14 +71,12 @@ ${JSON.stringify(oldInfo, null, 2)}
   await page.waitForTimeout(3000)
 }
 
-export async function runZjuHealthReport() {
-  const username = process.env.username
-  const password = process.env.password
+export async function runZjuHealthReport(username?: string, password?: string) {
   if (!username) {
-    throw new Error('请配置环境变量 username，详情请阅读项目 README.md')
+    throw new Error('请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
   }
   if (!password) {
-    throw new Error('请配置环境变量 password，详情请阅读项目 README.md')
+    throw new Error('请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
   }
 
   const dev = process.env.NODE_ENV === 'development'
