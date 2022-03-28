@@ -1,5 +1,7 @@
 # @zju-health-report/action
 
+浙江大学健康打卡自动打卡脚本，支持 Node.js 本地运行和 GitHub Action 定时运行。
+
 > 原有的打卡脚本 https://github.com/Long0x0/ZJU-nCov-Hitcarder 迫于压力删库，因此以匿名身份创建此脚本供大家使用。
 
 ## 使用方法
@@ -21,7 +23,7 @@
       main:
         runs-on: ubuntu-latest
         strategy:
-          fail-fast: true
+          fail-fast: false
           matrix:
             include:
               - username: ZJU_USERNAME
@@ -100,13 +102,15 @@
 
 5. 测试
 
-   Actions > ZJU-nCov-Hitcarder Action > Enable workflow > Run workflow。
+   Actions > @zju-health-report/action Demo > Enable workflow > Run workflow。
 
    Actions > Monthly Action > Enable workflow > Run workflow。
 
 6. 停用
 
-   Actions > ZJU-nCov-Hitcarder Action > Disable workflow。
+   Actions > @zju-health-report/action Demo > Disable workflow。
+
+   Actions > Monthly Action > Disable workflow。
 
 ## CLI
 
