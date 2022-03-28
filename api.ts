@@ -43,6 +43,9 @@ const submit = async (page: puppeteer.Page, dev: boolean) => {
       vm.info.sfymqjczrj = 0
       // 本人承诺
       vm.info.sfqrxxss = 1
+      if (vm.oldInfo?.geo_api_info == null) {
+        return `vm.oldInfo.geo_api_info 为空，请先手动打一次卡，确保有地理位置信息存在。`
+      }
       vm.locatComplete(JSON.parse(vm.oldInfo.geo_api_info))
       vm.save()
     } catch (err) {
