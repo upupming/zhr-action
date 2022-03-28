@@ -29162,14 +29162,12 @@ var api_exports = {};
 __export(api_exports, {
   runZjuHealthReport: () => runZjuHealthReport
 });
-async function runZjuHealthReport() {
-  const username = process.env.username;
-  const password = process.env.password;
+async function runZjuHealthReport(username, password) {
   if (!username) {
-    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF username\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md");
+    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF username\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md: https://github.com/zju-health-report/action");
   }
   if (!password) {
-    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF password\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md");
+    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF password\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md: https://github.com/zju-health-report/action");
   }
   const dev = process.env.NODE_ENV === "development";
   const browser = await import_puppeteer_core.default.launch({
@@ -29263,10 +29261,8 @@ ${JSON.stringify(oldInfo, null, 2)}
 init_cjs_shims();
 var core = __toESM(require_core());
 async function run() {
-  process.env.username = core.getInput("username");
-  process.env.password = core.getInput("password");
   try {
-    (await Promise.resolve().then(() => (init_api(), api_exports))).runZjuHealthReport();
+    (await Promise.resolve().then(() => (init_api(), api_exports))).runZjuHealthReport(core.getInput("username"), core.getInput("password"));
   } catch (error) {
     core.setFailed(error.message);
   }

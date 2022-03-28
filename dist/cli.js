@@ -4474,13 +4474,13 @@ var require_NetworkManager = __commonJS({
           response = "ProvideCredentials";
           this._attemptedAuthentications.add(event.requestId);
         }
-        const { username, password } = this._credentials || {
+        const { username: username2, password: password2 } = this._credentials || {
           username: void 0,
           password: void 0
         };
         this._client.send("Fetch.continueWithAuth", {
           requestId: event.requestId,
-          authChallengeResponse: { response, username, password }
+          authChallengeResponse: { response, username: username2, password: password2 }
         }).catch(helper_js_1.debugError);
       }
       _onRequestPaused(event) {
@@ -9972,16 +9972,16 @@ var require_url_state_machine = __commonJS({
       }
       return usm.url;
     };
-    module2.exports.setTheUsername = function(url, username) {
+    module2.exports.setTheUsername = function(url, username2) {
       url.username = "";
-      const decoded = punycode.ucs2.decode(username);
+      const decoded = punycode.ucs2.decode(username2);
       for (let i = 0; i < decoded.length; ++i) {
         url.username += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
       }
     };
-    module2.exports.setThePassword = function(url, password) {
+    module2.exports.setThePassword = function(url, password2) {
       url.password = "";
-      const decoded = punycode.ucs2.decode(password);
+      const decoded = punycode.ucs2.decode(password2);
       for (let i = 0; i < decoded.length; ++i) {
         url.password += percentEncodeChar(decoded[i], isUserinfoPercentEncode);
       }
@@ -27943,14 +27943,12 @@ ${JSON.stringify(oldInfo, null, 2)}
   console.log(`\u6253\u5361\u6210\u529F\uFF01`);
   await page.waitForTimeout(3e3);
 };
-async function runZjuHealthReport() {
-  const username = process.env.username;
-  const password = process.env.password;
-  if (!username) {
-    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF username\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md");
+async function runZjuHealthReport(username2, password2) {
+  if (!username2) {
+    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF username\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md: https://github.com/zju-health-report/action");
   }
-  if (!password) {
-    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF password\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md");
+  if (!password2) {
+    throw new Error("\u8BF7\u914D\u7F6E\u73AF\u5883\u53D8\u91CF password\uFF0C\u8BE6\u60C5\u8BF7\u9605\u8BFB\u9879\u76EE README.md: https://github.com/zju-health-report/action");
   }
   const dev = process.env.NODE_ENV === "development";
   const browser = await import_puppeteer_core.default.launch({
@@ -27963,7 +27961,7 @@ async function runZjuHealthReport() {
     waitUntil: "networkidle2"
   });
   try {
-    await login(page, username, password);
+    await login(page, username2, password2);
     await submit(page, dev);
   } finally {
     await browser.close();
@@ -27971,7 +27969,9 @@ async function runZjuHealthReport() {
 }
 
 // cli.ts
-runZjuHealthReport();
+var username = process.env.username;
+var password = process.env.password;
+runZjuHealthReport(username, password);
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /**
  * @license Copyright 2016 Google Inc. All Rights Reserved.
