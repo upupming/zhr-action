@@ -9,6 +9,7 @@ const options: Options = {
   sourcemap: true,
   splitting: true,
   entryPoints: [
+    'api.ts',
     'cli.ts',
     'action.ts',
   ],

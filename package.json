@@ -2,7 +2,7 @@
   "name": "@zju-health-report/action",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/api.js",
   "scripts": {
     "test": "esno cli.ts",
     "test:dev": "NODE_ENV=development pnpm test",
