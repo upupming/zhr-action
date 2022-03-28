@@ -7,10 +7,14 @@ const options: Options = {
   clean: true,
   dts: true,
   sourcemap: true,
+  splitting: true,
   entryPoints: [
     'cli.ts',
     'action.ts',
-  ]
+  ],
+  esbuildOptions: (options) => {
+    options.charset = 'utf8'
+  }
 }
 
 export default options
