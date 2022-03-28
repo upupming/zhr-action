@@ -64,7 +64,7 @@
               git commit -m "Monthly update"
               git log
           - name: Push changes
-            uses: ad-m/github-push-action@main
+            uses: ad-m/github-push-action@master
             with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
               branch: ${{ github.ref }}
