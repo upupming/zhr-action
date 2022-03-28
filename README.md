@@ -114,7 +114,25 @@
 
 ## CLI
 
-如果你安装了 Node.js，可以直接使用 `npx` 手动运行此打卡脚本：
+如果你安装了 Node.js，可以直接使用 `npx` 手动运行此打卡脚本。
+
+Windows Powershell:
+
+```bash
+$env:username="浙大通行证用户名"
+$env:password="浙大通行证密码"
+npx github:zju-health-report/action#release
+```
+
+Windows CMD:
+
+```bash
+set username=浙大通行证用户名
+set password=浙大通行证密码
+npx github:zju-health-report/action#release
+```
+
+Unix:
 
 ```bash
 username=浙大通行证用户名 password=浙大通行证密码 npx github:zju-health-report/action#release
