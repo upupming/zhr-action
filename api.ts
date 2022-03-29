@@ -68,7 +68,7 @@ ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
 
-请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。` : ''}
+请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。` : '将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#%E5%91%BD%E4%BB%A4%E8%A1%8C-cli'}
 `)
   console.log(`打卡成功！`)
   await page.waitForTimeout(3000)
