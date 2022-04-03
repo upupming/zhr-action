@@ -27805,7 +27805,9 @@ ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
 
-请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。` : "将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#%E5%91%BD%E4%BB%A4%E8%A1%8C-cli"}
+请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。` : "将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题"}
+
+请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
 `);
   console.log(`打卡成功！`);
   await page.waitForTimeout(3e3);
@@ -27820,7 +27822,7 @@ async function runZjuHealthReport(username, password) {
   const dev = process.env.NODE_ENV === "development";
   const browser = await import_puppeteer_core.default.launch({
     executablePath: import_chrome_launcher.Launcher.getInstallations()[0],
-    headless: !dev,
+    headless: process.env.CI || !dev,
     devtools: dev
   });
   const page = await browser.newPage();
@@ -27854,4 +27856,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-ZK2MTFRM.js.map
+//# sourceMappingURL=chunk-D6J54XXP.js.map

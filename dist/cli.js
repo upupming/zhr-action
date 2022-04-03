@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkZK2MTFRMjs = require('./chunk-ZK2MTFRM.js');
+var _chunkD6J54XXPjs = require('./chunk-D6J54XXP.js');
 require('./chunk-6OSZW4JC.js');
 
 
@@ -98,5 +98,5 @@ var import_dotenv = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_main());
 import_dotenv.default.config();
 var username = process.env.username;
 var password = process.env.password;
-_chunkZK2MTFRMjs.runZjuHealthReport.call(void 0, username, password);
+_chunkD6J54XXPjs.runZjuHealthReport.call(void 0, username, password);
 //# sourceMappingURL=cli.js.map

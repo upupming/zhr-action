@@ -35,7 +35,23 @@ Linux/macOS:
 username=浙大通行证用户名 password=浙大通行证密码 npm exec github:zju-health-report/action#release
 ```
 
-如果想要报告问题，请按照上述方法将环境变量 `NODE_ENV` 设置为 `development`，例如在 Linux/macOS 上可以使用 `NODE_ENV=development` 前缀。然后将打印出的 `oldInfo` 在 issue 中给出（注意隐藏关键的隐私信息），可以帮助我快速地定位问题。
+## 报告问题
+
+如果想要报告问题，请按照上述运行命令行的方法将环境变量 `NODE_ENV` 设置为 `development`，例如在 Linux/macOS 上可以使用 `NODE_ENV=development` 前缀。然后将打印出的 `oldInfo` 在 issue 中给出（注意隐藏关键的隐私信息），可以帮助我快速地定位问题。
+
+GitHub Action 也可以设置环境变量，但是 GitHub Action 的 log 是公开的，不要在公有仓库里面跑，不然别人会看到你的定位信息和 `uid` 等可能暴露个人隐私的信息。只需要这样修改 GitHub Action 就可以了:
+
+```yml
+steps:
+  - name: 打卡
+    uses: zju-health-report/action@release
+    with:
+      username: ${{ secrets[matrix.username] }}
+      password: ${{ secrets[matrix.password] }}
+    env:
+      # 注意一定要在私有仓库里面才加这个，不然会 log 是公开的，会暴露你的隐私信息
+      NODE_ENV: development
+```
 
 ## Node.js API
 
