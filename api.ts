@@ -1,5 +1,6 @@
 import puppeteer, { JSONObject } from 'puppeteer-core'
 import { Launcher } from 'chrome-launcher';
+import { banner } from './banner';
 
 declare global {
   interface Window {
@@ -74,9 +75,11 @@ ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
 
-请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。` : '将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题'}
+请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
 
-请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
+如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
+` : '将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题'}
+
 `)
   console.log(`打卡成功！`)
   await page.waitForTimeout(3000)
@@ -102,6 +105,8 @@ export async function runZjuHealthReport(username?: string, password?: string) {
   });
 
   try {
+    console.log(banner)
+
     await login(page, username, password)
     await submit(page, dev)
   } finally {

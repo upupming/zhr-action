@@ -1,4 +1,4 @@
-# @zju-health-report/action
+# @zju-health-report/action (ZHR)
 
 浙江大学健康打卡自动打卡脚本，支持 Node.js 本地运行和 GitHub Action 定时运行。
 
