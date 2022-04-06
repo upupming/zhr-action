@@ -104,7 +104,6 @@ async function run() {
   try {
     await _chunkU43QNKRMjs.runZjuHealthReport.call(void 0, username, password);
   } catch (error) {
-    console.log("error");
     console.log(chalk.red((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误"));
   }
 }

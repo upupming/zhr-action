@@ -12,7 +12,6 @@ async function run() {
   try {
     await runZjuHealthReport(username, password)
   } catch (error) {
-    console.log('error')
     console.log(chalk.red((error as Error)?.message ?? '未知错误'));
   }
 }
