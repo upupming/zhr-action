@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@actions/core': ^1.6.0
   '@types/gradient-string': ^1.1.2
+  chalk: ^5.0.1
   chrome-launcher: ^0.15.0
   dotenv: ^16.0.0
   esno: ^0.14.1
@@ -15,6 +16,7 @@ specifiers:
 devDependencies:
   '@actions/core': 1.6.0
   '@types/gradient-string': 1.1.2
+  chalk: 5.0.1
   chrome-launcher: 0.15.0
   dotenv: 16.0.0
   esno: 0.14.1
@@ -191,6 +193,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
+
+  /chalk/5.0.1:
+    resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
   /chokidar/3.5.3:

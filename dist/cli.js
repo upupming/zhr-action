@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkVANTXVVLjs = require('./chunk-VANTXVVL.js');
+var _chunkU43QNKRMjs = require('./chunk-U43QNKRM.js');
 require('./chunk-6OSZW4JC.js');
 
 
@@ -96,7 +96,17 @@ var require_main = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
 var import_dotenv = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_main());
 import_dotenv.default.config();
-var username = process.env.username;
-var password = process.env.password;
-_chunkVANTXVVLjs.runZjuHealthReport.call(void 0, username, password);
+async function run() {
+  var _a;
+  const username = process.env.username;
+  const password = process.env.password;
+  const chalk = (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).default;
+  try {
+    await _chunkU43QNKRMjs.runZjuHealthReport.call(void 0, username, password);
+  } catch (error) {
+    console.log("error");
+    console.log(chalk.red((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误"));
+  }
+}
+run();
 //# sourceMappingURL=cli.js.map

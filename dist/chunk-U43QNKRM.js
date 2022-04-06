@@ -27866,7 +27866,7 @@ var import_chrome_launcher = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_dist2
 
 // banner.ts
 _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
-var banner = "\n\x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;183;109mj\x1B[39m\x1B[38;2;255;182;110mu\x1B[39m\x1B[38;2;255;182;111m-\x1B[39m\x1B[38;2;255;181;113mh\x1B[39m\x1B[38;2;255;180;114me\x1B[39m\x1B[38;2;255;179;115ma\x1B[39m\x1B[38;2;255;178;116ml\x1B[39m\x1B[38;2;255;178;117mt\x1B[39m\x1B[38;2;255;177;118mh\x1B[39m\x1B[38;2;255;176;120m-\x1B[39m\x1B[38;2;255;175;121mr\x1B[39m\x1B[38;2;255;174;122me\x1B[39m\x1B[38;2;255;174;123mp\x1B[39m\x1B[38;2;255;173;124mo\x1B[39m\x1B[38;2;255;172;125mr\x1B[39m\x1B[38;2;255;171;126mt\x1B[39m \x1B[38;2;255;170;128m(\x1B[39m\x1B[38;2;255;169;129mZ\x1B[39m\x1B[38;2;255;169;130mH\x1B[39m\x1B[38;2;255;168;131mR\x1B[39m\x1B[38;2;255;167;132m)\x1B[39m \x1B[38;2;255;166;133m-\x1B[39m \x1B[38;2;255;165;135m浙\x1B[39m\x1B[38;2;255;165;136m江\x1B[39m\x1B[38;2;255;164;137m大\x1B[39m\x1B[38;2;255;163;138m学\x1B[39m\x1B[38;2;255;162;139m健\x1B[39m\x1B[38;2;255;161;140m康\x1B[39m\x1B[38;2;255;161;141m打\x1B[39m\x1B[38;2;255;160;143m卡\x1B[39m\x1B[38;2;255;159;144m自\x1B[39m\x1B[38;2;255;158;145m动\x1B[39m\x1B[38;2;255;157;146m化\x1B[39m\x1B[38;2;255;157;147m脚\x1B[39m\x1B[38;2;255;156;148m本\x1B[39m\n\n\x1B[38;2;255;155;150mA\x1B[39m\x1B[38;2;255;154;151mc\x1B[39m\x1B[38;2;255;153;152mt\x1B[39m\x1B[38;2;255;153;153mi\x1B[39m\x1B[38;2;255;152;154mo\x1B[39m\x1B[38;2;255;151;155mn\x1B[39m\x1B[38;2;255;150;156m:\x1B[39m \x1B[38;2;255;149;158mh\x1B[39m\x1B[38;2;255;148;159mt\x1B[39m\x1B[38;2;255;148;160mt\x1B[39m\x1B[38;2;255;147;161mp\x1B[39m\x1B[38;2;255;146;162ms\x1B[39m\x1B[38;2;255;145;163m:\x1B[39m\x1B[38;2;255;144;165m/\x1B[39m\x1B[38;2;255;144;166m/\x1B[39m\x1B[38;2;255;143;167mg\x1B[39m\x1B[38;2;255;142;168mi\x1B[39m\x1B[38;2;255;141;169mt\x1B[39m\x1B[38;2;255;140;170mh\x1B[39m\x1B[38;2;255;140;171mu\x1B[39m\x1B[38;2;255;139;173mb\x1B[39m\x1B[38;2;255;138;174m.\x1B[39m\x1B[38;2;255;137;175mc\x1B[39m\x1B[38;2;255;136;176mo\x1B[39m\x1B[38;2;255;136;177mm\x1B[39m\x1B[38;2;255;135;178m/\x1B[39m\x1B[38;2;255;134;180mz\x1B[39m\x1B[38;2;255;133;181mj\x1B[39m\x1B[38;2;255;132;182mu\x1B[39m\x1B[38;2;255;132;183m-\x1B[39m\x1B[38;2;255;131;184mh\x1B[39m\x1B[38;2;255;130;185me\x1B[39m\x1B[38;2;255;129;186ma\x1B[39m\x1B[38;2;255;128;188ml\x1B[39m\x1B[38;2;255;127;189mt\x1B[39m\x1B[38;2;255;127;190mh\x1B[39m\x1B[38;2;255;126;191m-\x1B[39m\x1B[38;2;255;125;192mr\x1B[39m\x1B[38;2;255;124;193me\x1B[39m\x1B[38;2;255;123;195mp\x1B[39m\x1B[38;2;255;123;196mo\x1B[39m\x1B[38;2;255;122;197mr\x1B[39m\x1B[38;2;255;121;198mt\x1B[39m\x1B[38;2;254;121;199m/\x1B[39m\x1B[38;2;253;122;199ma\x1B[39m\x1B[38;2;252;122;200mc\x1B[39m\x1B[38;2;252;122;201mt\x1B[39m\x1B[38;2;251;123;201mi\x1B[39m\x1B[38;2;250;123;202mo\x1B[39m\x1B[38;2;249;123;203mn\x1B[39m\n\x1B[38;2;248;124;203mD\x1B[39m\x1B[38;2;247;124;204me\x1B[39m\x1B[38;2;247;124;205mm\x1B[39m\x1B[38;2;246;125;205mo\x1B[39m\x1B[38;2;245;125;206m:\x1B[39m \x1B[38;2;244;125;207mh\x1B[39m\x1B[38;2;243;126;207mt\x1B[39m\x1B[38;2;242;126;208mt\x1B[39m\x1B[38;2;241;126;208mp\x1B[39m\x1B[38;2;241;127;209ms\x1B[39m\x1B[38;2;240;127;210m:\x1B[39m\x1B[38;2;239;127;210m/\x1B[39m\x1B[38;2;238;128;211m/\x1B[39m\x1B[38;2;237;128;212mg\x1B[39m\x1B[38;2;236;128;212mi\x1B[39m\x1B[38;2;236;129;213mt\x1B[39m\x1B[38;2;235;129;214mh\x1B[39m\x1B[38;2;234;129;214mu\x1B[39m\x1B[38;2;233;130;215mb\x1B[39m\x1B[38;2;232;130;216m.\x1B[39m\x1B[38;2;231;130;216mc\x1B[39m\x1B[38;2;230;131;217mo\x1B[39m\x1B[38;2;230;131;218mm\x1B[39m\x1B[38;2;229;131;218m/\x1B[39m\x1B[38;2;228;132;219mz\x1B[39m\x1B[38;2;227;132;220mj\x1B[39m\x1B[38;2;226;132;220mu\x1B[39m\x1B[38;2;225;133;221m-\x1B[39m\x1B[38;2;225;133;222mh\x1B[39m\x1B[38;2;224;133;222me\x1B[39m\x1B[38;2;223;134;223ma\x1B[39m\x1B[38;2;222;134;224ml\x1B[39m\x1B[38;2;221;134;224mt\x1B[39m\x1B[38;2;220;135;225mh\x1B[39m\x1B[38;2;219;135;225m-\x1B[39m\x1B[38;2;219;135;226mr\x1B[39m\x1B[38;2;218;136;227me\x1B[39m\x1B[38;2;217;136;227mp\x1B[39m\x1B[38;2;216;136;228mo\x1B[39m\x1B[38;2;215;137;229mr\x1B[39m\x1B[38;2;214;137;229mt\x1B[39m\x1B[38;2;214;137;230m/\x1B[39m\x1B[38;2;213;138;231mz\x1B[39m\x1B[38;2;212;138;231mj\x1B[39m\x1B[38;2;211;138;232mu\x1B[39m\x1B[38;2;210;139;233m-\x1B[39m\x1B[38;2;209;139;233mh\x1B[39m\x1B[38;2;208;139;234me\x1B[39m\x1B[38;2;208;140;235ma\x1B[39m\x1B[38;2;207;140;235ml\x1B[39m\x1B[38;2;206;140;236mt\x1B[39m\x1B[38;2;205;141;237mh\x1B[39m\x1B[38;2;204;141;237m-\x1B[39m\x1B[38;2;203;141;238mr\x1B[39m\x1B[38;2;203;142;239me\x1B[39m\x1B[38;2;202;142;239mp\x1B[39m\x1B[38;2;201;142;240mo\x1B[39m\x1B[38;2;200;143;241mr\x1B[39m\x1B[38;2;199;143;241mt\x1B[39m\x1B[38;2;198;143;242m-\x1B[39m\x1B[38;2;197;144;242ma\x1B[39m\x1B[38;2;197;144;243mc\x1B[39m\x1B[38;2;196;144;244mt\x1B[39m\x1B[38;2;195;145;244mi\x1B[39m\x1B[38;2;194;145;245mo\x1B[39m\x1B[38;2;193;145;246mn\x1B[39m\x1B[38;2;192;146;246m-\x1B[39m\x1B[38;2;192;146;247md\x1B[39m\x1B[38;2;191;146;248me\x1B[39m\x1B[38;2;190;147;248mm\x1B[39m\x1B[38;2;189;147;249mo\x1B[39m\n";
+var banner = "\n\x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m\n\nAction: https://github.com/zju-health-report/action\nDemo: https://github.com/zju-health-report/zju-health-report-action-demo\n";
 
 // api.ts
 var login = async (page, __username, __password) => {
@@ -27895,17 +27895,10 @@ var login = async (page, __username, __password) => {
 };
 var submit = async (page, dev) => {
   let errMsg = await page.evaluate(() => {
-    var _a;
     try {
       const { vm } = window;
-      vm.setSfzx("1");
-      vm.info.sfymqjczrj = 0;
-      vm.info.sfqrxxss = 1;
-      if (((_a = vm.oldInfo) == null ? void 0 : _a.geo_api_info) == null) {
-        return `vm.oldInfo.geo_api_info 为空，请先手动打一次卡，确保有地理位置信息存在。`;
-      }
-      vm.locatComplete(JSON.parse(vm.oldInfo.geo_api_info));
-      vm.save();
+      Object.assign(vm.info, vm.oldInfo);
+      vm.confirm();
     } catch (err) {
       return err == null ? void 0 : err.message;
     }
@@ -27923,7 +27916,6 @@ var submit = async (page, dev) => {
   let oldInfo = await page.evaluate(() => window.vm.oldInfo);
   if (errMsg)
     throw new Error(`打卡提交失败：${errMsg}
-
 ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
@@ -27931,7 +27923,10 @@ ${JSON.stringify(oldInfo, null, 2)}
 请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
 
 如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
-` : "将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题"}
+` : `
+表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
+
+将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 
 `);
   console.log(`打卡成功！`);
@@ -27982,4 +27977,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-VANTXVVL.js.map
+//# sourceMappingURL=chunk-U43QNKRM.js.map
