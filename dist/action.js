@@ -1299,7 +1299,7 @@ async function run() {
   var _a;
   const chalk = (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).default;
   try {
-    (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"));
+    await (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"));
   } catch (error) {
     core.setFailed(chalk.red((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误"));
   }
