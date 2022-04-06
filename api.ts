@@ -35,7 +35,7 @@ const login = async (page: puppeteer.Page, __username: string, __password: strin
     }
   })
 
-  if (errMsg) throw new Error(`登录失败: ${errMsg}`)
+  if (errMsg) throw new Error(`登录失败，网页报错为: ${errMsg}`)
   console.log(`${__username} 登陆成功！`)
   await page.waitForTimeout(3000)
 }
@@ -60,16 +60,19 @@ const submit = async (page: puppeteer.Page, dev: boolean) => {
     }
   })
   let oldInfo = await page.evaluate(() => (window.vm.oldInfo as JSONObject))
-  if (errMsg) throw new Error(`打卡提交失败：${errMsg}
+  let errorGuide = `常见错误：
+  1. 今天已经打过卡了，可以忽略此报错。
+  2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`
+  if (errMsg) throw new Error(`打卡提交失败，网页报错为：${errMsg}
 ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
 
-请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
+${errorGuide}
 
 如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
 ` : `
-表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
+${errorGuide}
 
 将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 

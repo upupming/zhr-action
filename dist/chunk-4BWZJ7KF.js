@@ -27889,7 +27889,7 @@ var login = async (page, __username, __password) => {
     }
   });
   if (errMsg)
-    throw new Error(`登录失败: ${errMsg}`);
+    throw new Error(`登录失败，网页报错为: ${errMsg}`);
   console.log(`${__username} 登陆成功！`);
   await page.waitForTimeout(3e3);
 };
@@ -27914,17 +27914,20 @@ var submit = async (page, dev) => {
     }
   });
   let oldInfo = await page.evaluate(() => window.vm.oldInfo);
+  let errorGuide = `常见错误：
+  1. 今天已经打过卡了，可以忽略此报错。
+  2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`;
   if (errMsg)
-    throw new Error(`打卡提交失败：${errMsg}
+    throw new Error(`打卡提交失败，网页报错为：${errMsg}
 ${dev ? `你前一次打卡的信息为：
 
 ${JSON.stringify(oldInfo, null, 2)}
 
-请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
+${errorGuide}
 
 如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
 ` : `
-表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
+${errorGuide}
 
 将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 
@@ -27977,4 +27980,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-U43QNKRM.js.map
+//# sourceMappingURL=chunk-4BWZJ7KF.js.map
