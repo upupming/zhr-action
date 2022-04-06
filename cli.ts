@@ -8,7 +8,9 @@ async function run() {
   const username = process.env.username
   const password = process.env.password
 
-  const chalk = (await import('chalk')).default
+  const chalk = new (await import('chalk')).Chalk({
+    level: 3
+  })
   try {
     await runZjuHealthReport(username, password)
   } catch (error) {

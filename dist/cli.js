@@ -100,7 +100,9 @@ async function run() {
   var _a;
   const username = process.env.username;
   const password = process.env.password;
-  const chalk = (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).default;
+  const chalk = new (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).Chalk({
+    level: 3
+  });
   try {
     await _chunk4BWZJ7KFjs.runZjuHealthReport.call(void 0, username, password);
   } catch (error) {

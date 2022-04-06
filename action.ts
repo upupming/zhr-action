@@ -2,7 +2,9 @@ import 'source-map-support/register'
 import * as core from '@actions/core'
 
 async function run() {
-  const chalk = (await import('chalk')).default
+  const chalk = new (await import('chalk')).Chalk({
+    level: 3
+  })
 
   try {
     await (await import('./api')).runZjuHealthReport(core.getInput('username'), core.getInput('password'))
