@@ -18,6 +18,6 @@ export const banner = '\n' +
   '\n' +
   'Action: https://github.com/zju-health-report/action\n' +
   'Demo: https://github.com/zju-health-report/zju-health-report-action-demo\n' +
-  '如果有任何建议或意见，欢迎贡献代码!'
+  '如果有任何建议或意见，欢迎贡献代码!\n'
 
 // console.log(banner)
