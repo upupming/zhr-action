@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkXLKI6D3Jjs = require('./chunk-XLKI6D3J.js');
+var _chunkD5I6ZSVYjs = require('./chunk-D5I6ZSVY.js');
 require('./chunk-6OSZW4JC.js');
 
 
@@ -101,7 +101,7 @@ async function run() {
   const username = process.env.username;
   const password = process.env.password;
   try {
-    await _chunkXLKI6D3Jjs.runZjuHealthReport.call(void 0, username, password);
+    await _chunkD5I6ZSVYjs.runZjuHealthReport.call(void 0, username, password);
   } catch (error) {
     console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
