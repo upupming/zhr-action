@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunk4BWZJ7KFjs = require('./chunk-4BWZJ7KF.js');
+var _chunkXLKI6D3Jjs = require('./chunk-XLKI6D3J.js');
 require('./chunk-6OSZW4JC.js');
 
 
@@ -100,13 +100,10 @@ async function run() {
   var _a;
   const username = process.env.username;
   const password = process.env.password;
-  const chalk = new (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).Chalk({
-    level: 3
-  });
   try {
-    await _chunk4BWZJ7KFjs.runZjuHealthReport.call(void 0, username, password);
+    await _chunkXLKI6D3Jjs.runZjuHealthReport.call(void 0, username, password);
   } catch (error) {
-    console.log(chalk.red((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误"));
+    console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
 }
 run();

@@ -27869,72 +27869,6 @@ _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
 var banner = "\n\x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m\n\nAction: https://github.com/zju-health-report/action\nDemo: https://github.com/zju-health-report/zju-health-report-action-demo\n";
 
 // api.ts
-var login = async (page, __username, __password) => {
-  let errMsg = await page.evaluate((__username2, __password2) => {
-    try {
-      document.getElementById("username").value = __username2;
-      document.getElementById("password").value = __password2;
-      document.querySelector(".login-button > button").click();
-    } catch (err) {
-      return err == null ? void 0 : err.message;
-    }
-  }, __username, __password);
-  await page.waitForTimeout(3e3);
-  errMsg != null ? errMsg : errMsg = await page.evaluate(() => {
-    var _a;
-    const errMsg2 = (_a = document.getElementById("msg")) == null ? void 0 : _a.textContent;
-    console.log("errMsg", errMsg2);
-    if (errMsg2) {
-      return errMsg2;
-    }
-  });
-  if (errMsg)
-    throw new Error(`登录失败，网页报错为: ${errMsg}`);
-  console.log(`${__username} 登陆成功！`);
-  await page.waitForTimeout(3e3);
-};
-var submit = async (page, dev) => {
-  let errMsg = await page.evaluate(() => {
-    try {
-      const { vm } = window;
-      Object.assign(vm.info, vm.oldInfo);
-      vm.confirm();
-    } catch (err) {
-      return err == null ? void 0 : err.message;
-    }
-  });
-  await page.waitForTimeout(1e3);
-  errMsg != null ? errMsg : errMsg = await page.evaluate(() => {
-    var _a, _b;
-    let popup = document.getElementById("wapat");
-    if (popup) {
-      if (getComputedStyle(popup).display !== "none") {
-        return (_b = (_a = document.querySelector(".wapat-title")) == null ? void 0 : _a.textContent) != null ? _b : void 0;
-      }
-    }
-  });
-  let oldInfo = await page.evaluate(() => window.vm.oldInfo);
-  let errorGuide = `常见错误：
-  1. 今天已经打过卡了，可以忽略此报错。
-  2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`;
-  if (errMsg)
-    throw new Error(`打卡提交失败，网页报错为：${errMsg}
-${dev ? `你前一次打卡的信息为：
-
-${JSON.stringify(oldInfo, null, 2)}
-
-${errorGuide}
-
-如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
-` : `
-${errorGuide}
-
-将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
-
-`);
-  console.log(`打卡成功！`);
-  await page.waitForTimeout(3e3);
-};
 async function runZjuHealthReport(username, password) {
   if (!username) {
     throw new Error("请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
@@ -27952,6 +27886,74 @@ async function runZjuHealthReport(username, password) {
   await page.goto("https://healthreport.zju.edu.cn/ncov/wap/default/index", {
     waitUntil: "networkidle2"
   });
+  const chalk = new (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./source-N7CQGNOT.js")))).Chalk({
+    level: 3
+  });
+  const login = async (page2, __username, __password) => {
+    let errMsg = await page2.evaluate((__username2, __password2) => {
+      try {
+        document.getElementById("username").value = __username2;
+        document.getElementById("password").value = __password2;
+        document.querySelector(".login-button > button").click();
+      } catch (err) {
+        return err == null ? void 0 : err.message;
+      }
+    }, __username, __password);
+    await page2.waitForTimeout(3e3);
+    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+      var _a;
+      const errMsg2 = (_a = document.getElementById("msg")) == null ? void 0 : _a.textContent;
+      if (errMsg2) {
+        return errMsg2;
+      }
+    });
+    if (errMsg)
+      throw new Error(`登录失败，网页报错为: ${chalk.red(errMsg)}`);
+    console.log(`${__username} ${chalk.green("登陆成功")}！
+`);
+    await page2.waitForTimeout(3e3);
+  };
+  const submit = async (page2, dev2) => {
+    let errMsg = await page2.evaluate(() => {
+      try {
+        const { vm } = window;
+        Object.assign(vm.info, vm.oldInfo);
+        vm.confirm();
+      } catch (err) {
+        return err == null ? void 0 : err.message;
+      }
+    });
+    await page2.waitForTimeout(1e3);
+    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+      var _a, _b;
+      let popup = document.getElementById("wapat");
+      if (popup) {
+        if (getComputedStyle(popup).display !== "none") {
+          return (_b = (_a = document.querySelector(".wapat-title")) == null ? void 0 : _a.textContent) != null ? _b : void 0;
+        }
+      }
+    });
+    let oldInfo = await page2.evaluate(() => window.vm.oldInfo);
+    let errorGuide = `常见错误：
+    1. 今天已经打过卡了，可以忽略此报错。
+    2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`;
+    if (errMsg)
+      throw new Error(`打卡提交失败，网页报错为：${chalk.red(errMsg)}
+  ${dev2 ? `你前一次打卡的信息为：
+
+  ${JSON.stringify(oldInfo, null, 2)}
+
+  ${errorGuide}
+
+  如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
+  ` : `
+  ${errorGuide}
+
+  将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
+`);
+    console.log(chalk.green(`打卡成功！`));
+    await page2.waitForTimeout(3e3);
+  };
   try {
     console.log(banner);
     await login(page, username, password);
@@ -27980,4 +27982,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-4BWZJ7KF.js.map
+//# sourceMappingURL=chunk-XLKI6D3J.js.map
