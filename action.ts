@@ -6,7 +6,7 @@ async function run() {
   try {
     await (await import('./api')).runZjuHealthReport(core.getInput('username'), core.getInput('password'))
   } catch (error) {
-    core.setFailed(error as Error);
+    core.setFailed((error as Error)?.message ?? '未知错误');
   }
 }
 

@@ -1296,10 +1296,11 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
 var core = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_core());
 async function run() {
+  var _a;
   try {
     await (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"));
   } catch (error) {
-    core.setFailed(error);
+    core.setFailed((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
 }
 run();
