@@ -58,7 +58,7 @@ export async function runZjuHealthReport(username?: string, password?: string) {
     })
 
     if (errMsg) throw new Error(`登录失败，网页报错为: ${chalk.red(errMsg)}`)
-    console.log(`${__username} ${chalk.green('登陆成功')}！\n`)
+    console.log(`${__username} ${chalk.green('登陆成功！')}\n`)
     await page.waitForTimeout(3000)
   }
 
