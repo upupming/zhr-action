@@ -66,8 +66,13 @@ export async function runZjuHealthReport(username?: string, password?: string) {
     let errMsg = await page.evaluate((): string | undefined => {
       try {
         const { vm } = window
-        Object.assign(vm.info, vm.oldInfo)
+        for (const key in vm.oldInfo) {
+          // if it is an empty value ('', null, undefined), skip assigning
+          if (!vm.oldInfo[key]) continue
+          vm.info[key] = vm.oldInfo[key]
+        }
         vm.confirm()
+        document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
       } catch (err) {
         return (err as Error)?.message
       }
