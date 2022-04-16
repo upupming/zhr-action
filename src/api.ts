@@ -134,7 +134,11 @@ export async function runZjuHealthReport(username?: string, password?: string, d
       data: {
         msgtype: 'text',
         text: {
-          content: removeColorModifier(logString)
+          content: `
+${removeColorModifier(logString).trim()}
+${process.env.ACTION_URL ? `
+GitHub workflow: ${process.env.ACTION_URL}` : ''}
+`.trim()
         },
       }
     })
