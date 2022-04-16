@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkGPIBYFDAjs = require('./chunk-GPIBYFDA.js');
+var _chunkYDFM2PBIjs = require('./chunk-YDFM2PBI.js');
 require('./chunk-FQFBMVJM.js');
 
 
@@ -102,7 +102,7 @@ async function run() {
   const password = process.env.password;
   const dingtalkToken = process.env.dingtalk_token;
   try {
-    await _chunkGPIBYFDAjs.runZjuHealthReport.call(void 0, username, password, dingtalkToken);
+    await _chunkYDFM2PBIjs.runZjuHealthReport.call(void 0, username, password, dingtalkToken);
   } catch (error) {
     console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
