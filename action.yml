@@ -7,6 +7,9 @@ inputs:
   password:
     description: '浙大通行证密码'
     required: true
+  dingtalk_token:
+    description: '钉钉机器人通知 access_token'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/action.js'

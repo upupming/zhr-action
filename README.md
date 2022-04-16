@@ -48,6 +48,7 @@ steps:
     with:
       username: ${{ secrets[matrix.username] }}
       password: ${{ secrets[matrix.password] }}
+      dingtalk_token: ${{ secrets[matrix.dingtalk_token] }}
     env:
       # 注意一定要在私有仓库里面才加这个，不然会 log 是公开的，会暴露你的隐私信息
       NODE_ENV: development
