@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/api.js",
   "scripts": {
-    "test": "esno cli.ts",
+    "test": "esno src/cli.ts",
     "test:dev": "NODE_ENV=development pnpm test",
     "dev": "tsup --watch",
     "build": "tsup",
