@@ -1,6 +1,9 @@
 import puppeteer, { JSONObject } from 'puppeteer-core'
 import { Launcher } from 'chrome-launcher';
 import { banner } from './banner';
+import { Console } from 'console'
+import { PassThrough } from 'stream'
+import Convert from 'ansi-to-html';
 
 declare global {
   interface Window {
@@ -13,8 +16,21 @@ declare global {
   }
 }
 
+export async function runZjuHealthReport(username?: string, password?: string, dingtalkToken?: string) {
+  // All logs will be saved to logString for further usage for dingtalk msg sender
+  let logString: string = ''
+  const createPassThrough = (stream: NodeJS.WriteStream) => {
+    const passThrough = new PassThrough()
+    passThrough.pipe(stream)
+    passThrough.on('data', (chunk) => {
+      chunk && (logString += Buffer.from(chunk).toString())
+    });
+    passThrough.on('error', (err) => { throw (err) });
+    return passThrough
+  }
 
-export async function runZjuHealthReport(username?: string, password?: string) {
+  const console = new Console(createPassThrough(process.stdout), createPassThrough(process.stderr))
+
   if (!username) {
     throw new Error('请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
   }
@@ -23,6 +39,7 @@ export async function runZjuHealthReport(username?: string, password?: string) {
   }
 
   const dev = process.env.NODE_ENV === 'development'
+
   const browser = await puppeteer.launch({
     executablePath: Launcher.getInstallations()[0],
     headless: process.env.CI || !dev,
@@ -103,8 +120,32 @@ export async function runZjuHealthReport(username?: string, password?: string) {
 
   将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 `)
-    console.log(chalk.green(`打卡成功！`))
+    console.log(`${chalk.green(`打卡成功！`)}\n`)
     await page.waitForTimeout(3000)
+  }
+
+  const notifyDingtalk = async (dingtalkToken?: string) => {
+    if (!dingtalkToken) return
+    const { status, data } = await request({
+      hostname: 'oapi.dingtalk.com',
+      path: `/robot/send?access_token=${dingtalkToken}`,
+      port: 443,
+      method: 'POST',
+      data: {
+        msgtype: 'text',
+        text: {
+          content: removeColorModifier(logString)
+        },
+      }
+    })
+    if (status !== 200) {
+      throw new Error(`钉钉消息推送失败，状态码：${chalk.red(status)}`)
+    }
+    const response = JSON.parse(data)
+    if (response.errcode != 0) {
+      throw new Error(`钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`)
+    }
+    console.log(`${chalk.green('钉钉消息推送成功！')}\n`)
   }
 
 
@@ -113,7 +154,67 @@ export async function runZjuHealthReport(username?: string, password?: string) {
 
     await login(page, username, password)
     await submit(page, dev)
+  } catch (err) {
+    logString += (err as Error)?.message
+    throw (err)
   } finally {
-    await browser.close();
+    try {
+      await notifyDingtalk(dingtalkToken)
+    } catch (err) {
+      throw (err)
+    } finally {
+      await browser.close();
+    }
   }
+}
+
+import { RequestOptions, request as httpsRequest } from 'https'
+export interface RequestResult {
+  status?: number
+  data: string
+}
+async function request(options: RequestOptions & { data: object }) {
+  return new Promise<RequestResult>((resolve, reject) => {
+    const requestData = JSON.stringify(options.data)
+
+    if (process.env.NODE_ENV === "development") {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+      options.hostname = 'localhost';
+      options.port = '65292';
+    }
+
+    const req = httpsRequest({
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        // 因为有中文，所以必须用 Buffer 转一下，当然可以直接不设置 Content-Length
+        'Content-Length': Buffer.from(requestData).length,
+        ...options.headers,
+      },
+    }, res => {
+      let resData = ''
+      res.on('data', d => {
+        resData += d
+      })
+      res.on('end', () => {
+        resolve({
+          status: res.statusCode,
+          data: resData
+        })
+      })
+    })
+
+    req.on('error', error => {
+      reject(error)
+    })
+    req.write(requestData)
+    req.end()
+  })
+
+}
+
+function removeColorModifier(str: string) {
+  // https://stackoverflow.com/a/29497680/8242705
+  return str.replace(
+    /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
 }

@@ -8,6 +8,10 @@ declare global {
         }
     }
 }
-declare function runZjuHealthReport(username?: string, password?: string): Promise<void>;
+declare function runZjuHealthReport(username?: string, password?: string, dingtalkToken?: string): Promise<void>;
+interface RequestResult {
+    status?: number;
+    data: string;
+}
 
-export { runZjuHealthReport };
+export { RequestResult, runZjuHealthReport };

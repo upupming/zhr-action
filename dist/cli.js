@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkW24CBEAGjs = require('./chunk-W24CBEAG.js');
-require('./chunk-6OSZW4JC.js');
+var _chunkKFORK2E2js = require('./chunk-KFORK2E2.js');
+require('./chunk-FQFBMVJM.js');
 
 
 
 
 
-var _chunkBVY3OA3Vjs = require('./chunk-BVY3OA3V.js');
+var _chunkOKMUBGTUjs = require('./chunk-OKMUBGTU.js');
 
 // node_modules/.pnpm/dotenv@16.0.0/node_modules/dotenv/lib/main.js
-var require_main = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_main = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/dotenv@16.0.0/node_modules/dotenv/lib/main.js"(exports, module) {
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkBVY3OA3Vjs.__require.call(void 0, "fs");
-    var path = _chunkBVY3OA3Vjs.__require.call(void 0, "path");
-    var os = _chunkBVY3OA3Vjs.__require.call(void 0, "os");
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
+    var os = _chunkOKMUBGTUjs.__require.call(void 0, "os");
     var LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg;
     function parse(src) {
       const obj = {};
@@ -92,16 +92,17 @@ var require_main = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
   }
 });
 
-// cli.ts
-_chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
-var import_dotenv = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_main());
+// src/cli.ts
+_chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+var import_dotenv = _chunkOKMUBGTUjs.__toESM.call(void 0, require_main());
 import_dotenv.default.config();
 async function run() {
   var _a;
   const username = process.env.username;
   const password = process.env.password;
+  const dingtalkToken = process.env.dingtalk_token;
   try {
-    await _chunkW24CBEAGjs.runZjuHealthReport.call(void 0, username, password);
+    await _chunkKFORK2E2js.runZjuHealthReport.call(void 0, username, password, dingtalkToken);
   } catch (error) {
     console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }

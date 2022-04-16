@@ -1,4 +1,4 @@
-"use strict";require('./chunk-6OSZW4JC.js');
+"use strict";require('./chunk-FQFBMVJM.js');
 
 
 
@@ -6,13 +6,13 @@
 
 
 
-var _chunkBVY3OA3Vjs = require('./chunk-BVY3OA3V.js');
+var _chunkOKMUBGTUjs = require('./chunk-OKMUBGTU.js');
 
 // node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/utils.js
-var require_utils = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_utils = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/utils.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.toCommandProperties = exports.toCommandValue = void 0;
     function toCommandValue(input) {
@@ -42,10 +42,10 @@ var require_utils = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/command.js
-var require_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_command = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/command.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
@@ -76,7 +76,7 @@ var require_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issue = exports.issueCommand = void 0;
-    var os = __importStar(_chunkBVY3OA3Vjs.__require.call(void 0, "os"));
+    var os = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "os"));
     var utils_1 = require_utils();
     function issueCommand(command, properties, message) {
       const cmd = new Command(command, properties, message);
@@ -130,10 +130,10 @@ var require_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/file-command.js
-var require_file_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_file_command = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/file-command.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
@@ -164,8 +164,8 @@ var require_file_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issueCommand = void 0;
-    var fs = __importStar(_chunkBVY3OA3Vjs.__require.call(void 0, "fs"));
-    var os = __importStar(_chunkBVY3OA3Vjs.__require.call(void 0, "os"));
+    var fs = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
+    var os = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "os"));
     var utils_1 = require_utils();
     function issueCommand(command, message) {
       const filePath = process.env[`GITHUB_${command}`];
@@ -184,10 +184,10 @@ var require_file_command = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/proxy.js
-var require_proxy = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_proxy = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/proxy.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     Object.defineProperty(exports, "__esModule", { value: true });
     function getProxyUrl(reqUrl) {
       let usingSsl = reqUrl.protocol === "https:";
@@ -239,17 +239,17 @@ var require_proxy = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/tunnel@0.0.6/node_modules/tunnel/lib/tunnel.js
-var require_tunnel = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_tunnel = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/tunnel@0.0.6/node_modules/tunnel/lib/tunnel.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
-    var net = _chunkBVY3OA3Vjs.__require.call(void 0, "net");
-    var tls = _chunkBVY3OA3Vjs.__require.call(void 0, "tls");
-    var http = _chunkBVY3OA3Vjs.__require.call(void 0, "http");
-    var https = _chunkBVY3OA3Vjs.__require.call(void 0, "https");
-    var events = _chunkBVY3OA3Vjs.__require.call(void 0, "events");
-    var assert = _chunkBVY3OA3Vjs.__require.call(void 0, "assert");
-    var util = _chunkBVY3OA3Vjs.__require.call(void 0, "util");
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+    var net = _chunkOKMUBGTUjs.__require.call(void 0, "net");
+    var tls = _chunkOKMUBGTUjs.__require.call(void 0, "tls");
+    var http = _chunkOKMUBGTUjs.__require.call(void 0, "http");
+    var https = _chunkOKMUBGTUjs.__require.call(void 0, "https");
+    var events = _chunkOKMUBGTUjs.__require.call(void 0, "events");
+    var assert = _chunkOKMUBGTUjs.__require.call(void 0, "assert");
+    var util = _chunkOKMUBGTUjs.__require.call(void 0, "util");
     exports.httpOverHttp = httpOverHttp;
     exports.httpsOverHttp = httpsOverHttp;
     exports.httpOverHttps = httpOverHttps;
@@ -463,21 +463,21 @@ var require_tunnel = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/tunnel@0.0.6/node_modules/tunnel/index.js
-var require_tunnel2 = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_tunnel2 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/tunnel@0.0.6/node_modules/tunnel/index.js"(exports, module) {
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     module.exports = require_tunnel();
   }
 });
 
 // node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/index.js
-var require_http_client = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_http_client = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/index.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     Object.defineProperty(exports, "__esModule", { value: true });
-    var http = _chunkBVY3OA3Vjs.__require.call(void 0, "http");
-    var https = _chunkBVY3OA3Vjs.__require.call(void 0, "https");
+    var http = _chunkOKMUBGTUjs.__require.call(void 0, "http");
+    var https = _chunkOKMUBGTUjs.__require.call(void 0, "https");
     var pm = require_proxy();
     var tunnel;
     var HttpCodes;
@@ -840,7 +840,7 @@ var require_http_client = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
           const agentOptions = {
             maxSockets,
             keepAlive: this._keepAlive,
-            proxy: _chunkBVY3OA3Vjs.__spreadProps.call(void 0, _chunkBVY3OA3Vjs.__spreadValues.call(void 0, {}, (proxyUrl.username || proxyUrl.password) && {
+            proxy: _chunkOKMUBGTUjs.__spreadProps.call(void 0, _chunkOKMUBGTUjs.__spreadValues.call(void 0, {}, (proxyUrl.username || proxyUrl.password) && {
               proxyAuth: `${proxyUrl.username}:${proxyUrl.password}`
             }), {
               host: proxyUrl.hostname,
@@ -935,10 +935,10 @@ var require_http_client = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/auth.js
-var require_auth = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_auth = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+http-client@1.0.11/node_modules/@actions/http-client/auth.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     Object.defineProperty(exports, "__esModule", { value: true });
     var BasicCredentialHandler = class {
       constructor(username, password) {
@@ -990,10 +990,10 @@ var require_auth = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/oidc-utils.js
-var require_oidc_utils = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_oidc_utils = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/oidc-utils.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
@@ -1089,10 +1089,10 @@ var require_oidc_utils = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
 });
 
 // node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/core.js
-var require_core = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
+var require_core = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/@actions+core@1.6.0/node_modules/@actions/core/lib/core.js"(exports) {
     "use strict";
-    _chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
@@ -1153,8 +1153,8 @@ var require_core = _chunkBVY3OA3Vjs.__commonJS.call(void 0, {
     var command_1 = require_command();
     var file_command_1 = require_file_command();
     var utils_1 = require_utils();
-    var os = __importStar(_chunkBVY3OA3Vjs.__require.call(void 0, "os"));
-    var path = __importStar(_chunkBVY3OA3Vjs.__require.call(void 0, "path"));
+    var os = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "os"));
+    var path = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "path"));
     var oidc_utils_1 = require_oidc_utils();
     var ExitCode;
     (function(ExitCode2) {
@@ -1292,13 +1292,13 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
   }
 });
 
-// action.ts
-_chunkBVY3OA3Vjs.init_cjs_shims.call(void 0, );
-var core = _chunkBVY3OA3Vjs.__toESM.call(void 0, require_core());
+// src/action.ts
+_chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+var core = _chunkOKMUBGTUjs.__toESM.call(void 0, require_core());
 async function run() {
   var _a;
   try {
-    await (await Promise.resolve().then(() => _chunkBVY3OA3Vjs.__toESM.call(void 0, _chunkBVY3OA3Vjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"));
+    await (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"), core.getInput("dingtalk_token"));
   } catch (error) {
     core.setFailed((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
