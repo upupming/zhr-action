@@ -9,9 +9,9 @@ const options: Options = {
   sourcemap: true,
   splitting: true,
   entryPoints: [
-    'api.ts',
-    'cli.ts',
-    'action.ts',
+    'src/api.ts',
+    'src/cli.ts',
+    'src/action.ts',
   ],
   esbuildOptions: (options) => {
     options.charset = 'utf8'
