@@ -32,10 +32,10 @@ export async function runZjuHealthReport(username?: string, password?: string, d
   const console = new Console(createPassThrough(process.stdout), createPassThrough(process.stderr))
 
   if (!username) {
-    throw new Error('请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
+    throw new Error('❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
   }
   if (!password) {
-    throw new Error('请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
+    throw new Error('❌ 请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
   }
 
   const dev = process.env.NODE_ENV === 'development'
@@ -74,8 +74,8 @@ export async function runZjuHealthReport(username?: string, password?: string, d
       }
     })
 
-    if (errMsg) throw new Error(`登录失败，网页报错为: ${chalk.red(errMsg)}`)
-    console.log(`${__username} ${chalk.green('登陆成功！')}\n`)
+    if (errMsg) throw new Error(`❌ 登录失败，网页报错为: ${chalk.red(errMsg)}`)
+    console.log(`✅ ${__username} ${chalk.green('登陆成功！')}\n`)
     await page.waitForTimeout(3000)
   }
 
@@ -107,7 +107,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
     2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`
-    if (errMsg) throw new Error(`打卡提交失败，网页报错为：${chalk.red(errMsg)}
+    if (errMsg) throw new Error(`❌ 打卡提交失败，网页报错为：${chalk.red(errMsg)}
   ${dev ? `你前一次打卡的信息为：
 
   ${JSON.stringify(oldInfo, null, 2)}
@@ -120,7 +120,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
 
   将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 `)
-    console.log(`${chalk.green(`打卡成功！`)}\n`)
+    console.log(`${chalk.green(`✅ 打卡成功！`)}\n`)
     await page.waitForTimeout(3000)
   }
 
@@ -143,29 +143,34 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
       }
     })
     if (status !== 200) {
-      throw new Error(`钉钉消息推送失败，状态码：${chalk.red(status)}`)
+      throw new Error(`❌ 钉钉消息推送失败，状态码：${chalk.red(status)}`)
     }
     const response = JSON.parse(data)
     if (response.errcode != 0) {
-      throw new Error(`钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`)
+      throw new Error(`❌ 钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`)
     }
-    console.log(`${chalk.green('钉钉消息推送成功！')}\n`)
+    console.log(`${chalk.green('✅ 钉钉消息推送成功！')}\n`)
   }
 
 
+  let mainErrorMsg = ''
   try {
     console.log(banner)
 
     await login(page, username, password)
     await submit(page, dev)
-  } catch (err) {
-    logString += (err as Error)?.message
-    throw (err)
+  } catch (mainError) {
+    logString += (mainError as Error)?.message
+    mainErrorMsg += (mainError as Error)?.message
+    throw (mainError)
   } finally {
     try {
       await notifyDingtalk(dingtalkToken)
-    } catch (err) {
-      throw (err)
+    } catch (notifyErrorMsg) {
+      throw (new Error(`
+${mainErrorMsg}
+${(notifyErrorMsg as Error)?.message}
+      `.trim()))
     } finally {
       await browser.close();
     }

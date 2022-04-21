@@ -27923,10 +27923,10 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
   };
   const console2 = new (0, _console.Console)(createPassThrough(process.stdout), createPassThrough(process.stderr));
   if (!username) {
-    throw new Error("请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+    throw new Error("❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
   }
   if (!password) {
-    throw new Error("请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+    throw new Error("❌ 请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
   }
   const dev = process.env.NODE_ENV === "development";
   const browser = await import_puppeteer_core.default.launch({
@@ -27960,8 +27960,8 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       }
     });
     if (errMsg)
-      throw new Error(`登录失败，网页报错为: ${chalk.red(errMsg)}`);
-    console2.log(`${__username} ${chalk.green("登陆成功！")}
+      throw new Error(`❌ 登录失败，网页报错为: ${chalk.red(errMsg)}`);
+    console2.log(`✅ ${__username} ${chalk.green("登陆成功！")}
 `);
     await page2.waitForTimeout(3e3);
   };
@@ -27996,7 +27996,7 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
     1. 今天已经打过卡了，可以忽略此报错。
     2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`;
     if (errMsg)
-      throw new Error(`打卡提交失败，网页报错为：${chalk.red(errMsg)}
+      throw new Error(`❌ 打卡提交失败，网页报错为：${chalk.red(errMsg)}
   ${dev2 ? `你前一次打卡的信息为：
 
   ${JSON.stringify(oldInfo, null, 2)}
@@ -28009,7 +28009,7 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
 
   将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 `);
-    console2.log(`${chalk.green(`打卡成功！`)}
+    console2.log(`${chalk.green(`✅ 打卡成功！`)}
 `);
     await page2.waitForTimeout(3e3);
   };
@@ -28033,27 +28033,32 @@ GitHub workflow: ${process.env.ACTION_URL}` : ""}
       }
     });
     if (status !== 200) {
-      throw new Error(`钉钉消息推送失败，状态码：${chalk.red(status)}`);
+      throw new Error(`❌ 钉钉消息推送失败，状态码：${chalk.red(status)}`);
     }
     const response = JSON.parse(data);
     if (response.errcode != 0) {
-      throw new Error(`钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`);
+      throw new Error(`❌ 钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`);
     }
-    console2.log(`${chalk.green("钉钉消息推送成功！")}
+    console2.log(`${chalk.green("✅ 钉钉消息推送成功！")}
 `);
   };
+  let mainErrorMsg = "";
   try {
     console2.log(banner);
     await login(page, username, password);
     await submit(page, dev);
-  } catch (err) {
-    logString += err == null ? void 0 : err.message;
-    throw err;
+  } catch (mainError) {
+    logString += mainError == null ? void 0 : mainError.message;
+    mainErrorMsg += mainError == null ? void 0 : mainError.message;
+    throw mainError;
   } finally {
     try {
       await notifyDingtalk(dingtalkToken);
-    } catch (err) {
-      throw err;
+    } catch (notifyErrorMsg) {
+      throw new Error(`
+${mainErrorMsg}
+${notifyErrorMsg == null ? void 0 : notifyErrorMsg.message}
+      `.trim());
     } finally {
       await browser.close();
     }
@@ -28114,4 +28119,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-YDFM2PBI.js.map
+//# sourceMappingURL=chunk-WB6RU6EE.js.map
