@@ -27,6 +27,7 @@
   "homepage": "https://github.com/zju-health-report/action#readme",
   "devDependencies": {
     "@actions/core": "1.6.0",
+    "@actions/exec": "1.1.1",
     "@types/command-exists": "1.2.0",
     "@types/gradient-string": "1.1.2",
     "@types/tmp": "0.2.3",

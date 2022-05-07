@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@actions/core': 1.6.0
+  '@actions/exec': 1.1.1
   '@types/command-exists': 1.2.0
   '@types/gradient-string': 1.1.2
   '@types/tmp': 0.2.3
@@ -20,6 +21,7 @@ specifiers:
 
 devDependencies:
   '@actions/core': 1.6.0
+  '@actions/exec': 1.1.1
   '@types/command-exists': 1.2.0
   '@types/gradient-string': 1.1.2
   '@types/tmp': 0.2.3
@@ -44,10 +46,20 @@ packages:
       '@actions/http-client': 1.0.11
     dev: true
 
+  /@actions/exec/1.1.1:
+    resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
+    dependencies:
+      '@actions/io': 1.1.2
+    dev: true
+
   /@actions/http-client/1.0.11:
     resolution: {integrity: sha512-VRYHGQV1rqnROJqdMvGUbY/Kn8vriQe/F9HR2AlYHzmKuM/p3kjNuXhmdBfcVgsvRWTz5C5XW5xvndZrVBuAYg==}
     dependencies:
       tunnel: 0.0.6
+    dev: true
+
+  /@actions/io/1.1.2:
+    resolution: {integrity: sha512-d+RwPlMp+2qmBfeLYPLXuSRykDIFEwdTA0MMxzS9kh4kvP1ftrc/9fzy6pX6qAjthdXruHQ6/6kjT/DNo5ALuw==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
