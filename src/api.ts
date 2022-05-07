@@ -106,7 +106,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
 
   let ocrRecognizeVerifyCodeRetryTimes = 0
   const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4
-  const ocrRecognizeVerifyCode = async () => {
+  const ocrRecognizeVerifyCode = async (): Promise<void> => {
     if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`)
     }
@@ -130,8 +130,8 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         const { vm } = window
         vm.change()
       })
-      await page.waitForTimeout(200)
-      ocrRecognizeVerifyCode()
+      await page.waitForTimeout(1000)
+      return ocrRecognizeVerifyCode()
     }
     console.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`)
   }
