@@ -83,7 +83,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         fileName = fileName.split('?')[0]
         if (!(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(fileName)) fileName += '.png'
 
-        console.log(`📷 捕获到图片请求 ${url}, ${fileName}`.split('?')[0])
+        console.log(`📷 捕获到图片请求 ${url.split('?')[0]}, ${fileName}`)
         // currently we only need code.png
         if (fileName === 'code.png') {
           verifyCodeImgFile = tmp.tmpNameSync({ postfix: fileName })
@@ -161,7 +161,8 @@ export async function runZjuHealthReport(username?: string, password?: string, d
           vm.info[key] = vm.oldInfo[key]
         }
         vm.info.verifyCode = __verifyCode
-        vm.confirm()
+        // vm.confirm()
+        vm.save()
         document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
       } catch (err) {
         return (err as Error)?.message
