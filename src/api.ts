@@ -161,7 +161,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
           vm.info[key] = vm.oldInfo[key]
         }
         vm.info.verifyCode = __verifyCode
-        // confirm 包含一些列前端校验
+        // confirm 包含一系列前端校验
         vm.confirm()
         // save 直接发出后端请求
         // vm.save()
