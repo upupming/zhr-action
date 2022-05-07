@@ -133,6 +133,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
       await page.waitForTimeout(200)
       ocrRecognizeVerifyCode()
     }
+    console.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`)
   }
 
   const submit = async (page: puppeteer.Page, dev: boolean): Promise<void> => {
