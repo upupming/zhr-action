@@ -161,8 +161,10 @@ export async function runZjuHealthReport(username?: string, password?: string, d
           vm.info[key] = vm.oldInfo[key]
         }
         vm.info.verifyCode = __verifyCode
-        // vm.confirm()
-        vm.save()
+        // confirm 包含一些列前端校验
+        vm.confirm()
+        // save 直接发出后端请求
+        // vm.save()
         document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
       } catch (err) {
         return (err as Error)?.message
