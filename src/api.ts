@@ -3,7 +3,10 @@ import { Launcher } from 'chrome-launcher';
 import { banner } from './banner';
 import { Console } from 'console'
 import { PassThrough } from 'stream'
-import Convert from 'ansi-to-html';
+import fs from 'fs'
+import tmp from 'tmp'
+import commandExists from 'command-exists'
+import { spawnSync } from 'child_process'
 
 declare global {
   interface Window {
@@ -54,6 +57,28 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     level: 3
   })
 
+
+  let verifyCodeImgFile = ''
+  let verifyCode = ''
+  page.on('response', async response => {
+    const url = response.url();
+    if (response.request().resourceType() === 'image') {
+      response.buffer().then(file => {
+        let fileName = url.split('/').pop();
+        if (!fileName) return
+        fileName = fileName.split('?')[0]
+        if (!(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(fileName)) fileName += '.png'
+
+        // currently we only need code.png
+        if (fileName === 'code.png') {
+          verifyCodeImgFile = tmp.tmpNameSync({ postfix: fileName })
+          const writeStream = fs.createWriteStream(verifyCodeImgFile);
+          writeStream.write(file);
+        }
+      });
+    }
+  });
+
   const login = async (page: puppeteer.Page, __username: string, __password: string) => {
     let errMsg = await page.evaluate((__username: string, __password: string): string | undefined => {
       try {
@@ -79,8 +104,39 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     await page.waitForTimeout(3000)
   }
 
+  let ocrRecognizeVerifyCodeRetryTimes = 0
+  const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4
+  const ocrRecognizeVerifyCode = async () => {
+    if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
+      throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`)
+    }
+    ocrRecognizeVerifyCodeRetryTimes++
+    if (ocrRecognizeVerifyCodeRetryTimes > 1) {
+      console.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`)
+    }
+    if (!await commandExists('tesseract')) {
+      throw new Error('❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html')
+    }
+    if (!verifyCodeImgFile) throw new Error('❌ 未下载到验证码图片')
+    const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(' ')
+    const tesseractProcess = spawnSync(args[0], args.slice(1))
+    const tesseractOutput = tesseractProcess.stdout.toString()
+    const tesseractError = tesseractProcess.stderr.toString()
+    if (tesseractError) throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`)
+    verifyCode = tesseractOutput.trim()
+    if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
+      console.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`)
+      await page.evaluate(() => {
+        const { vm } = window
+        vm.change()
+      })
+      await page.waitForTimeout(200)
+      ocrRecognizeVerifyCode()
+    }
+  }
+
   const submit = async (page: puppeteer.Page, dev: boolean) => {
-    let errMsg = await page.evaluate((): string | undefined => {
+    let errMsg = await page.evaluate((__verifyCode: string): string | undefined => {
       try {
         const { vm } = window
         for (const key in vm.oldInfo) {
@@ -88,12 +144,13 @@ export async function runZjuHealthReport(username?: string, password?: string, d
           if (!vm.oldInfo[key]) continue
           vm.info[key] = vm.oldInfo[key]
         }
+        vm.info.verifyCode = __verifyCode
         vm.confirm()
         document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
       } catch (err) {
         return (err as Error)?.message
       }
-    })
+    }, verifyCode)
     await page.waitForTimeout(1000)
     errMsg ??= await page.evaluate(() => {
       let popup = document.getElementById('wapat')
@@ -103,6 +160,14 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         }
       }
     })
+
+    if (errMsg?.includes('验证码错误')) {
+      // 这里不需要手动刷新，页面会自动刷新验证码
+      await ocrRecognizeVerifyCode()
+      await submit(page, dev)
+    }
+    console.log()
+
     let oldInfo = await page.evaluate(() => (window.vm.oldInfo as JSONObject))
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
@@ -158,6 +223,7 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
     console.log(banner)
 
     await login(page, username, password)
+    await ocrRecognizeVerifyCode()
     await submit(page, dev)
   } catch (mainError) {
     logString += (mainError as Error)?.message

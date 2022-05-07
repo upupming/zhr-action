@@ -2,29 +2,37 @@ lockfileVersion: 5.3
 
 specifiers:
   '@actions/core': 1.6.0
+  '@types/command-exists': 1.2.0
   '@types/gradient-string': 1.1.2
+  '@types/tmp': 0.2.3
   ansi-to-html: 0.7.2
   chalk: 5.0.1
   chrome-launcher: 0.15.0
+  command-exists: 1.2.9
   dotenv: 16.0.0
   esno: 0.14.1
   gradient-string: 2.0.0
   puppeteer-core: 13.5.2
   source-map-support: 0.5.21
+  tmp: 0.2.1
   tsup: 5.12.5
   typescript: 4.6.3
 
 devDependencies:
   '@actions/core': 1.6.0
+  '@types/command-exists': 1.2.0
   '@types/gradient-string': 1.1.2
+  '@types/tmp': 0.2.3
   ansi-to-html: 0.7.2
   chalk: 5.0.1
   chrome-launcher: 0.15.0
+  command-exists: 1.2.9
   dotenv: 16.0.0
   esno: 0.14.1
   gradient-string: 2.0.0
   puppeteer-core: 13.5.2
   source-map-support: 0.5.21
+  tmp: 0.2.1
   tsup: 5.12.5_typescript@4.6.3
   typescript: 4.6.3
 
@@ -63,6 +71,10 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@types/command-exists/1.2.0:
+    resolution: {integrity: sha512-ugsxEJfsCuqMLSuCD4PIJkp5Uk2z6TCMRCgYVuhRo5cYQY3+1xXTQkSlPtkpGHuvWMjS2KTeVQXxkXRACMbM6A==}
+    dev: true
+
   /@types/gradient-string/1.1.2:
     resolution: {integrity: sha512-zIet2KvHr2dkOCPI5ggQQ+WJVyfBSFaqK9sNelhgDjlE2K3Fu2muuPJwu5aKM3xoWuc3WXudVEMUwI1QWhykEQ==}
     dependencies:
@@ -75,6 +87,10 @@ packages:
 
   /@types/tinycolor2/1.4.3:
     resolution: {integrity: sha512-Kf1w9NE5HEgGxCRyIcRXR/ZYtDv0V8FVPtYHwLxl0O+maGX0erE77pQlD0gpP+/KByMZ87mOA79SjifhSB3PjQ==}
+    dev: true
+
+  /@types/tmp/0.2.3:
+    resolution: {integrity: sha512-dDZH/tXzwjutnuk4UacGgFRwV+JSLaXL1ikvidfJprkb7L9Nx1njcRHHmi3Dsvt7pgqqTEeucQuOrWHPFgzVHA==}
     dev: true
 
   /@types/yauzl/2.10.0:
@@ -249,6 +265,10 @@ packages:
 
   /color-name/1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+    dev: true
+
+  /command-exists/1.2.9:
+    resolution: {integrity: sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==}
     dev: true
 
   /commander/4.1.1:
@@ -1222,6 +1242,13 @@ packages:
     dependencies:
       '@types/tinycolor2': 1.4.3
       tinycolor2: 1.4.2
+    dev: true
+
+  /tmp/0.2.1:
+    resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
+    engines: {node: '>=8.17.0'}
+    dependencies:
+      rimraf: 3.0.2
     dev: true
 
   /to-regex-range/5.0.1:

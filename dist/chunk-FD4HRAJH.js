@@ -2684,16 +2684,16 @@ var require_helper = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (!environment_js_1.isNode && path) {
         throw new Error("Cannot write to a path outside of Node.js environment.");
       }
-      const fs = environment_js_1.isNode ? await importFSModule() : null;
+      const fs2 = environment_js_1.isNode ? await importFSModule() : null;
       let fileHandle;
-      if (path && fs) {
-        fileHandle = await fs.promises.open(path, "w");
+      if (path && fs2) {
+        fileHandle = await fs2.promises.open(path, "w");
       }
       const buffers = [];
       for await (const chunk of readable) {
         buffers.push(chunk);
-        if (fileHandle && fs) {
-          await fs.promises.writeFile(fileHandle, chunk);
+        if (fileHandle && fs2) {
+          await fs2.promises.writeFile(fileHandle, chunk);
         }
       }
       if (path && fileHandle)
@@ -2730,11 +2730,11 @@ var require_helper = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (!environment_js_1.isNode) {
         throw new Error("Cannot load the fs module API outside of Node.");
       }
-      const fs = await Promise.resolve().then(() => __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs")));
-      if (fs.promises) {
-        return fs;
+      const fs2 = await Promise.resolve().then(() => __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs")));
+      if (fs2.promises) {
+        return fs2;
       }
-      return fs.default;
+      return fs2.default;
     }
     exports.helper = {
       evaluationString,
@@ -3504,11 +3504,11 @@ var require_JSHandle = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           throw new Error(`JSHandle#uploadFile can only be used in Node environments.`);
         }
         const path = await Promise.resolve().then(() => __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "path")));
-        const fs = await helper_js_1.helper.importFSModule();
+        const fs2 = await helper_js_1.helper.importFSModule();
         const files = await Promise.all(filePaths.map(async (filePath) => {
           const resolvedPath = path.resolve(filePath);
           try {
-            await fs.promises.access(resolvedPath, fs.constants.R_OK);
+            await fs2.promises.access(resolvedPath, fs2.constants.R_OK);
           } catch (error) {
             if (error.code === "ENOENT")
               throw new Error(`${filePath} does not exist or is not readable`);
@@ -5011,8 +5011,8 @@ var require_DOMWorld = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           if (!environment_js_1.isNode) {
             throw new Error("Cannot pass a filepath to addScriptTag in the browser environment.");
           }
-          const fs = await helper_js_1.helper.importFSModule();
-          let contents = await fs.promises.readFile(path, "utf8");
+          const fs2 = await helper_js_1.helper.importFSModule();
+          let contents = await fs2.promises.readFile(path, "utf8");
           contents += "//# sourceURL=" + path.replace(/\n/g, "");
           const context = await this.executionContext();
           return (await context.evaluateHandle(addScriptContent, contents, id, type)).asElement();
@@ -5065,8 +5065,8 @@ var require_DOMWorld = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           if (!environment_js_1.isNode) {
             throw new Error("Cannot pass a filepath to addStyleTag in the browser environment.");
           }
-          const fs = await helper_js_1.helper.importFSModule();
-          let contents = await fs.promises.readFile(path, "utf8");
+          const fs2 = await helper_js_1.helper.importFSModule();
+          let contents = await fs2.promises.readFile(path, "utf8");
           contents += "/*# sourceURL=" + path.replace(/\n/g, "") + "*/";
           const context = await this.executionContext();
           return (await context.evaluateHandle(addStyleContent, contents)).asElement();
@@ -8100,8 +8100,8 @@ var require_Page = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           if (!environment_js_1.isNode) {
             throw new Error("Screenshots can only be written to a file path in a Node environment.");
           }
-          const fs = await helper_js_1.helper.importFSModule();
-          await fs.promises.writeFile(options.path, buffer);
+          const fs2 = await helper_js_1.helper.importFSModule();
+          await fs2.promises.writeFile(options.path, buffer);
         }
         return buffer;
         function processClip(clip2) {
@@ -14779,7 +14779,7 @@ var require_pump = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var once = require_once();
     var eos = require_end_of_stream();
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var noop = function() {
     };
     var ancient = /^v?\.0/.test(process.version);
@@ -14789,9 +14789,9 @@ var require_pump = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     var isFS = function(stream) {
       if (!ancient)
         return false;
-      if (!fs)
+      if (!fs2)
         return false;
-      return (stream instanceof (fs.ReadStream || noop) || stream instanceof (fs.WriteStream || noop)) && isFn(stream.close);
+      return (stream instanceof (fs2.ReadStream || noop) || stream instanceof (fs2.WriteStream || noop)) && isFn(stream.close);
     };
     var isRequest2 = function(stream) {
       return stream.setHeader && isFn(stream.abort);
@@ -15018,7 +15018,7 @@ var require_pend = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
 var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/fd-slicer@1.1.0/node_modules/fd-slicer/index.js"(exports) {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var util = _chunkOKMUBGTUjs.__require.call(void 0, "util");
     var stream = _chunkOKMUBGTUjs.__require.call(void 0, "stream");
     var Readable2 = stream.Readable;
@@ -15043,7 +15043,7 @@ var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     FdSlicer.prototype.read = function(buffer, offset, length, position, callback) {
       var self = this;
       self.pend.go(function(cb) {
-        fs.read(self.fd, buffer, offset, length, position, function(err, bytesRead, buffer2) {
+        fs2.read(self.fd, buffer, offset, length, position, function(err, bytesRead, buffer2) {
           cb();
           callback(err, bytesRead, buffer2);
         });
@@ -15052,7 +15052,7 @@ var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     FdSlicer.prototype.write = function(buffer, offset, length, position, callback) {
       var self = this;
       self.pend.go(function(cb) {
-        fs.write(self.fd, buffer, offset, length, position, function(err, written, buffer2) {
+        fs2.write(self.fd, buffer, offset, length, position, function(err, written, buffer2) {
           cb();
           callback(err, written, buffer2);
         });
@@ -15075,7 +15075,7 @@ var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (self.refCount < 0)
         throw new Error("invalid unref");
       if (self.autoClose) {
-        fs.close(self.fd, onCloseDone);
+        fs2.close(self.fd, onCloseDone);
       }
       function onCloseDone(err) {
         if (err) {
@@ -15114,7 +15114,7 @@ var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         if (self.destroyed)
           return cb();
         var buffer = new Buffer(toRead);
-        fs.read(self.context.fd, buffer, 0, toRead, self.pos, function(err, bytesRead) {
+        fs2.read(self.context.fd, buffer, 0, toRead, self.pos, function(err, bytesRead) {
           if (err) {
             self.destroy(err);
           } else if (bytesRead === 0) {
@@ -15164,7 +15164,7 @@ var require_fd_slicer = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       self.context.pend.go(function(cb) {
         if (self.destroyed)
           return cb();
-        fs.write(self.context.fd, buffer, 0, buffer.length, self.pos, function(err2, bytes) {
+        fs2.write(self.context.fd, buffer, 0, buffer.length, self.pos, function(err2, bytes) {
           if (err2) {
             self.destroy();
             cb();
@@ -15563,9 +15563,9 @@ var require_buffer_crc32 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       }
     }
     function bufferizeInt(num) {
-      var tmp = ensureBuffer(4);
-      tmp.writeInt32BE(num, 0);
-      return tmp;
+      var tmp2 = ensureBuffer(4);
+      tmp2.writeInt32BE(num, 0);
+      return tmp2;
     }
     function _crc32(buf, previous) {
       buf = ensureBuffer(buf);
@@ -15595,7 +15595,7 @@ var require_buffer_crc32 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
 var require_yauzl = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/yauzl@2.10.0/node_modules/yauzl/index.js"(exports) {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var zlib2 = _chunkOKMUBGTUjs.__require.call(void 0, "zlib");
     var fd_slicer = require_fd_slicer();
     var crc32 = require_buffer_crc32();
@@ -15632,12 +15632,12 @@ var require_yauzl = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         options.strictFileNames = false;
       if (callback == null)
         callback = defaultCallback;
-      fs.open(path, "r", function(err, fd) {
+      fs2.open(path, "r", function(err, fd) {
         if (err)
           return callback(err);
         fromFd(fd, options, function(err2, zipfile) {
           if (err2)
-            fs.close(fd, defaultCallback);
+            fs2.close(fd, defaultCallback);
           callback(err2, zipfile);
         });
       });
@@ -15661,7 +15661,7 @@ var require_yauzl = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         options.strictFileNames = false;
       if (callback == null)
         callback = defaultCallback;
-      fs.fstat(fd, function(err, stats) {
+      fs2.fstat(fd, function(err, stats) {
         if (err)
           return callback(err);
         var reader = fd_slicer.createFromFd(fd, { autoClose: true });
@@ -16298,7 +16298,7 @@ var require_extract_zip = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/extract-zip@2.0.1/node_modules/extract-zip/index.js"(exports, module) {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var debug = require_src()("extract-zip");
-    var { createWriteStream, promises: fs } = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var { createWriteStream, promises: fs2 } = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var getStream = require_get_stream();
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
     var { promisify } = _chunkOKMUBGTUjs.__require.call(void 0, "util");
@@ -16339,8 +16339,8 @@ var require_extract_zip = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
             }
             const destDir = path.dirname(path.join(this.opts.dir, entry.fileName));
             try {
-              await fs.mkdir(destDir, { recursive: true });
-              const canonicalDestDir = await fs.realpath(destDir);
+              await fs2.mkdir(destDir, { recursive: true });
+              const canonicalDestDir = await fs2.realpath(destDir);
               const relativeDestDir = path.relative(this.opts.dir, canonicalDestDir);
               if (relativeDestDir.split(path.sep).includes("..")) {
                 throw new Error(`Out of bound path "${canonicalDestDir}" found while processing file ${entry.fileName}`);
@@ -16385,7 +16385,7 @@ var require_extract_zip = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           mkdirOptions.mode = procMode;
         }
         debug("mkdir", _chunkOKMUBGTUjs.__spreadValues.call(void 0, { dir: destDir }, mkdirOptions));
-        await fs.mkdir(destDir, mkdirOptions);
+        await fs2.mkdir(destDir, mkdirOptions);
         if (isDir)
           return;
         debug("opening read stream", dest);
@@ -16393,7 +16393,7 @@ var require_extract_zip = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         if (symlink) {
           const link = await getStream(readStream);
           debug("creating symlink", link, dest);
-          await fs.symlink(link, dest);
+          await fs2.symlink(link, dest);
         } else {
           await pipeline(readStream, createWriteStream(dest, { mode: procMode }));
         }
@@ -16425,8 +16425,8 @@ var require_extract_zip = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (!path.isAbsolute(opts.dir)) {
         throw new Error("Target directory is expected to be absolute");
       }
-      await fs.mkdir(opts.dir, { recursive: true });
-      opts.dir = await fs.realpath(opts.dir);
+      await fs2.mkdir(opts.dir, { recursive: true });
+      opts.dir = await fs2.realpath(opts.dir);
       return new Extractor(zipPath, opts).extract();
     };
   }
@@ -16438,7 +16438,7 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var pathModule = _chunkOKMUBGTUjs.__require.call(void 0, "path");
     var isWindows = process.platform === "win32";
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var DEBUG = process.env.NODE_DEBUG && /fs/.test(process.env.NODE_DEBUG);
     function rethrow() {
       var callback;
@@ -16503,7 +16503,7 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         base = m[0];
         previous = "";
         if (isWindows && !knownHard[base]) {
-          fs.lstatSync(base);
+          fs2.lstatSync(base);
           knownHard[base] = true;
         }
       }
@@ -16521,7 +16521,7 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         if (cache && Object.prototype.hasOwnProperty.call(cache, base)) {
           resolvedLink = cache[base];
         } else {
-          var stat = fs.lstatSync(base);
+          var stat = fs2.lstatSync(base);
           if (!stat.isSymbolicLink()) {
             knownHard[base] = true;
             if (cache)
@@ -16536,8 +16536,8 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
             }
           }
           if (linkTarget === null) {
-            fs.statSync(base);
-            linkTarget = fs.readlinkSync(base);
+            fs2.statSync(base);
+            linkTarget = fs2.readlinkSync(base);
           }
           resolvedLink = pathModule.resolve(previous, linkTarget);
           if (cache)
@@ -16574,7 +16574,7 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         base = m[0];
         previous = "";
         if (isWindows && !knownHard[base]) {
-          fs.lstat(base, function(err) {
+          fs2.lstat(base, function(err) {
             if (err)
               return cb(err);
             knownHard[base] = true;
@@ -16602,7 +16602,7 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         if (cache && Object.prototype.hasOwnProperty.call(cache, base)) {
           return gotResolvedLink(cache[base]);
         }
-        return fs.lstat(base, gotStat);
+        return fs2.lstat(base, gotStat);
       }
       function gotStat(err, stat) {
         if (err)
@@ -16619,10 +16619,10 @@ var require_old = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
             return gotTarget(null, seenLinks[id], base);
           }
         }
-        fs.stat(base, function(err2) {
+        fs2.stat(base, function(err2) {
           if (err2)
             return cb(err2);
-          fs.readlink(base, function(err3, target) {
+          fs2.readlink(base, function(err3, target) {
             if (!isWindows)
               seenLinks[id] = target;
             gotTarget(err3, target);
@@ -16655,9 +16655,9 @@ var require_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     realpath.realpathSync = realpathSync;
     realpath.monkeypatch = monkeypatch;
     realpath.unmonkeypatch = unmonkeypatch;
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
-    var origRealpath = fs.realpath;
-    var origRealpathSync = fs.realpathSync;
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var origRealpath = fs2.realpath;
+    var origRealpathSync = fs2.realpathSync;
     var version = process.version;
     var ok = /^v[0-5]\./.test(version);
     var old = require_old();
@@ -16695,12 +16695,12 @@ var require_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       }
     }
     function monkeypatch() {
-      fs.realpath = realpath;
-      fs.realpathSync = realpathSync;
+      fs2.realpath = realpath;
+      fs2.realpathSync = realpathSync;
     }
     function unmonkeypatch() {
-      fs.realpath = origRealpath;
-      fs.realpathSync = origRealpathSync;
+      fs2.realpath = origRealpath;
+      fs2.realpathSync = origRealpathSync;
     }
   }
 });
@@ -17605,7 +17605,7 @@ var require_common2 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     function ownProp(obj, field) {
       return Object.prototype.hasOwnProperty.call(obj, field);
     }
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
     var minimatch = require_minimatch();
     var isAbsolute = require_path_is_absolute();
@@ -17660,7 +17660,7 @@ var require_common2 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       self.stat = !!options.stat;
       self.noprocess = !!options.noprocess;
       self.absolute = !!options.absolute;
-      self.fs = options.fs || fs;
+      self.fs = options.fs || fs2;
       self.maxLength = options.maxLength || Infinity;
       self.cache = options.cache || /* @__PURE__ */ Object.create(null);
       self.statCache = options.statCache || /* @__PURE__ */ Object.create(null);
@@ -18744,7 +18744,7 @@ var require_rimraf = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var assert = _chunkOKMUBGTUjs.__require.call(void 0, "assert");
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var glob = void 0;
     try {
       glob = require_glob();
@@ -18766,9 +18766,9 @@ var require_rimraf = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         "readdir"
       ];
       methods.forEach((m) => {
-        options[m] = options[m] || fs[m];
+        options[m] = options[m] || fs2[m];
         m = m + "Sync";
-        options[m] = options[m] || fs[m];
+        options[m] = options[m] || fs2[m];
       });
       options.maxBusyTries = options.maxBusyTries || 3;
       options.emfileWait = options.emfileWait || 1e3;
@@ -19542,14 +19542,14 @@ var require_chownr = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/chownr@1.1.4/node_modules/chownr/chownr.js"(exports, module) {
     "use strict";
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
-    var LCHOWN = fs.lchown ? "lchown" : "chown";
-    var LCHOWNSYNC = fs.lchownSync ? "lchownSync" : "chownSync";
-    var needEISDIRHandled = fs.lchown && !process.version.match(/v1[1-9]+\./) && !process.version.match(/v10\.[6-9]/);
+    var LCHOWN = fs2.lchown ? "lchown" : "chown";
+    var LCHOWNSYNC = fs2.lchownSync ? "lchownSync" : "chownSync";
+    var needEISDIRHandled = fs2.lchown && !process.version.match(/v1[1-9]+\./) && !process.version.match(/v10\.[6-9]/);
     var lchownSync = (path2, uid, gid) => {
       try {
-        return fs[LCHOWNSYNC](path2, uid, gid);
+        return fs2[LCHOWNSYNC](path2, uid, gid);
       } catch (er) {
         if (er.code !== "ENOENT")
           throw er;
@@ -19557,7 +19557,7 @@ var require_chownr = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     };
     var chownSync = (path2, uid, gid) => {
       try {
-        return fs.chownSync(path2, uid, gid);
+        return fs2.chownSync(path2, uid, gid);
       } catch (er) {
         if (er.code !== "ENOENT")
           throw er;
@@ -19567,7 +19567,7 @@ var require_chownr = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (!er || er.code !== "EISDIR")
         cb(er);
       else
-        fs.chown(path2, uid, gid, cb);
+        fs2.chown(path2, uid, gid, cb);
     } : (_, __, ___, cb) => cb;
     var handleEISDirSync = needEISDIRHandled ? (path2, uid, gid) => {
       try {
@@ -19579,18 +19579,18 @@ var require_chownr = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       }
     } : (path2, uid, gid) => lchownSync(path2, uid, gid);
     var nodeVersion = process.version;
-    var readdir = (path2, options, cb) => fs.readdir(path2, options, cb);
-    var readdirSync = (path2, options) => fs.readdirSync(path2, options);
+    var readdir = (path2, options, cb) => fs2.readdir(path2, options, cb);
+    var readdirSync = (path2, options) => fs2.readdirSync(path2, options);
     if (/^v4\./.test(nodeVersion))
-      readdir = (path2, options, cb) => fs.readdir(path2, cb);
+      readdir = (path2, options, cb) => fs2.readdir(path2, cb);
     var chown = (cpath, uid, gid, cb) => {
-      fs[LCHOWN](cpath, uid, gid, handleEISDIR(cpath, uid, gid, (er) => {
+      fs2[LCHOWN](cpath, uid, gid, handleEISDIR(cpath, uid, gid, (er) => {
         cb(er && er.code !== "ENOENT" ? er : null);
       }));
     };
     var chownrKid = (p, child, uid, gid, cb) => {
       if (typeof child === "string")
-        return fs.lstat(path.resolve(p, child), (er, stats) => {
+        return fs2.lstat(path.resolve(p, child), (er, stats) => {
           if (er)
             return cb(er.code !== "ENOENT" ? er : null);
           stats.name = child;
@@ -19634,7 +19634,7 @@ var require_chownr = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     var chownrKidSync = (p, child, uid, gid) => {
       if (typeof child === "string") {
         try {
-          const stats = fs.lstatSync(path.resolve(p, child));
+          const stats = fs2.lstatSync(path.resolve(p, child));
           stats.name = child;
           child = stats;
         } catch (er) {
@@ -23631,7 +23631,7 @@ var require_mkdirp_classic = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/mkdirp-classic@0.5.3/node_modules/mkdirp-classic/index.js"(exports, module) {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var _0777 = parseInt("0777", 8);
     module.exports = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
     function mkdirP(p, opts, f, made) {
@@ -23642,7 +23642,7 @@ var require_mkdirp_classic = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         opts = { mode: opts };
       }
       var mode = opts.mode;
-      var xfs = opts.fs || fs;
+      var xfs = opts.fs || fs2;
       if (mode === void 0) {
         mode = _0777 & ~process.umask();
       }
@@ -23681,7 +23681,7 @@ var require_mkdirp_classic = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         opts = { mode: opts };
       }
       var mode = opts.mode;
-      var xfs = opts.fs || fs;
+      var xfs = opts.fs || fs2;
       if (mode === void 0) {
         mode = _0777 & ~process.umask();
       }
@@ -23722,7 +23722,7 @@ var require_tar_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     var tar = require_tar_stream();
     var pump = require_pump();
     var mkdirp = require_mkdirp_classic();
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
     var os = _chunkOKMUBGTUjs.__require.call(void 0, "os");
     var win32 = os.platform() === "win32";
@@ -23734,19 +23734,19 @@ var require_tar_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     var normalize = !win32 ? echo : function(name) {
       return name.replace(/\\/g, "/").replace(/[:?<>|]/g, "_");
     };
-    var statAll = function(fs2, stat, cwd, ignore, entries, sort) {
+    var statAll = function(fs3, stat, cwd, ignore, entries, sort) {
       var queue = entries || ["."];
       return function loop(callback) {
         if (!queue.length)
           return callback();
         var next = queue.shift();
         var nextAbs = path.join(cwd, next);
-        stat.call(fs2, nextAbs, function(err, stat2) {
+        stat.call(fs3, nextAbs, function(err, stat2) {
           if (err)
             return callback(err);
           if (!stat2.isDirectory())
             return callback(null, next, stat2);
-          fs2.readdir(nextAbs, function(err2, files) {
+          fs3.readdir(nextAbs, function(err2, files) {
             if (err2)
               return callback(err2);
             if (sort)
@@ -23775,7 +23775,7 @@ var require_tar_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         cwd = ".";
       if (!opts)
         opts = {};
-      var xfs = opts.fs || fs;
+      var xfs = opts.fs || fs2;
       var ignore = opts.ignore || opts.filter || noop;
       var map = opts.map || noop;
       var mapStream = opts.mapStream || echo;
@@ -23872,7 +23872,7 @@ var require_tar_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         cwd = ".";
       if (!opts)
         opts = {};
-      var xfs = opts.fs || fs;
+      var xfs = opts.fs || fs2;
       var ignore = opts.ignore || opts.filter || noop;
       var map = opts.map || noop;
       var mapStream = opts.mapStream || echo;
@@ -24028,14 +24028,14 @@ var require_tar_fs = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         extract.on("finish", opts.finish);
       return extract;
     };
-    function validate(fs2, name, root, cb) {
+    function validate(fs3, name, root, cb) {
       if (name === root)
         return cb(null, true);
-      fs2.lstat(name, function(err, st) {
+      fs3.lstat(name, function(err, st) {
         if (err && err.code !== "ENOENT")
           return cb(err);
         if (err || st.isDirectory())
-          return validate(fs2, path.join(name, ".."), root, cb);
+          return validate(fs3, path.join(name, ".."), root, cb);
         cb(null, false);
       });
     }
@@ -24857,7 +24857,7 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BrowserFetcher = void 0;
     var os = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "os"));
-    var fs = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
+    var fs2 = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
     var path = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "path"));
     var util = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "util"));
     var childProcess = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "child_process"));
@@ -24914,9 +24914,9 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       return url;
     }
     function handleArm64() {
-      fs.stat("/usr/bin/chromium-browser", function(err, stats) {
+      fs2.stat("/usr/bin/chromium-browser", function(err, stats) {
         if (stats === void 0) {
-          fs.stat("/usr/bin/chromium", function(err2, stats2) {
+          fs2.stat("/usr/bin/chromium", function(err2, stats2) {
             if (stats2 === void 0) {
               console.error("The chromium binary is not available for arm64.\nIf you are on Ubuntu, you can install with: \n\n sudo apt install chromium\n\n\n sudo apt install chromium-browser\n");
               throw new Error();
@@ -24925,13 +24925,13 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         }
       });
     }
-    var readdirAsync = (0, util_1.promisify)(fs.readdir.bind(fs));
-    var mkdirAsync = (0, util_1.promisify)(fs.mkdir.bind(fs));
-    var unlinkAsync = (0, util_1.promisify)(fs.unlink.bind(fs));
-    var chmodAsync = (0, util_1.promisify)(fs.chmod.bind(fs));
+    var readdirAsync = (0, util_1.promisify)(fs2.readdir.bind(fs2));
+    var mkdirAsync = (0, util_1.promisify)(fs2.mkdir.bind(fs2));
+    var unlinkAsync = (0, util_1.promisify)(fs2.unlink.bind(fs2));
+    var chmodAsync = (0, util_1.promisify)(fs2.chmod.bind(fs2));
     function existsAsync(filePath) {
       return new Promise((resolve) => {
-        fs.access(filePath, (err) => resolve(!err));
+        fs2.access(filePath, (err) => resolve(!err));
       });
     }
     var BrowserFetcher = class {
@@ -25040,7 +25040,7 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         } else
           throw new Error("Unsupported product: " + this._product);
         const url = downloadURL(this._product, this._platform, this._downloadHost, revision);
-        const local = fs.existsSync(folderPath);
+        const local = fs2.existsSync(folderPath);
         debugFetcher({
           revision,
           executablePath,
@@ -25089,7 +25089,7 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           reject(error);
           return;
         }
-        const file = fs.createWriteStream(destinationPath);
+        const file = fs2.createWriteStream(destinationPath);
         file.on("finish", () => fulfill());
         file.on("error", (error) => reject(error));
         response.pipe(file);
@@ -25122,7 +25122,7 @@ var require_BrowserFetcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         const tarStream = tar.extract(folderPath);
         tarStream.on("error", reject);
         tarStream.on("finish", fulfill);
-        const readStream = fs.createReadStream(tarPath);
+        const readStream = fs2.createReadStream(tarPath);
         readStream.pipe(bzip()).pipe(tarStream);
       });
     }
@@ -25305,7 +25305,7 @@ var require_BrowserRunner = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     exports.BrowserRunner = void 0;
     var Debug_js_1 = require_Debug();
     var childProcess = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "child_process"));
-    var fs = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
+    var fs2 = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
     var path = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "path"));
     var readline = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "readline"));
     var rimraf_1 = __importDefault(require_rimraf());
@@ -25317,8 +25317,8 @@ var require_BrowserRunner = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     var PipeTransport_js_1 = require_PipeTransport();
     var Errors_js_1 = require_Errors();
     var removeFolderAsync = (0, util_1.promisify)(rimraf_1.default);
-    var renameAsync = (0, util_1.promisify)(fs.rename);
-    var unlinkAsync = (0, util_1.promisify)(fs.unlink);
+    var renameAsync = (0, util_1.promisify)(fs2.rename);
+    var unlinkAsync = (0, util_1.promisify)(fs2.unlink);
     var debugLauncher = (0, Debug_js_1.debug)("puppeteer:launcher");
     var PROCESS_ERROR_EXPLANATION = `Puppeteer was unable to kill the process which ran the browser binary.
 This means that, on future Puppeteer launches, Puppeteer might not be able to launch the browser.
@@ -25378,7 +25378,7 @@ If you think this is a bug, please report it on the Puppeteer issue tracker.`;
                 try {
                   await unlinkAsync(path.join(this._userDataDir, "user.js"));
                   const prefsBackupPath = path.join(this._userDataDir, "prefs.js.puppeteer");
-                  if (fs.existsSync(prefsBackupPath)) {
+                  if (fs2.existsSync(prefsBackupPath)) {
                     const prefsPath = path.join(this._userDataDir, "prefs.js");
                     await unlinkAsync(prefsPath);
                     await renameAsync(prefsBackupPath, prefsPath);
@@ -25551,15 +25551,15 @@ var require_Launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     Object.defineProperty(exports, "__esModule", { value: true });
     var os = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "os"));
     var path = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "path"));
-    var fs = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
+    var fs2 = __importStar(_chunkOKMUBGTUjs.__require.call(void 0, "fs"));
     var assert_js_1 = require_assert();
     var BrowserFetcher_js_1 = require_BrowserFetcher();
     var Browser_js_1 = require_Browser();
     var BrowserRunner_js_1 = require_BrowserRunner();
     var util_1 = _chunkOKMUBGTUjs.__require.call(void 0, "util");
-    var copyFileAsync = (0, util_1.promisify)(fs.copyFile);
-    var mkdtempAsync = (0, util_1.promisify)(fs.mkdtemp);
-    var writeFileAsync = (0, util_1.promisify)(fs.writeFile);
+    var copyFileAsync = (0, util_1.promisify)(fs2.copyFile);
+    var mkdtempAsync = (0, util_1.promisify)(fs2.mkdtemp);
+    var writeFileAsync = (0, util_1.promisify)(fs2.writeFile);
     var tmpDir = () => process.env.PUPPETEER_TMP_DIR || os.tmpdir();
     var ChromeLauncher = class {
       constructor(projectRoot, preferredRevision, isPuppeteerCore) {
@@ -25723,7 +25723,7 @@ var require_Launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         });
         if (profileArgIndex !== -1) {
           userDataDir = firefoxArguments[profileArgIndex + 1];
-          if (!fs.existsSync(userDataDir)) {
+          if (!fs2.existsSync(userDataDir)) {
             throw new Error(`Firefox profile not found at '${userDataDir}'`);
           }
           isTempUserDataDir = false;
@@ -25905,7 +25905,7 @@ var require_Launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         });
         await writeFileAsync(path.join(profilePath, "user.js"), lines.join("\n"));
         const prefsPath = path.join(profilePath, "prefs.js");
-        if (fs.existsSync(prefsPath)) {
+        if (fs2.existsSync(prefsPath)) {
           const prefsBackupPath = path.join(profilePath, "prefs.js.puppeteer");
           await copyFileAsync(prefsPath, prefsBackupPath);
         }
@@ -25971,7 +25971,7 @@ var require_Launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         throw new Error(`Unable to detect browser executable path for '${channel}' on ${platform}.`);
       }
       try {
-        fs.accessSync(chromePath);
+        fs2.accessSync(chromePath);
       } catch (error) {
         throw new Error(`Could not find Google Chrome executable for channel '${channel}' at '${chromePath}'.`);
       }
@@ -25983,11 +25983,11 @@ var require_Launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       if (!_isPuppeteerCore) {
         const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || process.env.npm_config_puppeteer_executable_path || process.env.npm_package_config_puppeteer_executable_path;
         if (executablePath) {
-          const missingText2 = !fs.existsSync(executablePath) ? "Tried to use PUPPETEER_EXECUTABLE_PATH env variable to launch browser but did not find any executable at: " + executablePath : void 0;
+          const missingText2 = !fs2.existsSync(executablePath) ? "Tried to use PUPPETEER_EXECUTABLE_PATH env variable to launch browser but did not find any executable at: " + executablePath : void 0;
           return { executablePath, missingText: missingText2 };
         }
         const ubuntuChromiumPath = "/usr/bin/chromium-browser";
-        if (product === "chrome" && os.platform() !== "darwin" && os.arch() === "arm64" && fs.existsSync(ubuntuChromiumPath)) {
+        if (product === "chrome" && os.platform() !== "darwin" && os.arch() === "arm64" && fs2.existsSync(ubuntuChromiumPath)) {
           return { executablePath: ubuntuChromiumPath, missingText: void 0 };
         }
         downloadPath = process.env.PUPPETEER_DOWNLOAD_PATH || process.env.npm_config_puppeteer_download_path || process.env.npm_package_config_puppeteer_download_path;
@@ -26233,11 +26233,11 @@ var require_locate_path = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     "use strict";
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var { promisify } = _chunkOKMUBGTUjs.__require.call(void 0, "util");
     var pLocate = require_p_locate();
-    var fsStat = promisify(fs.stat);
-    var fsLStat = promisify(fs.lstat);
+    var fsStat = promisify(fs2.stat);
+    var fsLStat = promisify(fs2.lstat);
     var typeMappings = {
       directory: "isDirectory",
       file: "isFile"
@@ -26273,7 +26273,7 @@ var require_locate_path = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         type: "file"
       }, options);
       checkType(options);
-      const statFn = options.allowSymlinks ? fs.statSync : fs.lstatSync;
+      const statFn = options.allowSymlinks ? fs2.statSync : fs2.lstatSync;
       for (const path_ of paths) {
         try {
           const stat = statFn(path.resolve(options.cwd, path_));
@@ -26292,9 +26292,9 @@ var require_path_exists = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/path-exists@4.0.0/node_modules/path-exists/index.js"(exports, module) {
     "use strict";
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var { promisify } = _chunkOKMUBGTUjs.__require.call(void 0, "util");
-    var pAccess = promisify(fs.access);
+    var pAccess = promisify(fs2.access);
     module.exports = async (path) => {
       try {
         await pAccess(path);
@@ -26305,7 +26305,7 @@ var require_path_exists = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     };
     module.exports.sync = (path) => {
       try {
-        fs.accessSync(path);
+        fs2.accessSync(path);
         return true;
       } catch (_) {
         return false;
@@ -26862,8 +26862,8 @@ var require_node3 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
           }
           break;
         case "FILE":
-          var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
-          stream2 = new fs.SyncWriteStream(fd2, { autoClose: false });
+          var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+          stream2 = new fs2.SyncWriteStream(fd2, { autoClose: false });
           stream2._type = "fs";
           break;
         case "PIPE":
@@ -27160,11 +27160,11 @@ var require_is_docker = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   "node_modules/.pnpm/is-docker@2.2.1/node_modules/is-docker/index.js"(exports, module) {
     "use strict";
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var isDocker;
     function hasDockerEnv() {
       try {
-        fs.statSync("/.dockerenv");
+        fs2.statSync("/.dockerenv");
         return true;
       } catch (_) {
         return false;
@@ -27172,7 +27172,7 @@ var require_is_docker = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     }
     function hasDockerCGroup() {
       try {
-        return fs.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
+        return fs2.readFileSync("/proc/self/cgroup", "utf8").includes("docker");
       } catch (_) {
         return false;
       }
@@ -27192,7 +27192,7 @@ var require_is_wsl = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     "use strict";
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     var os = _chunkOKMUBGTUjs.__require.call(void 0, "os");
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var isDocker = require_is_docker();
     var isWsl = () => {
       if (process.platform !== "linux") {
@@ -27205,7 +27205,7 @@ var require_is_wsl = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         return true;
       }
       try {
-        return fs.readFileSync("/proc/version", "utf8").toLowerCase().includes("microsoft") ? !isDocker() : false;
+        return fs2.readFileSync("/proc/version", "utf8").toLowerCase().includes("microsoft") ? !isDocker() : false;
       } catch (_) {
         return false;
       }
@@ -27332,7 +27332,7 @@ var require_chrome_finder = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.win32 = exports.wsl = exports.linux = exports.darwin = exports.darwinFast = void 0;
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
     var os_1 = _chunkOKMUBGTUjs.__require.call(void 0, "os");
     var child_process_1 = _chunkOKMUBGTUjs.__require.call(void 0, "child_process");
@@ -27492,7 +27492,7 @@ var require_chrome_finder = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
         return false;
       }
       try {
-        fs.accessSync(file);
+        fs2.accessSync(file);
         return true;
       } catch (e) {
         return false;
@@ -27582,7 +27582,7 @@ var require_chrome_launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getChromePath = exports.killAll = exports.launch = exports.Launcher = void 0;
     var childProcess = _chunkOKMUBGTUjs.__require.call(void 0, "child_process");
-    var fs = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
     var net = _chunkOKMUBGTUjs.__require.call(void 0, "net");
     var chromeFinder = require_chrome_finder();
     var random_port_1 = require_random_port();
@@ -27644,7 +27644,7 @@ var require_chrome_launcher = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       constructor(opts = {}, moduleOverrides = {}) {
         this.opts = opts;
         this.tmpDirandPidFileReady = false;
-        this.fs = moduleOverrides.fs || fs;
+        this.fs = moduleOverrides.fs || fs2;
         this.spawn = moduleOverrides.spawn || spawn;
         log.setLevel(utils_1.defaults(this.opts.logLevel, "silent"));
         this.startingUrl = utils_1.defaults(this.opts.startingUrl, "about:blank");
@@ -27895,6 +27895,478 @@ var require_dist2 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
   }
 });
 
+// node_modules/.pnpm/tmp@0.2.1/node_modules/tmp/lib/tmp.js
+var require_tmp = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
+  "node_modules/.pnpm/tmp@0.2.1/node_modules/tmp/lib/tmp.js"(exports, module) {
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var os = _chunkOKMUBGTUjs.__require.call(void 0, "os");
+    var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
+    var crypto = _chunkOKMUBGTUjs.__require.call(void 0, "crypto");
+    var _c = { fs: fs2.constants, os: os.constants };
+    var rimraf = require_rimraf();
+    var RANDOM_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var TEMPLATE_PATTERN = /XXXXXX/;
+    var DEFAULT_TRIES = 3;
+    var CREATE_FLAGS = (_c.O_CREAT || _c.fs.O_CREAT) | (_c.O_EXCL || _c.fs.O_EXCL) | (_c.O_RDWR || _c.fs.O_RDWR);
+    var IS_WIN32 = os.platform() === "win32";
+    var EBADF = _c.EBADF || _c.os.errno.EBADF;
+    var ENOENT = _c.ENOENT || _c.os.errno.ENOENT;
+    var DIR_MODE = 448;
+    var FILE_MODE = 384;
+    var EXIT = "exit";
+    var _removeObjects = [];
+    var FN_RMDIR_SYNC = fs2.rmdirSync.bind(fs2);
+    var FN_RIMRAF_SYNC = rimraf.sync;
+    var _gracefulCleanup = false;
+    function tmpName(options, callback) {
+      const args = _parseArguments(options, callback), opts = args[0], cb = args[1];
+      try {
+        _assertAndSanitizeOptions(opts);
+      } catch (err) {
+        return cb(err);
+      }
+      let tries = opts.tries;
+      (function _getUniqueName() {
+        try {
+          const name = _generateTmpName(opts);
+          fs2.stat(name, function(err) {
+            if (!err) {
+              if (tries-- > 0)
+                return _getUniqueName();
+              return cb(new Error("Could not get a unique tmp filename, max tries reached " + name));
+            }
+            cb(null, name);
+          });
+        } catch (err) {
+          cb(err);
+        }
+      })();
+    }
+    function tmpNameSync(options) {
+      const args = _parseArguments(options), opts = args[0];
+      _assertAndSanitizeOptions(opts);
+      let tries = opts.tries;
+      do {
+        const name = _generateTmpName(opts);
+        try {
+          fs2.statSync(name);
+        } catch (e) {
+          return name;
+        }
+      } while (tries-- > 0);
+      throw new Error("Could not get a unique tmp filename, max tries reached");
+    }
+    function file(options, callback) {
+      const args = _parseArguments(options, callback), opts = args[0], cb = args[1];
+      tmpName(opts, function _tmpNameCreated(err, name) {
+        if (err)
+          return cb(err);
+        fs2.open(name, CREATE_FLAGS, opts.mode || FILE_MODE, function _fileCreated(err2, fd) {
+          if (err2)
+            return cb(err2);
+          if (opts.discardDescriptor) {
+            return fs2.close(fd, function _discardCallback(possibleErr) {
+              return cb(possibleErr, name, void 0, _prepareTmpFileRemoveCallback(name, -1, opts, false));
+            });
+          } else {
+            const discardOrDetachDescriptor = opts.discardDescriptor || opts.detachDescriptor;
+            cb(null, name, fd, _prepareTmpFileRemoveCallback(name, discardOrDetachDescriptor ? -1 : fd, opts, false));
+          }
+        });
+      });
+    }
+    function fileSync(options) {
+      const args = _parseArguments(options), opts = args[0];
+      const discardOrDetachDescriptor = opts.discardDescriptor || opts.detachDescriptor;
+      const name = tmpNameSync(opts);
+      var fd = fs2.openSync(name, CREATE_FLAGS, opts.mode || FILE_MODE);
+      if (opts.discardDescriptor) {
+        fs2.closeSync(fd);
+        fd = void 0;
+      }
+      return {
+        name,
+        fd,
+        removeCallback: _prepareTmpFileRemoveCallback(name, discardOrDetachDescriptor ? -1 : fd, opts, true)
+      };
+    }
+    function dir(options, callback) {
+      const args = _parseArguments(options, callback), opts = args[0], cb = args[1];
+      tmpName(opts, function _tmpNameCreated(err, name) {
+        if (err)
+          return cb(err);
+        fs2.mkdir(name, opts.mode || DIR_MODE, function _dirCreated(err2) {
+          if (err2)
+            return cb(err2);
+          cb(null, name, _prepareTmpDirRemoveCallback(name, opts, false));
+        });
+      });
+    }
+    function dirSync(options) {
+      const args = _parseArguments(options), opts = args[0];
+      const name = tmpNameSync(opts);
+      fs2.mkdirSync(name, opts.mode || DIR_MODE);
+      return {
+        name,
+        removeCallback: _prepareTmpDirRemoveCallback(name, opts, true)
+      };
+    }
+    function _removeFileAsync(fdPath, next) {
+      const _handler = function(err) {
+        if (err && !_isENOENT(err)) {
+          return next(err);
+        }
+        next();
+      };
+      if (0 <= fdPath[0])
+        fs2.close(fdPath[0], function() {
+          fs2.unlink(fdPath[1], _handler);
+        });
+      else
+        fs2.unlink(fdPath[1], _handler);
+    }
+    function _removeFileSync(fdPath) {
+      let rethrownException = null;
+      try {
+        if (0 <= fdPath[0])
+          fs2.closeSync(fdPath[0]);
+      } catch (e) {
+        if (!_isEBADF(e) && !_isENOENT(e))
+          throw e;
+      } finally {
+        try {
+          fs2.unlinkSync(fdPath[1]);
+        } catch (e) {
+          if (!_isENOENT(e))
+            rethrownException = e;
+        }
+      }
+      if (rethrownException !== null) {
+        throw rethrownException;
+      }
+    }
+    function _prepareTmpFileRemoveCallback(name, fd, opts, sync) {
+      const removeCallbackSync = _prepareRemoveCallback(_removeFileSync, [fd, name], sync);
+      const removeCallback = _prepareRemoveCallback(_removeFileAsync, [fd, name], sync, removeCallbackSync);
+      if (!opts.keep)
+        _removeObjects.unshift(removeCallbackSync);
+      return sync ? removeCallbackSync : removeCallback;
+    }
+    function _prepareTmpDirRemoveCallback(name, opts, sync) {
+      const removeFunction = opts.unsafeCleanup ? rimraf : fs2.rmdir.bind(fs2);
+      const removeFunctionSync = opts.unsafeCleanup ? FN_RIMRAF_SYNC : FN_RMDIR_SYNC;
+      const removeCallbackSync = _prepareRemoveCallback(removeFunctionSync, name, sync);
+      const removeCallback = _prepareRemoveCallback(removeFunction, name, sync, removeCallbackSync);
+      if (!opts.keep)
+        _removeObjects.unshift(removeCallbackSync);
+      return sync ? removeCallbackSync : removeCallback;
+    }
+    function _prepareRemoveCallback(removeFunction, fileOrDirName, sync, cleanupCallbackSync) {
+      let called = false;
+      return function _cleanupCallback(next) {
+        if (!called) {
+          const toRemove = cleanupCallbackSync || _cleanupCallback;
+          const index = _removeObjects.indexOf(toRemove);
+          if (index >= 0)
+            _removeObjects.splice(index, 1);
+          called = true;
+          if (sync || removeFunction === FN_RMDIR_SYNC || removeFunction === FN_RIMRAF_SYNC) {
+            return removeFunction(fileOrDirName);
+          } else {
+            return removeFunction(fileOrDirName, next || function() {
+            });
+          }
+        }
+      };
+    }
+    function _garbageCollector() {
+      if (!_gracefulCleanup)
+        return;
+      while (_removeObjects.length) {
+        try {
+          _removeObjects[0]();
+        } catch (e) {
+        }
+      }
+    }
+    function _randomChars(howMany) {
+      let value = [], rnd = null;
+      try {
+        rnd = crypto.randomBytes(howMany);
+      } catch (e) {
+        rnd = crypto.pseudoRandomBytes(howMany);
+      }
+      for (var i = 0; i < howMany; i++) {
+        value.push(RANDOM_CHARS[rnd[i] % RANDOM_CHARS.length]);
+      }
+      return value.join("");
+    }
+    function _isBlank(s) {
+      return s === null || _isUndefined(s) || !s.trim();
+    }
+    function _isUndefined(obj) {
+      return typeof obj === "undefined";
+    }
+    function _parseArguments(options, callback) {
+      if (typeof options === "function") {
+        return [{}, options];
+      }
+      if (_isUndefined(options)) {
+        return [{}, callback];
+      }
+      const actualOptions = {};
+      for (const key of Object.getOwnPropertyNames(options)) {
+        actualOptions[key] = options[key];
+      }
+      return [actualOptions, callback];
+    }
+    function _generateTmpName(opts) {
+      const tmpDir = opts.tmpdir;
+      if (!_isUndefined(opts.name))
+        return path.join(tmpDir, opts.dir, opts.name);
+      if (!_isUndefined(opts.template))
+        return path.join(tmpDir, opts.dir, opts.template).replace(TEMPLATE_PATTERN, _randomChars(6));
+      const name = [
+        opts.prefix ? opts.prefix : "tmp",
+        "-",
+        process.pid,
+        "-",
+        _randomChars(12),
+        opts.postfix ? "-" + opts.postfix : ""
+      ].join("");
+      return path.join(tmpDir, opts.dir, name);
+    }
+    function _assertAndSanitizeOptions(options) {
+      options.tmpdir = _getTmpDir(options);
+      const tmpDir = options.tmpdir;
+      if (!_isUndefined(options.name))
+        _assertIsRelative(options.name, "name", tmpDir);
+      if (!_isUndefined(options.dir))
+        _assertIsRelative(options.dir, "dir", tmpDir);
+      if (!_isUndefined(options.template)) {
+        _assertIsRelative(options.template, "template", tmpDir);
+        if (!options.template.match(TEMPLATE_PATTERN))
+          throw new Error(`Invalid template, found "${options.template}".`);
+      }
+      if (!_isUndefined(options.tries) && isNaN(options.tries) || options.tries < 0)
+        throw new Error(`Invalid tries, found "${options.tries}".`);
+      options.tries = _isUndefined(options.name) ? options.tries || DEFAULT_TRIES : 1;
+      options.keep = !!options.keep;
+      options.detachDescriptor = !!options.detachDescriptor;
+      options.discardDescriptor = !!options.discardDescriptor;
+      options.unsafeCleanup = !!options.unsafeCleanup;
+      options.dir = _isUndefined(options.dir) ? "" : path.relative(tmpDir, _resolvePath(options.dir, tmpDir));
+      options.template = _isUndefined(options.template) ? void 0 : path.relative(tmpDir, _resolvePath(options.template, tmpDir));
+      options.template = _isBlank(options.template) ? void 0 : path.relative(options.dir, options.template);
+      options.name = _isUndefined(options.name) ? void 0 : _sanitizeName(options.name);
+      options.prefix = _isUndefined(options.prefix) ? "" : options.prefix;
+      options.postfix = _isUndefined(options.postfix) ? "" : options.postfix;
+    }
+    function _resolvePath(name, tmpDir) {
+      const sanitizedName = _sanitizeName(name);
+      if (sanitizedName.startsWith(tmpDir)) {
+        return path.resolve(sanitizedName);
+      } else {
+        return path.resolve(path.join(tmpDir, sanitizedName));
+      }
+    }
+    function _sanitizeName(name) {
+      if (_isBlank(name)) {
+        return name;
+      }
+      return name.replace(/["']/g, "");
+    }
+    function _assertIsRelative(name, option, tmpDir) {
+      if (option === "name") {
+        if (path.isAbsolute(name))
+          throw new Error(`${option} option must not contain an absolute path, found "${name}".`);
+        let basename = path.basename(name);
+        if (basename === ".." || basename === "." || basename !== name)
+          throw new Error(`${option} option must not contain a path, found "${name}".`);
+      } else {
+        if (path.isAbsolute(name) && !name.startsWith(tmpDir)) {
+          throw new Error(`${option} option must be relative to "${tmpDir}", found "${name}".`);
+        }
+        let resolvedPath = _resolvePath(name, tmpDir);
+        if (!resolvedPath.startsWith(tmpDir))
+          throw new Error(`${option} option must be relative to "${tmpDir}", found "${resolvedPath}".`);
+      }
+    }
+    function _isEBADF(error) {
+      return _isExpectedError(error, -EBADF, "EBADF");
+    }
+    function _isENOENT(error) {
+      return _isExpectedError(error, -ENOENT, "ENOENT");
+    }
+    function _isExpectedError(error, errno, code) {
+      return IS_WIN32 ? error.code === code : error.code === code && error.errno === errno;
+    }
+    function setGracefulCleanup() {
+      _gracefulCleanup = true;
+    }
+    function _getTmpDir(options) {
+      return path.resolve(_sanitizeName(options && options.tmpdir || os.tmpdir()));
+    }
+    process.addListener(EXIT, _garbageCollector);
+    Object.defineProperty(module.exports, "tmpdir", {
+      enumerable: true,
+      configurable: false,
+      get: function() {
+        return _getTmpDir();
+      }
+    });
+    module.exports.dir = dir;
+    module.exports.dirSync = dirSync;
+    module.exports.file = file;
+    module.exports.fileSync = fileSync;
+    module.exports.tmpName = tmpName;
+    module.exports.tmpNameSync = tmpNameSync;
+    module.exports.setGracefulCleanup = setGracefulCleanup;
+  }
+});
+
+// node_modules/.pnpm/command-exists@1.2.9/node_modules/command-exists/lib/command-exists.js
+var require_command_exists = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
+  "node_modules/.pnpm/command-exists@1.2.9/node_modules/command-exists/lib/command-exists.js"(exports, module) {
+    "use strict";
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+    var exec = _chunkOKMUBGTUjs.__require.call(void 0, "child_process").exec;
+    var execSync = _chunkOKMUBGTUjs.__require.call(void 0, "child_process").execSync;
+    var fs2 = _chunkOKMUBGTUjs.__require.call(void 0, "fs");
+    var path = _chunkOKMUBGTUjs.__require.call(void 0, "path");
+    var access = fs2.access;
+    var accessSync = fs2.accessSync;
+    var constants = fs2.constants || fs2;
+    var isUsingWindows = process.platform == "win32";
+    var fileNotExists = function(commandName, callback) {
+      access(commandName, constants.F_OK, function(err) {
+        callback(!err);
+      });
+    };
+    var fileNotExistsSync = function(commandName) {
+      try {
+        accessSync(commandName, constants.F_OK);
+        return false;
+      } catch (e) {
+        return true;
+      }
+    };
+    var localExecutable = function(commandName, callback) {
+      access(commandName, constants.F_OK | constants.X_OK, function(err) {
+        callback(null, !err);
+      });
+    };
+    var localExecutableSync = function(commandName) {
+      try {
+        accessSync(commandName, constants.F_OK | constants.X_OK);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    };
+    var commandExistsUnix = function(commandName, cleanedCommandName, callback) {
+      fileNotExists(commandName, function(isFile) {
+        if (!isFile) {
+          var child = exec("command -v " + cleanedCommandName + " 2>/dev/null && { echo >&1 " + cleanedCommandName + "; exit 0; }", function(error, stdout, stderr) {
+            callback(null, !!stdout);
+          });
+          return;
+        }
+        localExecutable(commandName, callback);
+      });
+    };
+    var commandExistsWindows = function(commandName, cleanedCommandName, callback) {
+      if (!/^(?!(?:.*\s|.*\.|\W+)$)(?:[a-zA-Z]:)?(?:(?:[^<>:"\|\?\*\n])+(?:\/\/|\/|\\\\|\\)?)+$/m.test(commandName)) {
+        callback(null, false);
+        return;
+      }
+      var child = exec("where " + cleanedCommandName, function(error) {
+        if (error !== null) {
+          callback(null, false);
+        } else {
+          callback(null, true);
+        }
+      });
+    };
+    var commandExistsUnixSync = function(commandName, cleanedCommandName) {
+      if (fileNotExistsSync(commandName)) {
+        try {
+          var stdout = execSync("command -v " + cleanedCommandName + " 2>/dev/null && { echo >&1 " + cleanedCommandName + "; exit 0; }");
+          return !!stdout;
+        } catch (error) {
+          return false;
+        }
+      }
+      return localExecutableSync(commandName);
+    };
+    var commandExistsWindowsSync = function(commandName, cleanedCommandName, callback) {
+      if (!/^(?!(?:.*\s|.*\.|\W+)$)(?:[a-zA-Z]:)?(?:(?:[^<>:"\|\?\*\n])+(?:\/\/|\/|\\\\|\\)?)+$/m.test(commandName)) {
+        return false;
+      }
+      try {
+        var stdout = execSync("where " + cleanedCommandName, { stdio: [] });
+        return !!stdout;
+      } catch (error) {
+        return false;
+      }
+    };
+    var cleanInput = function(s) {
+      if (/[^A-Za-z0-9_\/:=-]/.test(s)) {
+        s = "'" + s.replace(/'/g, "'\\''") + "'";
+        s = s.replace(/^(?:'')+/g, "").replace(/\\'''/g, "\\'");
+      }
+      return s;
+    };
+    if (isUsingWindows) {
+      cleanInput = function(s) {
+        var isPathName = /[\\]/.test(s);
+        if (isPathName) {
+          var dirname = '"' + path.dirname(s) + '"';
+          var basename = '"' + path.basename(s) + '"';
+          return dirname + ":" + basename;
+        }
+        return '"' + s + '"';
+      };
+    }
+    module.exports = function commandExists2(commandName, callback) {
+      var cleanedCommandName = cleanInput(commandName);
+      if (!callback && typeof Promise !== "undefined") {
+        return new Promise(function(resolve, reject) {
+          commandExists2(commandName, function(error, output) {
+            if (output) {
+              resolve(commandName);
+            } else {
+              reject(error);
+            }
+          });
+        });
+      }
+      if (isUsingWindows) {
+        commandExistsWindows(commandName, cleanedCommandName, callback);
+      } else {
+        commandExistsUnix(commandName, cleanedCommandName, callback);
+      }
+    };
+    module.exports.sync = function(commandName) {
+      var cleanedCommandName = cleanInput(commandName);
+      if (isUsingWindows) {
+        return commandExistsWindowsSync(commandName, cleanedCommandName);
+      } else {
+        return commandExistsUnixSync(commandName, cleanedCommandName);
+      }
+    };
+  }
+});
+
+// node_modules/.pnpm/command-exists@1.2.9/node_modules/command-exists/index.js
+var require_command_exists2 = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
+  "node_modules/.pnpm/command-exists@1.2.9/node_modules/command-exists/index.js"(exports, module) {
+    _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
+    module.exports = require_command_exists();
+  }
+});
+
 // src/api.ts
 _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
 var import_puppeteer_core = _chunkOKMUBGTUjs.__toESM.call(void 0, require_cjs_entry_core());
@@ -27902,11 +28374,15 @@ var import_chrome_launcher = _chunkOKMUBGTUjs.__toESM.call(void 0, require_dist2
 
 // src/banner.ts
 _chunkOKMUBGTUjs.init_cjs_shims.call(void 0, );
-var banner = "\n\x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m\n\nAction: https://github.com/zju-health-report/action\nDemo: https://github.com/zju-health-report/zju-health-report-action-demo\n如果有任何建议或意见，欢迎贡献代码!\n";
+var banner = "\n\x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m\n\nAction: https://github.com/zju-health-report/action\nDemo: https://github.com/zju-health-report/zju-health-report-action-demo\n如果有任何建议或意见，欢迎贡献代码！感兴趣的同学可以申请成为 zju-health-report 组织的 Member。\n";
 
 // src/api.ts
+var import_tmp = _chunkOKMUBGTUjs.__toESM.call(void 0, require_tmp());
+var import_command_exists = _chunkOKMUBGTUjs.__toESM.call(void 0, require_command_exists2());
 var _console = require('console');
 
+var _fs = require('fs'); var _fs2 = _interopRequireDefault(_fs);
+var _child_process = require('child_process');
 
 async function runZjuHealthReport(username, password, dingtalkToken) {
   let logString = "";
@@ -27941,6 +28417,26 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
   const chalk = new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./source-XNDADEMN.js")))).Chalk({
     level: 3
   });
+  let verifyCodeImgFile = "";
+  let verifyCode = "";
+  page.on("response", async (response) => {
+    const url = response.url();
+    if (response.request().resourceType() === "image") {
+      response.buffer().then((file) => {
+        let fileName = url.split("/").pop();
+        if (!fileName)
+          return;
+        fileName = fileName.split("?")[0];
+        if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName))
+          fileName += ".png";
+        if (fileName === "code.png") {
+          verifyCodeImgFile = import_tmp.default.tmpNameSync({ postfix: fileName });
+          const writeStream = _fs2.default.createWriteStream(verifyCodeImgFile);
+          writeStream.write(file);
+        }
+      });
+    }
+  });
   const login = async (page2, __username, __password) => {
     let errMsg = await page2.evaluate((__username2, __password2) => {
       try {
@@ -27965,8 +28461,40 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
 `);
     await page2.waitForTimeout(3e3);
   };
+  let ocrRecognizeVerifyCodeRetryTimes = 0;
+  const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4;
+  const ocrRecognizeVerifyCode = async () => {
+    if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
+      throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`);
+    }
+    ocrRecognizeVerifyCodeRetryTimes++;
+    if (ocrRecognizeVerifyCodeRetryTimes > 1) {
+      console2.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`);
+    }
+    if (!await (0, import_command_exists.default)("tesseract")) {
+      throw new Error("❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html");
+    }
+    if (!verifyCodeImgFile)
+      throw new Error("❌ 未下载到验证码图片");
+    const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(" ");
+    const tesseractProcess = _child_process.spawnSync.call(void 0, args[0], args.slice(1));
+    const tesseractOutput = tesseractProcess.stdout.toString();
+    const tesseractError = tesseractProcess.stderr.toString();
+    if (tesseractError)
+      throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`);
+    verifyCode = tesseractOutput.trim();
+    if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
+      console2.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`);
+      await page.evaluate(() => {
+        const { vm } = window;
+        vm.change();
+      });
+      await page.waitForTimeout(200);
+      ocrRecognizeVerifyCode();
+    }
+  };
   const submit = async (page2, dev2) => {
-    let errMsg = await page2.evaluate(() => {
+    let errMsg = await page2.evaluate((__verifyCode) => {
       var _a;
       try {
         const { vm } = window;
@@ -27975,12 +28503,13 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
             continue;
           vm.info[key] = vm.oldInfo[key];
         }
+        vm.info.verifyCode = __verifyCode;
         vm.confirm();
         (_a = document.querySelector(".wapcf-btn-ok")) == null ? void 0 : _a.click();
       } catch (err) {
         return err == null ? void 0 : err.message;
       }
-    });
+    }, verifyCode);
     await page2.waitForTimeout(1e3);
     errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
       var _a, _b;
@@ -27991,6 +28520,11 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
         }
       }
     });
+    if (errMsg == null ? void 0 : errMsg.includes("验证码错误")) {
+      await ocrRecognizeVerifyCode();
+      await submit(page2, dev2);
+    }
+    console2.log();
     let oldInfo = await page2.evaluate(() => window.vm.oldInfo);
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
@@ -28046,6 +28580,7 @@ GitHub workflow: ${process.env.ACTION_URL}` : ""}
   try {
     console2.log(banner);
     await login(page, username, password);
+    await ocrRecognizeVerifyCode();
     await submit(page, dev);
   } catch (mainError) {
     logString += mainError == null ? void 0 : mainError.message;
@@ -28103,6 +28638,13 @@ function removeColorModifier(str) {
 
 
 exports.runZjuHealthReport = runZjuHealthReport;
+/*!
+ * Tmp
+ *
+ * Copyright (c) 2011-2017 KARASZI Istvan <github@spam.raszi.hu>
+ *
+ * MIT Licensed
+ */
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /**
  * @license Copyright 2016 Google Inc. All Rights Reserved.
@@ -28119,4 +28661,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-WB6RU6EE.js.map
+//# sourceMappingURL=chunk-FD4HRAJH.js.map
