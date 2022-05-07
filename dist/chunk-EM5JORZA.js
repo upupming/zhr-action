@@ -28441,7 +28441,9 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
         fileName = fileName.split("?")[0];
         if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName))
           fileName += ".png";
-        console2.log(`📷 捕获到图片请求 ${url.split("?")[0]}, ${fileName}`);
+        if (dev) {
+          console2.log(`📷 捕获到图片请求 ${url.split("?")[0]}, ${fileName}`);
+        }
         if (fileName === "code.png") {
           verifyCodeImgFile = import_tmp.default.tmpNameSync({ postfix: fileName });
           const writeStream = _fs2.default.createWriteStream(verifyCodeImgFile);
@@ -28669,4 +28671,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-AA2JHCL2.js.map
+//# sourceMappingURL=chunk-EM5JORZA.js.map
