@@ -2360,8 +2360,8 @@ async function run() {
     cmd0 = "brew update";
     cmd1 = "brew install tesseract";
   }
-  await exec.exec("sudo " + cmd0);
-  await exec.exec("sudo " + cmd1);
+  await exec.exec("sudo " + cmd0, [], { silent: true });
+  await exec.exec("sudo " + cmd1, [], { silent: true });
   try {
     await (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"), core.getInput("dingtalk_token"));
   } catch (error) {

@@ -28479,9 +28479,6 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
     const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(" ");
     const tesseractProcess = _child_process.spawnSync.call(void 0, args[0], args.slice(1));
     const tesseractOutput = tesseractProcess.stdout.toString();
-    const tesseractError = tesseractProcess.stderr.toString();
-    if (tesseractError)
-      throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`);
     verifyCode = tesseractOutput.trim();
     if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
       console2.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`);
@@ -28522,7 +28519,7 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
     });
     if (errMsg == null ? void 0 : errMsg.includes("验证码错误")) {
       await ocrRecognizeVerifyCode();
-      await submit(page2, dev2);
+      return await submit(page2, dev2);
     }
     console2.log();
     let oldInfo = await page2.evaluate(() => window.vm.oldInfo);
@@ -28661,4 +28658,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-FD4HRAJH.js.map
+//# sourceMappingURL=chunk-PGXXGP2O.js.map

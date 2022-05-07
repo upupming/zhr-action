@@ -121,8 +121,8 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(' ')
     const tesseractProcess = spawnSync(args[0], args.slice(1))
     const tesseractOutput = tesseractProcess.stdout.toString()
-    const tesseractError = tesseractProcess.stderr.toString()
-    if (tesseractError) throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`)
+    // const tesseractError = tesseractProcess.stderr.toString()
+    // if (tesseractError) throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`)
     verifyCode = tesseractOutput.trim()
     if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
       console.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`)
@@ -135,7 +135,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     }
   }
 
-  const submit = async (page: puppeteer.Page, dev: boolean) => {
+  const submit = async (page: puppeteer.Page, dev: boolean): Promise<void> => {
     let errMsg = await page.evaluate((__verifyCode: string): string | undefined => {
       try {
         const { vm } = window
@@ -164,7 +164,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     if (errMsg?.includes('验证码错误')) {
       // 这里不需要手动刷新，页面会自动刷新验证码
       await ocrRecognizeVerifyCode()
-      await submit(page, dev)
+      return await submit(page, dev)
     }
     console.log()
 

@@ -11,8 +11,8 @@ async function run() {
     cmd0 = "brew update"
     cmd1 = "brew install tesseract"
   }
-  await exec.exec("sudo " + cmd0)
-  await exec.exec("sudo " + cmd1)
+  await exec.exec("sudo " + cmd0, [], { silent: true })
+  await exec.exec("sudo " + cmd1, [], { silent: true })
 
   try {
     await (await import('../src/api')).runZjuHealthReport(core.getInput('username'), core.getInput('password'), core.getInput('dingtalk_token'))

@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});
 
-var _chunkFD4HRAJHjs = require('./chunk-FD4HRAJH.js');
+var _chunkPGXXGP2Ojs = require('./chunk-PGXXGP2O.js');
 require('./chunk-OKMUBGTU.js');
 
 
-exports.runZjuHealthReport = _chunkFD4HRAJHjs.runZjuHealthReport;
+exports.runZjuHealthReport = _chunkPGXXGP2Ojs.runZjuHealthReport;
 //# sourceMappingURL=api.js.map
