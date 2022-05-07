@@ -69,6 +69,7 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         fileName = fileName.split('?')[0]
         if (!(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(fileName)) fileName += '.png'
 
+        console.log(`📷 捕获到图片请求 ${url}, ${fileName}`)
         // currently we only need code.png
         if (fileName === 'code.png') {
           verifyCodeImgFile = tmp.tmpNameSync({ postfix: fileName })
