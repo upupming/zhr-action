@@ -19,6 +19,20 @@ declare global {
   }
 }
 
+const waitFor = async (condFunc: () => boolean) => {
+  return new Promise((resolve) => {
+    if (condFunc()) {
+      resolve(undefined);
+    }
+    else {
+      setTimeout(async () => {
+        await waitFor(condFunc);
+        resolve(undefined);
+      }, 100);
+    }
+  });
+};
+
 export async function runZjuHealthReport(username?: string, password?: string, dingtalkToken?: string) {
   // All logs will be saved to logString for further usage for dingtalk msg sender
   let logString: string = ''
@@ -102,7 +116,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
 
     if (errMsg) throw new Error(`❌ 登录失败，网页报错为: ${chalk.red(errMsg)}`)
     console.log(`✅ ${__username} ${chalk.green('登陆成功！')}\n`)
-    await page.waitForTimeout(3000)
   }
 
   let ocrRecognizeVerifyCodeRetryTimes = 0
@@ -115,13 +128,15 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     if (ocrRecognizeVerifyCodeRetryTimes > 1) {
       console.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`)
     }
+    await waitFor(() => !!verifyCodeImgFile)
     if (!await commandExists('tesseract')) {
       throw new Error('❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html')
     }
-    if (!verifyCodeImgFile) throw new Error('❌ 未下载到验证码图片')
     const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(' ')
     const tesseractProcess = spawnSync(args[0], args.slice(1))
     const tesseractOutput = tesseractProcess.stdout.toString()
+    verifyCodeImgFile = ''
+    // GitHub Action will report warning here, but it's not a problem
     // const tesseractError = tesseractProcess.stderr.toString()
     // if (tesseractError) throw new Error(`❌ tesseract 识别验证码失败，错误信息为: ${tesseractError}`)
     verifyCode = tesseractOutput.trim()
@@ -131,7 +146,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         const { vm } = window
         vm.change()
       })
-      await page.waitForTimeout(1000)
       return ocrRecognizeVerifyCode()
     }
     console.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`)
@@ -188,7 +202,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
   将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 `)
     console.log(`${chalk.green(`✅ 打卡成功！`)}\n`)
-    await page.waitForTimeout(3000)
   }
 
   const notifyDingtalk = async (dingtalkToken?: string) => {

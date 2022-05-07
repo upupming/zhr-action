@@ -1478,7 +1478,7 @@ var require_AriaQueryHandler = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
       }
       return exeCtx._adoptBackendNodeId(res[0].backendDOMNodeId);
     };
-    var waitFor = async (domWorld, selector, options) => {
+    var waitFor2 = async (domWorld, selector, options) => {
       const binding = {
         name: "ariaQuerySelector",
         pptrFunction: async (selector2) => {
@@ -1503,7 +1503,7 @@ var require_AriaQueryHandler = _chunkOKMUBGTUjs.__commonJS.call(void 0, {
     };
     exports.ariaHandler = {
       queryOne,
-      waitFor,
+      waitFor: waitFor2,
       queryAll,
       queryAllArray
     };
@@ -28384,6 +28384,18 @@ var _console = require('console');
 var _fs = require('fs'); var _fs2 = _interopRequireDefault(_fs);
 var _child_process = require('child_process');
 
+var waitFor = async (condFunc) => {
+  return new Promise((resolve) => {
+    if (condFunc()) {
+      resolve(void 0);
+    } else {
+      setTimeout(async () => {
+        await waitFor(condFunc);
+        resolve(void 0);
+      }, 100);
+    }
+  });
+};
 async function runZjuHealthReport(username, password, dingtalkToken) {
   let logString = "";
   const createPassThrough = (stream) => {
@@ -28460,7 +28472,6 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       throw new Error(`❌ 登录失败，网页报错为: ${chalk.red(errMsg)}`);
     console2.log(`✅ ${__username} ${chalk.green("登陆成功！")}
 `);
-    await page2.waitForTimeout(3e3);
   };
   let ocrRecognizeVerifyCodeRetryTimes = 0;
   const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4;
@@ -28472,14 +28483,14 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
     if (ocrRecognizeVerifyCodeRetryTimes > 1) {
       console2.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`);
     }
+    await waitFor(() => !!verifyCodeImgFile);
     if (!await (0, import_command_exists.default)("tesseract")) {
       throw new Error("❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html");
     }
-    if (!verifyCodeImgFile)
-      throw new Error("❌ 未下载到验证码图片");
     const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(" ");
     const tesseractProcess = _child_process.spawnSync.call(void 0, args[0], args.slice(1));
     const tesseractOutput = tesseractProcess.stdout.toString();
+    verifyCodeImgFile = "";
     verifyCode = tesseractOutput.trim();
     if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
       console2.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`);
@@ -28487,7 +28498,6 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
         const { vm } = window;
         vm.change();
       });
-      await page.waitForTimeout(1e3);
       return ocrRecognizeVerifyCode();
     }
     console2.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`);
@@ -28544,7 +28554,6 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
 `);
     console2.log(`${chalk.green(`✅ 打卡成功！`)}
 `);
-    await page2.waitForTimeout(3e3);
   };
   const notifyDingtalk = async (dingtalkToken2) => {
     if (!dingtalkToken2)
@@ -28660,4 +28669,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-PEQAMOHO.js.map
+//# sourceMappingURL=chunk-2DKJIQ6A.js.map

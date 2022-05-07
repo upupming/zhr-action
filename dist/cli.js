@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkPEQAMOHOjs = require('./chunk-PEQAMOHO.js');
+var _chunk2DKJIQ6Ajs = require('./chunk-2DKJIQ6A.js');
 require('./chunk-FQFBMVJM.js');
 
 
@@ -102,7 +102,7 @@ async function run() {
   const password = process.env.password;
   const dingtalkToken = process.env.dingtalk_token;
   try {
-    await _chunkPEQAMOHOjs.runZjuHealthReport.call(void 0, username, password, dingtalkToken);
+    await _chunk2DKJIQ6Ajs.runZjuHealthReport.call(void 0, username, password, dingtalkToken);
   } catch (error) {
     console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }
