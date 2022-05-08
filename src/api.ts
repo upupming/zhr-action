@@ -129,6 +129,10 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     ocrRecognizeVerifyCodeRetryTimes++
     if (ocrRecognizeVerifyCodeRetryTimes > 1) {
       console.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`)
+      await page.evaluate(() => {
+        const { vm } = window
+        vm.change()
+      })
     }
     await waitFor(() => !!verifyCodeImgFile)
     if (!await commandExists('tesseract')) {
@@ -144,10 +148,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     verifyCode = tesseractOutput.trim()
     if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
       console.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`)
-      await page.evaluate(() => {
-        const { vm } = window
-        vm.change()
-      })
       return ocrRecognizeVerifyCode()
     }
     console.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`)
@@ -183,7 +183,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
     })
 
     if (errMsg?.includes('验证码错误')) {
-      // 这里不需要手动刷新，页面会自动刷新验证码
       await ocrRecognizeVerifyCode()
       return await submit(page, dev)
     }
