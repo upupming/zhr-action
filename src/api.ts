@@ -121,12 +121,12 @@ export async function runZjuHealthReport(username?: string, password?: string, d
   }
 
   let ocrRecognizeVerifyCodeRetryTimes = 0
-  const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4
+  const MAX_OCR_RETRY_TIMES = 20, EXPECTED_VERIFY_CODE_LENGTH = 4
   const ocrRecognizeVerifyCode = async (): Promise<void> => {
+    ocrRecognizeVerifyCodeRetryTimes++
     if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`)
     }
-    ocrRecognizeVerifyCodeRetryTimes++
     if (ocrRecognizeVerifyCodeRetryTimes > 1) {
       console.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`)
       await page.evaluate(() => {
@@ -167,7 +167,6 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         vm.confirm()
         // save 直接发出后端请求
         // vm.save()
-        document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
       } catch (err) {
         return (err as Error)?.message
       }
@@ -177,7 +176,10 @@ export async function runZjuHealthReport(username?: string, password?: string, d
       let popup = document.getElementById('wapat')
       if (popup) {
         if (getComputedStyle(popup).display !== 'none') {
-          return document.querySelector('.wapat-title')?.textContent ?? undefined
+          let errMsg = document.querySelector('.wapat-title')?.textContent ?? undefined
+          // 关闭弹窗
+          document.querySelector<HTMLObjectElement>('.wapat-btn-ok')?.click()
+          return errMsg
         }
       }
     })

@@ -28476,12 +28476,12 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
 `);
   };
   let ocrRecognizeVerifyCodeRetryTimes = 0;
-  const MAX_OCR_RETRY_TIMES = 10, EXPECTED_VERIFY_CODE_LENGTH = 4;
+  const MAX_OCR_RETRY_TIMES = 20, EXPECTED_VERIFY_CODE_LENGTH = 4;
   const ocrRecognizeVerifyCode = async () => {
+    ocrRecognizeVerifyCodeRetryTimes++;
     if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`);
     }
-    ocrRecognizeVerifyCodeRetryTimes++;
     if (ocrRecognizeVerifyCodeRetryTimes > 1) {
       console2.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`);
       await page.evaluate(() => {
@@ -28506,7 +28506,6 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
   };
   const submit = async (page2, dev2) => {
     let errMsg = await page2.evaluate((__verifyCode) => {
-      var _a;
       try {
         const { vm } = window;
         for (const key in vm.oldInfo) {
@@ -28516,18 +28515,19 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
         }
         vm.info.verifyCode = __verifyCode;
         vm.confirm();
-        (_a = document.querySelector(".wapcf-btn-ok")) == null ? void 0 : _a.click();
       } catch (err) {
         return err == null ? void 0 : err.message;
       }
     }, verifyCode);
     await page2.waitForTimeout(1e3);
     errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
-      var _a, _b;
+      var _a, _b, _c;
       let popup = document.getElementById("wapat");
       if (popup) {
         if (getComputedStyle(popup).display !== "none") {
-          return (_b = (_a = document.querySelector(".wapat-title")) == null ? void 0 : _a.textContent) != null ? _b : void 0;
+          let errMsg2 = (_b = (_a = document.querySelector(".wapat-title")) == null ? void 0 : _a.textContent) != null ? _b : void 0;
+          (_c = document.querySelector(".wapat-btn-ok")) == null ? void 0 : _c.click();
+          return errMsg2;
         }
       }
     });
@@ -28671,4 +28671,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-TE4FNCUI.js.map
+//# sourceMappingURL=chunk-HUBOCBZR.js.map
