@@ -28506,6 +28506,7 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
   };
   const submit = async (page2, dev2) => {
     let errMsg = await page2.evaluate((__verifyCode) => {
+      var _a;
       try {
         const { vm } = window;
         for (const key in vm.oldInfo) {
@@ -28515,6 +28516,7 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
         }
         vm.info.verifyCode = __verifyCode;
         vm.confirm();
+        (_a = document.querySelector(".wapcf-btn-ok")) == null ? void 0 : _a.click();
       } catch (err) {
         return err == null ? void 0 : err.message;
       }
@@ -28536,6 +28538,13 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       return await submit(page2, dev2);
     }
     console2.log();
+    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+      const { vm } = window;
+      if (vm.show) {
+        return void 0;
+      }
+      return "打卡未报错，但是页面没有显示打卡成功，请手动检查是否真的打卡成功了";
+    });
     let oldInfo = await page2.evaluate(() => window.vm.oldInfo);
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
@@ -28671,4 +28680,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-HUBOCBZR.js.map
+//# sourceMappingURL=chunk-RHSXOM4Z.js.map

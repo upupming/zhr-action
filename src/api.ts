@@ -165,6 +165,8 @@ export async function runZjuHealthReport(username?: string, password?: string, d
         vm.info.verifyCode = __verifyCode
         // confirm 包含一系列前端校验
         vm.confirm()
+        // 确认弹窗：「每天只能填报一次，请确认信息是否全部正确？」
+        document.querySelector<HTMLObjectElement>('.wapcf-btn-ok')?.click()
         // save 直接发出后端请求
         // vm.save()
       } catch (err) {
@@ -189,6 +191,15 @@ export async function runZjuHealthReport(username?: string, password?: string, d
       return await submit(page, dev)
     }
     console.log()
+
+    errMsg ??= await page.evaluate(() => {
+      // 弹窗：「提交信息成功」
+      const { vm } = window
+      if (vm.show) {
+        return undefined
+      }
+      return '打卡未报错，但是页面没有显示打卡成功，请手动检查是否真的打卡成功了'
+    })
 
     let oldInfo = await page.evaluate(() => (window.vm.oldInfo as JSONObject))
     let errorGuide = `常见错误：
