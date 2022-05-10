@@ -6,7 +6,8 @@
 
 ## GitHub Action 使用方法（推荐）
 
-参考：https://github.com/zju-health-report/zhr-action-demo
+- 参考：https://github.com/zju-health-report/zhr-action-demo
+- 注意要用 GitHub Action 自动打卡是 Fork `zhr-action-demo` 这个仓库，而不是此仓库，此仓库是 ZHR Action 的源码，而 `zhr-action-demo` 是使用 ZHR Action 的一个 demo。
 
 ## 命令行 CLI
 
