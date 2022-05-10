@@ -6,7 +6,7 @@
 
 ## GitHub Action 使用方法（推荐）
 
-参考：https://github.com/zju-health-report/zju-health-report-action-demo
+参考：https://github.com/zju-health-report/zhr-action-demo
 
 ## 命令行 CLI
 
