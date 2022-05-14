@@ -70,6 +70,7 @@ async function main() {
   const username = '浙大通行证用户名'
   const password = '浙大通行证密码'
   const dingtalkToken = process.env.dingtalk_token
+  const { ZjuHealthReporter } = await import('@zju-health-report/action')
 
   try {
     await new ZjuHealthReporter({ username, password, dingtalkToken }).runReport()

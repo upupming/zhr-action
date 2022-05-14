@@ -49,17 +49,20 @@ export class ZjuHealthReporter {
   EXPECTED_VERIFY_CODE_LENGTH = 4
   dev: boolean
   NETWORK_ERROR_KEYWORDS = [
-    'net::ERR_INTERNET_DISCONNECTED',
+    'net::',
     'Navigation timeout',
     'Execution context was destroyed, most likely because of a navigation.',
-    'ProtocolError'
+    'ProtocolError',
+    'preflight',
+    '获取响应内容报错'
   ]
+  responseErrMsg: string = '';
   constructor(config: ZjuHealthReportConfig) {
     this.config = {
       username: '',
       password: '',
       dingtalkToken: '',
-      networkErrorRetryTimes: 5,
+      networkErrorRetryTimes: 10,
       ...config,
     }
     this.console = new Console(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr))
@@ -77,10 +80,12 @@ export class ZjuHealthReporter {
 
   private async login() {
     this.page = await this.browser.newPage();
+    this.responseErrMsg = ''
     this.page.on('response', async response => {
-      const url = response.url();
-      if (response.request().resourceType() === 'image') {
-        response.buffer().then(file => {
+      try {
+        if (response.status() === 200 && response.request().resourceType() === 'image') {
+          const url = response.url();
+
           let fileName = url.split('/').pop();
           if (!fileName) return
           fileName = fileName.split('?')[0]
@@ -91,11 +96,17 @@ export class ZjuHealthReporter {
           }
           // currently we only need code.png
           if (fileName === 'code.png') {
+            const file = await response.buffer()
             this.verifyCodeImgFile = tmp.tmpNameSync({ postfix: fileName })
             const writeStream = fs.createWriteStream(this.verifyCodeImgFile);
             writeStream.write(file);
           }
-        });
+        }
+      } catch (error) {
+        this.responseErrMsg = `
+${this.responseErrMsg}
+❌ 获取响应内容报错: ${(error as Error)?.message}
+        `.trim()
       }
     });
     await this.page.goto('https://healthreport.zju.edu.cn/ncov/wap/default/index', {
@@ -137,7 +148,9 @@ export class ZjuHealthReporter {
         vm.change()
       })
     }
+    if (this.responseErrMsg) throw new Error(this.responseErrMsg)
     await waitFor(() => !!this.verifyCodeImgFile)
+    if (this.responseErrMsg) throw new Error(this.responseErrMsg)
     if (!await commandExists('tesseract')) {
       throw new Error('❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html')
     }
