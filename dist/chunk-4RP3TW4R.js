@@ -28382,7 +28382,7 @@ var version = "1.3.3";
 var banner = `
 \x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m
 
-当前版本: ${version}
+当前版本: ${version}@123f78
 Action: https://github.com/zju-health-report/action
 Demo: https://github.com/zju-health-report/zhr-action-demo
 如果有任何建议或意见，欢迎贡献代码！感兴趣的同学可以申请成为 zju-health-report 组织的 Member。
@@ -28408,74 +28408,72 @@ var waitFor = async (condFunc) => {
     }
   });
 };
-async function runZjuHealthReport(username, password, dingtalkToken) {
-  let logString = "";
-  const createPassThrough = (stream) => {
+var ZjuHealthReporter = class {
+  constructor(config) {
+    this.logString = "";
+    this.ocrRecognizeVerifyCodeRetryTimes = 0;
+    this.MAX_ocrRecognizeVerifyCodeRetryTimes = 100;
+    this.verifyCodeImgFile = "";
+    this.verifyCode = "";
+    this.EXPECTED_VERIFY_CODE_LENGTH = 4;
+    this.NETWORK_ERROR_KEYWORDS = ["net::ERR_INTERNET_DISCONNECTED", "Navigation timeout", "Execution context was destroyed, most likely because of a navigation."];
+    this.config = _chunkOKMUBGTUjs.__spreadValues.call(void 0, {
+      username: "",
+      password: "",
+      dingtalkToken: "",
+      networkErrorRetryTimes: 5
+    }, config);
+    this.console = new (0, _console.Console)(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr));
+    this.dev = process.env.NODE_ENV === "development";
+  }
+  createPassThrough(stream) {
     const passThrough = new (0, _stream2.PassThrough)();
     passThrough.pipe(stream);
     passThrough.on("data", (chunk) => {
-      chunk && (logString += Buffer.from(chunk).toString());
+      chunk && (this.logString += Buffer.from(chunk).toString());
     });
     passThrough.on("error", (err) => {
       throw err;
     });
     return passThrough;
-  };
-  const console2 = new (0, _console.Console)(createPassThrough(process.stdout), createPassThrough(process.stderr));
-  if (!username) {
-    throw new Error("❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
   }
-  if (!password) {
-    throw new Error("❌ 请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
-  }
-  const dev = process.env.NODE_ENV === "development";
-  const browser = await import_puppeteer_core.default.launch({
-    executablePath: import_chrome_launcher.Launcher.getInstallations()[0],
-    headless: process.env.CI || !dev,
-    devtools: dev
-  });
-  const page = await browser.newPage();
-  await page.goto("https://healthreport.zju.edu.cn/ncov/wap/default/index", {
-    waitUntil: "networkidle2"
-  });
-  const chalk = new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./source-XNDADEMN.js")))).Chalk({
-    level: 3
-  });
-  let verifyCodeImgFile = "";
-  let verifyCode = "";
-  page.on("response", async (response) => {
-    const url = response.url();
-    if (response.request().resourceType() === "image") {
-      response.buffer().then((file) => {
-        let fileName = url.split("/").pop();
-        if (!fileName)
-          return;
-        fileName = fileName.split("?")[0];
-        if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName))
-          fileName += ".png";
-        if (dev) {
-          console2.log(`📷 捕获到图片请求 ${url.split("?")[0]}, ${fileName}`);
-        }
-        if (fileName === "code.png") {
-          verifyCodeImgFile = import_tmp.default.tmpNameSync({ postfix: fileName });
-          const writeStream = _fs2.default.createWriteStream(verifyCodeImgFile);
-          writeStream.write(file);
-        }
-      });
-    }
-  });
-  const login = async (page2, __username, __password) => {
-    let errMsg = await page2.evaluate((__username2, __password2) => {
+  async login() {
+    this.page = await this.browser.newPage();
+    this.page.on("response", async (response) => {
+      const url = response.url();
+      if (response.request().resourceType() === "image") {
+        response.buffer().then((file) => {
+          let fileName = url.split("/").pop();
+          if (!fileName)
+            return;
+          fileName = fileName.split("?")[0];
+          if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(fileName))
+            fileName += ".png";
+          if (this.dev) {
+            console.log(`📷 捕获到图片请求 ${url.split("?")[0]}, ${fileName}`);
+          }
+          if (fileName === "code.png") {
+            this.verifyCodeImgFile = import_tmp.default.tmpNameSync({ postfix: fileName });
+            const writeStream = _fs2.default.createWriteStream(this.verifyCodeImgFile);
+            writeStream.write(file);
+          }
+        });
+      }
+    });
+    await this.page.goto("https://healthreport.zju.edu.cn/ncov/wap/default/index", {
+      waitUntil: "networkidle2"
+    });
+    let errMsg = await this.page.evaluate((__username, __password) => {
       try {
-        document.getElementById("username").value = __username2;
-        document.getElementById("password").value = __password2;
+        document.getElementById("username").value = __username;
+        document.getElementById("password").value = __password;
         document.querySelector(".login-button > button").click();
       } catch (err) {
         return err == null ? void 0 : err.message;
       }
-    }, __username, __password);
-    await page2.waitForTimeout(3e3);
-    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+    }, this.config.username, this.config.password);
+    await this.page.waitForTimeout(3e3);
+    errMsg != null ? errMsg : errMsg = await this.page.evaluate(() => {
       var _a;
       const errMsg2 = (_a = document.getElementById("msg")) == null ? void 0 : _a.textContent;
       if (errMsg2) {
@@ -28483,41 +28481,39 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       }
     });
     if (errMsg)
-      throw new Error(`❌ 登录失败，网页报错为: ${chalk.red(errMsg)}`);
-    console2.log(`✅ ${__username} ${chalk.green("登陆成功！")}
+      throw new Error(`❌ 登录失败，网页报错为: ${this.chalk.red(errMsg)}`);
+    this.console.log(`✅ ${this.config.username} ${this.chalk.green("登陆成功！")}
 `);
-  };
-  let ocrRecognizeVerifyCodeRetryTimes = 0;
-  const MAX_OCR_RETRY_TIMES = 20, EXPECTED_VERIFY_CODE_LENGTH = 4;
-  const ocrRecognizeVerifyCode = async () => {
-    ocrRecognizeVerifyCodeRetryTimes++;
-    if (ocrRecognizeVerifyCodeRetryTimes > MAX_OCR_RETRY_TIMES) {
-      throw new Error(`❌ 验证码识别超过最大重试次数 ${MAX_OCR_RETRY_TIMES}`);
+  }
+  async ocrRecognizeVerifyCode() {
+    this.ocrRecognizeVerifyCodeRetryTimes++;
+    if (this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
+      throw new Error(`❌ 验证码识别超过最大重试次数 ${this.MAX_ocrRecognizeVerifyCodeRetryTimes}`);
     }
-    if (ocrRecognizeVerifyCodeRetryTimes > 1) {
-      console2.log(`验证码识别失败，重试第 ${ocrRecognizeVerifyCodeRetryTimes} 次...`);
-      await page.evaluate(() => {
+    if (this.ocrRecognizeVerifyCodeRetryTimes > 1) {
+      this.console.log(`验证码识别失败，重试第 ${this.ocrRecognizeVerifyCodeRetryTimes} 次...`);
+      await this.page.evaluate(() => {
         const { vm } = window;
         vm.change();
       });
     }
-    await waitFor(() => !!verifyCodeImgFile);
+    await waitFor(() => !!this.verifyCodeImgFile);
     if (!await (0, import_command_exists.default)("tesseract")) {
       throw new Error("❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html");
     }
-    const args = `tesseract ${verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(" ");
+    const args = `tesseract ${this.verifyCodeImgFile} stdout -l eng --psm 7 -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.split(" ");
     const tesseractProcess = _child_process.spawnSync.call(void 0, args[0], args.slice(1));
     const tesseractOutput = tesseractProcess.stdout.toString();
-    verifyCodeImgFile = "";
-    verifyCode = tesseractOutput.trim();
-    if (verifyCode.length !== EXPECTED_VERIFY_CODE_LENGTH) {
-      console2.log(`识别出的验证码 ${verifyCode} 不符合长度为 ${EXPECTED_VERIFY_CODE_LENGTH} 的要求`);
-      return ocrRecognizeVerifyCode();
+    this.verifyCodeImgFile = "";
+    this.verifyCode = tesseractOutput.trim();
+    if (this.verifyCode.length !== this.EXPECTED_VERIFY_CODE_LENGTH) {
+      this.console.log(`识别出的验证码 ${this.verifyCode} 不符合长度为 ${this.EXPECTED_VERIFY_CODE_LENGTH} 的要求`);
+      return this.ocrRecognizeVerifyCode();
     }
-    console2.log(`当前验证码识别结果为: ${chalk.green(verifyCode)}`);
-  };
-  const submit = async (page2, dev2) => {
-    let errMsg = await page2.evaluate((__verifyCode) => {
+    this.console.log(`当前验证码识别结果为: ${this.chalk.green(this.verifyCode)}`);
+  }
+  async submit() {
+    let errMsg = await this.page.evaluate((__verifyCode) => {
       var _a;
       try {
         const { vm } = window;
@@ -28532,9 +28528,9 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       } catch (err) {
         return err == null ? void 0 : err.message;
       }
-    }, verifyCode);
-    await page2.waitForTimeout(1e3);
-    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+    }, this.verifyCode);
+    await this.page.waitForTimeout(1e3);
+    errMsg != null ? errMsg : errMsg = await this.page.evaluate(() => {
       var _a, _b, _c;
       let popup = document.getElementById("wapat");
       if (popup) {
@@ -28546,24 +28542,24 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
       }
     });
     if (errMsg == null ? void 0 : errMsg.includes("验证码错误")) {
-      await ocrRecognizeVerifyCode();
-      return await submit(page2, dev2);
+      await this.ocrRecognizeVerifyCode();
+      return await this.submit();
     }
-    console2.log();
-    errMsg != null ? errMsg : errMsg = await page2.evaluate(() => {
+    this.console.log();
+    errMsg != null ? errMsg : errMsg = await this.page.evaluate(() => {
       const { vm } = window;
       if (vm.show) {
         return void 0;
       }
       return "打卡未报错，但是页面没有显示打卡成功，请手动检查是否真的打卡成功了";
     });
-    let oldInfo = await page2.evaluate(() => window.vm.oldInfo);
+    let oldInfo = await this.page.evaluate(() => window.vm.oldInfo);
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
     2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。`;
     if (errMsg)
-      throw new Error(`❌ 打卡提交失败，网页报错为：${chalk.red(errMsg)}
-  ${dev2 ? `你前一次打卡的信息为：
+      throw new Error(`❌ 打卡提交失败，网页报错为：${this.chalk.red(errMsg)}
+  ${this.dev ? `你前一次打卡的信息为：
 
   ${JSON.stringify(oldInfo, null, 2)}
 
@@ -28575,22 +28571,22 @@ async function runZjuHealthReport(username, password, dingtalkToken) {
 
   将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
 `);
-    console2.log(`${chalk.green(`✅ 打卡成功！`)}
+    this.console.log(`${this.chalk.green(`✅ 打卡成功！`)}
 `);
-  };
-  const notifyDingtalk = async (dingtalkToken2) => {
-    if (!dingtalkToken2)
+  }
+  async notifyDingtalk(dingtalkToken) {
+    if (!dingtalkToken)
       return;
     const { status, data } = await request({
       hostname: "oapi.dingtalk.com",
-      path: `/robot/send?access_token=${dingtalkToken2}`,
+      path: `/robot/send?access_token=${dingtalkToken}`,
       port: 443,
       method: "POST",
       data: {
         msgtype: "text",
         text: {
           content: `
-${removeColorModifier(logString).trim()}
+${removeColorModifier(this.logString).trim()}
 ${process.env.ACTION_URL ? `
 GitHub workflow: ${process.env.ACTION_URL}` : ""}
 `.trim()
@@ -28598,38 +28594,73 @@ GitHub workflow: ${process.env.ACTION_URL}` : ""}
       }
     });
     if (status !== 200) {
-      throw new Error(`❌ 钉钉消息推送失败，状态码：${chalk.red(status)}`);
+      throw new Error(`❌ 钉钉消息推送失败，状态码：${this.chalk.red(status)}`);
     }
     const response = JSON.parse(data);
     if (response.errcode != 0) {
-      throw new Error(`❌ 钉钉消息推送失败，错误：${chalk.red(response.errmsg)}`);
+      throw new Error(`❌ 钉钉消息推送失败，错误：${this.chalk.red(response.errmsg)}`);
     }
-    console2.log(`${chalk.green("✅ 钉钉消息推送成功！")}
+    this.console.log(`${this.chalk.green("✅ 钉钉消息推送成功！")}
 `);
-  };
-  let mainErrorMsg = "";
-  try {
-    console2.log(banner);
-    await login(page, username, password);
-    await ocrRecognizeVerifyCode();
-    await submit(page, dev);
-  } catch (mainError) {
-    logString += mainError == null ? void 0 : mainError.message;
-    mainErrorMsg += mainError == null ? void 0 : mainError.message;
-    throw mainError;
-  } finally {
-    try {
-      await notifyDingtalk(dingtalkToken);
-    } catch (notifyErrorMsg) {
-      throw new Error(`
-${mainErrorMsg}
-${notifyErrorMsg == null ? void 0 : notifyErrorMsg.message}
-      `.trim());
-    } finally {
-      await browser.close();
-    }
   }
-}
+  async runReport() {
+    var _a, _b;
+    this.logString = "";
+    const {
+      username,
+      password,
+      dingtalkToken
+    } = this.config;
+    if (!username) {
+      throw new Error("❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+    }
+    if (!password) {
+      throw new Error("❌ 请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+    }
+    this.chalk = new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./source-XNDADEMN.js")))).Chalk({
+      level: 3
+    });
+    (_a = this.browser) == null ? void 0 : _a.close();
+    this.browser = await import_puppeteer_core.default.launch({
+      executablePath: import_chrome_launcher.Launcher.getInstallations()[0],
+      headless: process.env.CI || !this.dev,
+      devtools: this.dev
+    });
+    let mainErrorMsg = "";
+    try {
+      this.console.log(banner);
+      await this.login();
+      await this.ocrRecognizeVerifyCode();
+      await this.submit();
+    } catch (mainError) {
+      debugger;
+      this.logString += mainError == null ? void 0 : mainError.message;
+      mainErrorMsg += mainError == null ? void 0 : mainError.message;
+      for (const keyword of this.NETWORK_ERROR_KEYWORDS) {
+        if ((_b = mainError == null ? void 0 : mainError.message) == null ? void 0 : _b.includes(keyword)) {
+          if (--this.config.networkErrorRetryTimes <= 0) {
+            this.console.log(`网络错误超出重试次数上限
+`);
+            break;
+          }
+          this.console.log(`遇到网络错误: ${mainError == null ? void 0 : mainError.message}，尝试进行重试，剩余次数 ${this.config.networkErrorRetryTimes}...`);
+          return await this.runReport();
+        }
+      }
+    }
+    try {
+      await this.notifyDingtalk(dingtalkToken);
+    } catch (notifyError) {
+      mainErrorMsg = `
+  ${mainErrorMsg}
+  ${notifyError == null ? void 0 : notifyError.message}
+        `.trim();
+    }
+    await this.browser.close();
+    if (mainErrorMsg)
+      throw new Error(mainErrorMsg);
+  }
+};
 async function request(options) {
   return new Promise((resolve, reject) => {
     const requestData = JSON.stringify(options.data);
@@ -28668,7 +28699,7 @@ function removeColorModifier(str) {
 
 
 
-exports.runZjuHealthReport = runZjuHealthReport;
+exports.ZjuHealthReporter = ZjuHealthReporter;
 /*!
  * Tmp
  *
@@ -28692,4 +28723,4 @@ exports.runZjuHealthReport = runZjuHealthReport;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-UR6NQ7AF.js.map
+//# sourceMappingURL=chunk-4RP3TW4R.js.map

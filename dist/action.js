@@ -2363,7 +2363,14 @@ async function run() {
   await exec.exec("sudo " + cmd0, [], { silent: true });
   await exec.exec("sudo " + cmd1, [], { silent: true });
   try {
-    await (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./api.js")))).runZjuHealthReport(core.getInput("username"), core.getInput("password"), core.getInput("dingtalk_token"));
+    const username = core.getInput("username");
+    const password = core.getInput("password");
+    const dingtalkToken = core.getInput("dingtalk_token");
+    await new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./api.js")))).ZjuHealthReporter({
+      username,
+      password,
+      dingtalkToken
+    }).runReport();
   } catch (error) {
     core.setFailed((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }

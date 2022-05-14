@@ -15,7 +15,14 @@ async function run() {
   await exec.exec("sudo " + cmd1, [], { silent: true })
 
   try {
-    await (await import('../src/api')).runZjuHealthReport(core.getInput('username'), core.getInput('password'), core.getInput('dingtalk_token'))
+    const username = core.getInput('username')
+    const password = core.getInput('password')
+    const dingtalkToken = core.getInput('dingtalk_token')
+    await new (await import('../src/api')).ZjuHealthReporter({
+      username,
+      password,
+      dingtalkToken
+    }).runReport()
   } catch (error) {
     core.setFailed((error as Error)?.message ?? '未知错误');
   }
