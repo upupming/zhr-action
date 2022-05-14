@@ -48,7 +48,12 @@ export class ZjuHealthReporter {
   verifyCode = ''
   EXPECTED_VERIFY_CODE_LENGTH = 4
   dev: boolean
-  NETWORK_ERROR_KEYWORDS = ['net::ERR_INTERNET_DISCONNECTED', 'Navigation timeout', 'Execution context was destroyed, most likely because of a navigation.']
+  NETWORK_ERROR_KEYWORDS = [
+    'net::ERR_INTERNET_DISCONNECTED',
+    'Navigation timeout',
+    'Execution context was destroyed, most likely because of a navigation.',
+    'ProtocolError'
+  ]
   constructor(config: ZjuHealthReportConfig) {
     this.config = {
       username: '',
@@ -281,7 +286,6 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
       await this.ocrRecognizeVerifyCode()
       await this.submit()
     } catch (mainError) {
-      debugger
       this.logString += (mainError as Error)?.message
       mainErrorMsg += (mainError as Error)?.message
 
