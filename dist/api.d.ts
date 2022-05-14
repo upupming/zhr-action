@@ -26,6 +26,7 @@ declare class ZjuHealthReporter {
     EXPECTED_VERIFY_CODE_LENGTH: number;
     dev: boolean;
     NETWORK_ERROR_KEYWORDS: string[];
+    responseErrMsg: string;
     constructor(config: ZjuHealthReportConfig);
     createPassThrough(stream: NodeJS.WriteStream): PassThrough;
     private login;

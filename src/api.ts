@@ -54,6 +54,7 @@ export class ZjuHealthReporter {
     'Execution context was destroyed, most likely because of a navigation.',
     'ProtocolError'
   ]
+  responseErrMsg: string = '';
   constructor(config: ZjuHealthReportConfig) {
     this.config = {
       username: '',
@@ -77,10 +78,13 @@ export class ZjuHealthReporter {
 
   private async login() {
     this.page = await this.browser.newPage();
+    this.responseErrMsg = ''
     this.page.on('response', async response => {
-      const url = response.url();
-      if (response.request().resourceType() === 'image') {
-        response.buffer().then(file => {
+      try {
+        if (response.request().resourceType() === 'image') {
+          const url = response.url();
+          const file = await response.buffer()
+
           let fileName = url.split('/').pop();
           if (!fileName) return
           fileName = fileName.split('?')[0]
@@ -95,7 +99,12 @@ export class ZjuHealthReporter {
             const writeStream = fs.createWriteStream(this.verifyCodeImgFile);
             writeStream.write(file);
           }
-        });
+        }
+      } catch (error) {
+        this.responseErrMsg = `
+${this.responseErrMsg}
+❌ 获取响应内容报错: ${(error as Error)?.message}
+        `.trim()
       }
     });
     await this.page.goto('https://healthreport.zju.edu.cn/ncov/wap/default/index', {
@@ -137,7 +146,9 @@ export class ZjuHealthReporter {
         vm.change()
       })
     }
+    if (this.responseErrMsg) throw new Error(this.responseErrMsg)
     await waitFor(() => !!this.verifyCodeImgFile)
+    if (this.responseErrMsg) throw new Error(this.responseErrMsg)
     if (!await commandExists('tesseract')) {
       throw new Error('❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html')
     }
