@@ -69,9 +69,13 @@ npm i github:zju-health-report/action#release
 async function main() {
   const username = '浙大通行证用户名'
   const password = '浙大通行证密码'
+  const dingtalkToken = process.env.dingtalk_token
 
-  const { runZjuHealthReport } = await import('@zju-health-report/action')
-  runZjuHealthReport(username, password)
+  try {
+    await new ZjuHealthReporter({ username, password, dingtalkToken }).runReport()
+  } catch (error) {
+    console.log((error as Error)?.message ?? '未知错误');
+  }
 }
 
 main()
