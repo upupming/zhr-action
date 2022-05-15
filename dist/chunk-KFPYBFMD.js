@@ -28382,7 +28382,7 @@ var version = "1.3.3";
 var banner = `
 \x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m
 
-当前版本: ${version}@1859f2
+当前版本: ${version}@aad76e
 Action: https://github.com/zju-health-report/action
 Demo: https://github.com/zju-health-report/zhr-action-demo
 如果有任何建议或意见，欢迎贡献代码！感兴趣的同学可以申请成为 zju-health-report 组织的 Member。
@@ -28452,7 +28452,6 @@ var ZjuHealthReporter = class {
       try {
         if (response.status() === 200 && response.request().resourceType() === "image") {
           const url = response.url();
-          const file = await response.buffer();
           let fileName = url.split("/").pop();
           if (!fileName)
             return;
@@ -28463,6 +28462,7 @@ var ZjuHealthReporter = class {
             console.log(`📷 捕获到图片请求 ${url.split("?")[0]}, ${fileName}`);
           }
           if (fileName === "code.png") {
+            const file = await response.buffer();
             this.verifyCodeImgFile = import_tmp.default.tmpNameSync({ postfix: fileName });
             const writeStream = _fs2.default.createWriteStream(this.verifyCodeImgFile);
             writeStream.write(file);
@@ -28741,4 +28741,4 @@ exports.ZjuHealthReporter = ZjuHealthReporter;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-XTCTUFWW.js.map
+//# sourceMappingURL=chunk-KFPYBFMD.js.map

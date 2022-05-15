@@ -85,7 +85,6 @@ export class ZjuHealthReporter {
       try {
         if (response.status() === 200 && response.request().resourceType() === 'image') {
           const url = response.url();
-          const file = await response.buffer()
 
           let fileName = url.split('/').pop();
           if (!fileName) return
@@ -97,6 +96,7 @@ export class ZjuHealthReporter {
           }
           // currently we only need code.png
           if (fileName === 'code.png') {
+            const file = await response.buffer()
             this.verifyCodeImgFile = tmp.tmpNameSync({ postfix: fileName })
             const writeStream = fs.createWriteStream(this.verifyCodeImgFile);
             writeStream.write(file);
