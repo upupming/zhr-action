@@ -62,7 +62,7 @@ export class ZjuHealthReporter {
       username: '',
       password: '',
       dingtalkToken: '',
-      networkErrorRetryTimes: 5,
+      networkErrorRetryTimes: 10,
       ...config,
     }
     this.console = new Console(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr))
