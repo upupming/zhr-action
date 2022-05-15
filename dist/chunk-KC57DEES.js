@@ -28382,7 +28382,7 @@ var version = "1.3.3";
 var banner = `
 \x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m
 
-当前版本: ${version}@e333d6
+当前版本: ${version}@aec7d0
 Action: https://github.com/zju-health-report/action
 Demo: https://github.com/zju-health-report/zhr-action-demo
 如果有任何建议或意见，欢迎贡献代码！感兴趣的同学可以申请成为 zju-health-report 组织的 Member。
@@ -28424,12 +28424,13 @@ var ZjuHealthReporter = class {
       "preflight",
       "获取响应内容报错"
     ];
+    this.networkErrorRetryTimes = 0;
+    this.MAX_networkErrorRetryTimes = 30;
     this.responseErrMsg = "";
     this.config = _chunkOKMUBGTUjs.__spreadValues.call(void 0, {
       username: "",
       password: "",
-      dingtalkToken: "",
-      networkErrorRetryTimes: 10
+      dingtalkToken: ""
     }, config);
     this.console = new (0, _console.Console)(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr));
     this.dev = process.env.NODE_ENV === "development";
@@ -28446,6 +28447,13 @@ var ZjuHealthReporter = class {
     return passThrough;
   }
   async login() {
+    if (++this.networkErrorRetryTimes > this.MAX_networkErrorRetryTimes) {
+      throw new Error(`❌ 网络错误超过最大重试次数 ${this.MAX_networkErrorRetryTimes}`);
+    }
+    if (this.networkErrorRetryTimes > 1) {
+      this.console.log(`上次网络连接失败，重试第 ${this.networkErrorRetryTimes} 次...
+`);
+    }
     this.page = await this.browser.newPage();
     this.responseErrMsg = "";
     this.page.on("response", async (response) => {
@@ -28501,8 +28509,7 @@ ${this.responseErrMsg}
 `);
   }
   async ocrRecognizeVerifyCode() {
-    this.ocrRecognizeVerifyCodeRetryTimes++;
-    if (this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
+    if (++this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${this.MAX_ocrRecognizeVerifyCodeRetryTimes}`);
     }
     if (this.ocrRecognizeVerifyCodeRetryTimes > 1) {
@@ -28656,12 +28663,7 @@ GitHub workflow: ${process.env.ACTION_URL}` : ""}
       mainErrorMsg += mainError == null ? void 0 : mainError.message;
       for (const keyword of this.NETWORK_ERROR_KEYWORDS) {
         if ((_b = mainError == null ? void 0 : mainError.message) == null ? void 0 : _b.includes(keyword)) {
-          if (--this.config.networkErrorRetryTimes <= 0) {
-            this.console.log(`网络错误超出重试次数上限
-`);
-            break;
-          }
-          this.console.log(`遇到网络错误: ${mainError == null ? void 0 : mainError.message}，尝试进行重试，剩余次数 ${this.config.networkErrorRetryTimes}...`);
+          this.console.log(`遇到网络错误: ${mainError == null ? void 0 : mainError.message}`);
           return await this.runReport();
         }
       }
@@ -28741,4 +28743,4 @@ exports.ZjuHealthReporter = ZjuHealthReporter;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-GZPUGTEH.js.map
+//# sourceMappingURL=chunk-KC57DEES.js.map

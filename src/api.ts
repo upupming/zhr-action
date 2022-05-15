@@ -56,13 +56,15 @@ export class ZjuHealthReporter {
     'preflight',
     '获取响应内容报错'
   ]
+  networkErrorRetryTimes = 0
+  /** 出现意外的网络错误时（例如 puppeteer 出现网络问题 net::ERR_INTERNET_DISCONNECTED）会重试，最大重试次数 */
+  MAX_networkErrorRetryTimes = 30
   responseErrMsg: string = '';
   constructor(config: ZjuHealthReportConfig) {
     this.config = {
       username: '',
       password: '',
       dingtalkToken: '',
-      networkErrorRetryTimes: 10,
       ...config,
     }
     this.console = new Console(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr))
@@ -79,6 +81,13 @@ export class ZjuHealthReporter {
   }
 
   private async login() {
+    if (++this.networkErrorRetryTimes > this.MAX_networkErrorRetryTimes) {
+      throw new Error(`❌ 网络错误超过最大重试次数 ${this.MAX_networkErrorRetryTimes}`)
+    }
+    if (this.networkErrorRetryTimes > 1) {
+      this.console.log(`上次网络连接失败，重试第 ${this.networkErrorRetryTimes} 次...\n`)
+    }
+
     this.page = await this.browser.newPage();
     this.responseErrMsg = ''
     this.page.on('response', async response => {
@@ -137,8 +146,7 @@ ${this.responseErrMsg}
   }
 
   private async ocrRecognizeVerifyCode(): Promise<void> {
-    this.ocrRecognizeVerifyCodeRetryTimes++
-    if (this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
+    if (++this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${this.MAX_ocrRecognizeVerifyCodeRetryTimes}`)
     }
     if (this.ocrRecognizeVerifyCodeRetryTimes > 1) {
@@ -304,11 +312,7 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
 
       for (const keyword of this.NETWORK_ERROR_KEYWORDS) {
         if ((mainError as Error)?.message?.includes(keyword)) {
-          if (--this.config.networkErrorRetryTimes <= 0) {
-            this.console.log(`网络错误超出重试次数上限\n`)
-            break
-          }
-          this.console.log(`遇到网络错误: ${(mainError as Error)?.message}，尝试进行重试，剩余次数 ${this.config.networkErrorRetryTimes}...`)
+          this.console.log(`遇到网络错误: ${(mainError as Error)?.message}`)
           return await this.runReport()
         }
       }
@@ -335,8 +339,6 @@ export interface ZjuHealthReportConfig {
   password?: string
   /** 钉钉消息通知 access token，如果不传不会进行消息推送 */
   dingtalkToken?: string
-  /** 出现意外的网络错误时（例如 puppeteer 出现网络问题 net::ERR_INTERNET_DISCONNECTED）会重试，最大重试次数 */
-  networkErrorRetryTimes?: number
 }
 
 export interface RequestResult {
