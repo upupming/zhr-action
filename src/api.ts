@@ -49,7 +49,7 @@ export class ZjuHealthReporter {
   EXPECTED_VERIFY_CODE_LENGTH = 4
   dev: boolean
   NETWORK_ERROR_KEYWORDS = [
-    'net::ERR_INTERNET_DISCONNECTED',
+    'net::',
     'Navigation timeout',
     'Execution context was destroyed, most likely because of a navigation.',
     'ProtocolError',
