@@ -52,7 +52,9 @@ export class ZjuHealthReporter {
     'net::ERR_INTERNET_DISCONNECTED',
     'Navigation timeout',
     'Execution context was destroyed, most likely because of a navigation.',
-    'ProtocolError'
+    'ProtocolError',
+    'preflight',
+    '获取响应内容报错'
   ]
   responseErrMsg: string = '';
   constructor(config: ZjuHealthReportConfig) {
@@ -81,7 +83,7 @@ export class ZjuHealthReporter {
     this.responseErrMsg = ''
     this.page.on('response', async response => {
       try {
-        if (response.request().resourceType() === 'image') {
+        if (response.status() === 200 && response.request().resourceType() === 'image') {
           const url = response.url();
           const file = await response.buffer()
 
