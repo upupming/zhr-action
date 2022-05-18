@@ -45,7 +45,7 @@ export class ZjuHealthReporter {
   ocrRecognizeVerifyCodeRetryTimes = 0
   MAX_ocrRecognizeVerifyCodeRetryTimes = 100
   verifyCodeImgFile = ''
-  verifyCode = ''
+  verifyCode: null | string = null
   EXPECTED_VERIFY_CODE_LENGTH = 4
   dev: boolean
   NETWORK_ERROR_KEYWORDS = [
@@ -146,6 +146,11 @@ ${this.responseErrMsg}
   }
 
   private async ocrRecognizeVerifyCode(): Promise<void> {
+    const needVerifyCode = await this.page.evaluate(() => {
+      return Boolean(document.querySelector('input[name="verifyCode"]'))
+    })
+    if (!needVerifyCode) return
+
     if (++this.ocrRecognizeVerifyCodeRetryTimes > this.MAX_ocrRecognizeVerifyCodeRetryTimes) {
       throw new Error(`❌ 验证码识别超过最大重试次数 ${this.MAX_ocrRecognizeVerifyCodeRetryTimes}`)
     }
@@ -157,7 +162,7 @@ ${this.responseErrMsg}
       })
     }
     if (this.responseErrMsg) throw new Error(this.responseErrMsg)
-    await waitFor(() => !!this.verifyCodeImgFile)
+    await waitFor(() => Boolean(this.verifyCodeImgFile))
     if (this.responseErrMsg) throw new Error(this.responseErrMsg)
     if (!await commandExists('tesseract')) {
       throw new Error('❌ 请参考安装 tesseract 命令行工具，用于验证码识别，参考链接: https://tesseract-ocr.github.io/tessdoc/Installation.html')
@@ -178,7 +183,7 @@ ${this.responseErrMsg}
   }
 
   private async submit(): Promise<void> {
-    let errMsg = await this.page.evaluate((__verifyCode: string): string | undefined => {
+    let errMsg = await this.page.evaluate((__verifyCode: string | null): string | undefined => {
       try {
         const { vm } = window
         for (const key in vm.oldInfo) {
@@ -186,7 +191,9 @@ ${this.responseErrMsg}
           if (!vm.oldInfo[key]) continue
           vm.info[key] = vm.oldInfo[key]
         }
-        vm.info.verifyCode = __verifyCode
+        if (__verifyCode != null) {
+          vm.info.verifyCode = __verifyCode
+        }
         // confirm 包含一系列前端校验
         vm.confirm()
         // 确认弹窗：「每天只能填报一次，请确认信息是否全部正确？」

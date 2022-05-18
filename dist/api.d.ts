@@ -22,7 +22,7 @@ declare class ZjuHealthReporter {
     ocrRecognizeVerifyCodeRetryTimes: number;
     MAX_ocrRecognizeVerifyCodeRetryTimes: number;
     verifyCodeImgFile: string;
-    verifyCode: string;
+    verifyCode: null | string;
     EXPECTED_VERIFY_CODE_LENGTH: number;
     dev: boolean;
     NETWORK_ERROR_KEYWORDS: string[];
