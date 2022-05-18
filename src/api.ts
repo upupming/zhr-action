@@ -142,7 +142,7 @@ ${this.responseErrMsg}
     })
 
     if (errMsg) throw new Error(`❌ 登录失败，网页报错为: ${this.chalk.red(errMsg)}`)
-    await this.page.waitForFunction("document.title.includes('上报')");
+    await this.page.waitForFunction("Boolean(window?.vm?.oldInfo)");
     this.console.log(`✅ ${this.config.username} ${this.chalk.green('登陆成功！')}\n`)
   }
 
