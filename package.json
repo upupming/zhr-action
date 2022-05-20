@@ -1,6 +1,6 @@
 {
   "name": "@zju-health-report/action",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "zju-health-report (ZHR) - 浙江大学健康打卡自动化脚本",
   "main": "dist/api.js",
   "scripts": {
