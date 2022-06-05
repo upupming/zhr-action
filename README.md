@@ -82,3 +82,13 @@ async function main() {
 main()
 
 ```
+
+## 常见问题
+
+### 登录异常
+
+如果遇到浙大通行证报错异常登录的情况，例如 [zhr-action-demo/issues/10](https://github.com/zju-health-report/zhr-action-demo/issues/10)，可以尝试使用 Cookie 方式登录，直接跳过浙大通行证。使用 Cookie 方式登录无需提供 `password`。具体方法如下：
+
+使用 Chrome 浏览器打开 https://healthreport.zju.edu.cn/ncov/wap/default/index ，登录完成之后，F12 打开控制台的网络请求页面，刷新页面之后找到最上面一个请求（`index` 页面）的 Request Headers，复制其中 Cookie 字段中 `eai-sess=xxx;` 中的 `xxx` 部分的内容，作为 `cookieEaiSess` 传给 `ZjuHealthReporter` 对象即可，如果使用命令行 CLI，同上面的操作一样将 `password="浙大通行证密码"` 换成 `cookieEaiSess="xxx"` 即可。如果是 GitHub Action，则是 `cookie_eai_sess` 这个 input，可以直接参考 [zhr-action-demo](https://github.com/zju-health-report/zhr-action-demo/blob/9c7ac053838918b656286674f8449cb8e8663591/.github/workflows/health-report.yml#L20) 进行配置。
+
+![cookieEaiSess](https://user-images.githubusercontent.com/102473739/172088620-54fe16fa-bdf8-4a18-b53d-2a914a6d87cb.png)

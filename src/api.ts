@@ -60,11 +60,13 @@ export class ZjuHealthReporter {
   /** 出现意外的网络错误时（例如 puppeteer 出现网络问题 net::ERR_INTERNET_DISCONNECTED）会重试，最大重试次数 */
   MAX_networkErrorRetryTimes = 30
   responseErrMsg: string = '';
+  WEB_URL = 'https://healthreport.zju.edu.cn/ncov/wap/default/index'
   constructor(config: ZjuHealthReportConfig) {
     this.config = {
       username: '',
       password: '',
       dingtalkToken: '',
+      cookieEaiSess: '',
       ...config,
     }
     this.console = new Console(this.createPassThrough(process.stdout), this.createPassThrough(process.stderr))
@@ -101,7 +103,7 @@ export class ZjuHealthReporter {
           if (!(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).test(fileName)) fileName += '.png'
 
           if (this.dev) {
-            console.log(`📷 捕获到图片请求 ${url.split('?')[0]}, ${fileName}`)
+            this.console.log(`📷 捕获到图片请求 ${url.split('?')[0]}, ${fileName}`)
           }
           // currently we only need code.png
           if (fileName === 'code.png') {
@@ -118,30 +120,44 @@ ${this.responseErrMsg}
         `.trim()
       }
     });
-    await this.page.goto('https://healthreport.zju.edu.cn/ncov/wap/default/index', {
+
+    if (this.config.cookieEaiSess) {
+      await this.page.setCookie({
+        name: 'eai-sess',
+        value: this.config.cookieEaiSess,
+        url: this.WEB_URL
+      })
+    }
+
+    await this.page.goto(this.WEB_URL, {
       waitUntil: 'networkidle2',
     });
 
-    let errMsg = await this.page.evaluate((__username: string, __password: string): string | undefined => {
-      try {
-        (document.getElementById('username') as HTMLInputElement)!.value = __username;
-        (document.getElementById('password') as HTMLInputElement)!.value = __password;
-        (document.querySelector('.login-button > button') as HTMLButtonElement).click()
-      } catch (err) {
-        return (err as Error)?.message
-      }
-    }, this.config.username, this.config.password);
+    if (this.config.cookieEaiSess) {
+      this.console.log(`已配置 eai-sess Cookie，跳过浙大通行证登录过程\n`)
+    } else {
+      let errMsg = await this.page.evaluate((__username: string, __password: string): string | undefined => {
+        try {
+          (document.getElementById('username') as HTMLInputElement)!.value = __username;
+          (document.getElementById('password') as HTMLInputElement)!.value = __password;
+          (document.querySelector('.login-button > button') as HTMLButtonElement).click()
+        } catch (err) {
+          return (err as Error)?.message
+        }
+      }, this.config.username, this.config.password);
 
-    await this.page.waitForTimeout(3000)
+      await this.page.waitForTimeout(3000)
 
-    errMsg ??= await this.page.evaluate((): string | undefined => {
-      const errMsg = document.getElementById('msg')?.textContent
-      if (errMsg) {
-        return errMsg
-      }
-    })
+      errMsg ??= await this.page.evaluate((): string | undefined => {
+        const errMsg = document.getElementById('msg')?.textContent
+        if (errMsg) {
+          return errMsg
+        }
+      })
 
-    if (errMsg) throw new Error(`❌ 登录失败，网页报错为: ${this.chalk.red(errMsg)}`)
+      if (errMsg) throw new Error(`❌ 登录失败，网页报错为: ${this.chalk.red(errMsg)}`)
+    }
+
     await this.page.waitForFunction("Boolean(window?.vm?.oldInfo)");
     this.console.log(`✅ ${this.config.username} ${this.chalk.green('登陆成功！')}\n`)
   }
@@ -287,14 +303,15 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
     const {
       username,
       password,
+      cookieEaiSess,
       dingtalkToken
     } = this.config
 
     if (!username) {
       throw new Error('❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
     }
-    if (!password) {
-      throw new Error('❌ 请配置环境变量 password，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
+    if (!password && !cookieEaiSess) {
+      throw new Error('❌ 请配置环境变量 password 或者 eai-sess Cookie，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
     }
 
     this.chalk = new (await import('chalk')).Chalk({
@@ -345,6 +362,7 @@ export interface ZjuHealthReportConfig {
   username?: string
   /** ZJU 密码 */
   password?: string
+  cookieEaiSess?: string
   /** 钉钉消息通知 access token，如果不传不会进行消息推送 */
   dingtalkToken?: string
 }
