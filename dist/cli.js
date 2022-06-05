@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _chunkAHEH3MVDjs = require('./chunk-AHEH3MVD.js');
+var _chunkPFLVVNZQjs = require('./chunk-PFLVVNZQ.js');
 require('./chunk-FQFBMVJM.js');
 
 
@@ -100,9 +100,10 @@ async function run() {
   var _a;
   const username = process.env.username;
   const password = process.env.password;
+  const cookieEaiSess = process.env.cookie_eai_sess;
   const dingtalkToken = process.env.dingtalk_token;
   try {
-    await new (0, _chunkAHEH3MVDjs.ZjuHealthReporter)({ username, password, dingtalkToken }).runReport();
+    await new (0, _chunkPFLVVNZQjs.ZjuHealthReporter)({ username, password, dingtalkToken, cookieEaiSess }).runReport();
   } catch (error) {
     console.log((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");
   }

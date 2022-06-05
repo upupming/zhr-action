@@ -6,7 +6,10 @@ inputs:
     required: true
   password:
     description: '浙大通行证密码'
-    required: true
+    required: false
+  cookieEaiSess:
+    description: '健康上报网页 eai-sess Cookie'
+    required: false
   dingtalk_token:
     description: '钉钉机器人通知 access_token'
     required: false

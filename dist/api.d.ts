@@ -30,6 +30,7 @@ declare class ZjuHealthReporter {
     /** 出现意外的网络错误时（例如 puppeteer 出现网络问题 net::ERR_INTERNET_DISCONNECTED）会重试，最大重试次数 */
     MAX_networkErrorRetryTimes: number;
     responseErrMsg: string;
+    WEB_URL: string;
     constructor(config: ZjuHealthReportConfig);
     createPassThrough(stream: NodeJS.WriteStream): PassThrough;
     private login;
@@ -43,6 +44,7 @@ interface ZjuHealthReportConfig {
     username?: string;
     /** ZJU 密码 */
     password?: string;
+    cookieEaiSess?: string;
     /** 钉钉消息通知 access token，如果不传不会进行消息推送 */
     dingtalkToken?: string;
 }

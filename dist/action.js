@@ -2365,11 +2365,13 @@ async function run() {
   try {
     const username = core.getInput("username");
     const password = core.getInput("password");
+    const cookieEaiSess = core.getInput("cookie_eai_sess");
     const dingtalkToken = core.getInput("dingtalk_token");
     await new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./api.js")))).ZjuHealthReporter({
       username,
       password,
-      dingtalkToken
+      dingtalkToken,
+      cookieEaiSess
     }).runReport();
   } catch (error) {
     core.setFailed((_a = error == null ? void 0 : error.message) != null ? _a : "未知错误");

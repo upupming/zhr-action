@@ -17,11 +17,13 @@ async function run() {
   try {
     const username = core.getInput('username')
     const password = core.getInput('password')
+    const cookieEaiSess = core.getInput('cookie_eai_sess')
     const dingtalkToken = core.getInput('dingtalk_token')
     await new (await import('../src/api')).ZjuHealthReporter({
       username,
       password,
-      dingtalkToken
+      dingtalkToken,
+      cookieEaiSess
     }).runReport()
   } catch (error) {
     core.setFailed((error as Error)?.message ?? '未知错误');
