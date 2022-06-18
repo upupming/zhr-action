@@ -1,7 +1,7 @@
 {
-  "name": "@zju-health-report/action",
+  "name": "zhr-action",
   "version": "1.4.0",
-  "description": "zju-health-report (ZHR) - 浙江大学健康打卡自动化脚本",
+  "description": "zhr-action (zju-health-report action, ZHR) - 浙江大学健康打卡自动化脚本",
   "main": "dist/api.js",
   "scripts": {
     "test": "esno src/cli.ts",
@@ -16,15 +16,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zju-health-report/action.git"
+    "url": "git+https://github.com/upupming/zhr-action.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zju-health-report/action/issues"
+    "url": "https://github.com/upupming/zhr-action/issues"
   },
-  "homepage": "https://github.com/zju-health-report/action#readme",
+  "homepage": "https://github.com/upupming/zhr-action#readme",
   "devDependencies": {
     "@actions/core": "1.6.0",
     "@actions/exec": "1.1.1",

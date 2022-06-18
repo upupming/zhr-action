@@ -28382,10 +28382,10 @@ var version = "1.4.0";
 var banner = `
 \x1B[38;2;255;184;108mz\x1B[39m\x1B[38;2;255;180;113mj\x1B[39m\x1B[38;2;255;177;119mu\x1B[39m\x1B[38;2;255;173;124m-\x1B[39m\x1B[38;2;255;169;129mh\x1B[39m\x1B[38;2;255;165;134me\x1B[39m\x1B[38;2;255;162;140ma\x1B[39m\x1B[38;2;255;158;145ml\x1B[39m\x1B[38;2;255;154;150mt\x1B[39m\x1B[38;2;255;151;156mh\x1B[39m\x1B[38;2;255;147;161m-\x1B[39m\x1B[38;2;255;143;166mr\x1B[39m\x1B[38;2;255;140;172me\x1B[39m\x1B[38;2;255;136;177mp\x1B[39m\x1B[38;2;255;132;182mo\x1B[39m\x1B[38;2;255;128;187mr\x1B[39m\x1B[38;2;255;125;193mt\x1B[39m \x1B[38;2;255;121;198m(\x1B[39m\x1B[38;2;251;122;201mZ\x1B[39m\x1B[38;2;248;124;204mH\x1B[39m\x1B[38;2;244;125;207mR\x1B[39m\x1B[38;2;240;127;209m)\x1B[39m \x1B[38;2;237;128;212m-\x1B[39m \x1B[38;2;233;130;215m浙\x1B[39m\x1B[38;2;229;131;218m江\x1B[39m\x1B[38;2;226;133;221m大\x1B[39m\x1B[38;2;222;134;224m学\x1B[39m\x1B[38;2;218;135;226m健\x1B[39m\x1B[38;2;215;137;229m康\x1B[39m\x1B[38;2;211;138;232m打\x1B[39m\x1B[38;2;207;140;235m卡\x1B[39m\x1B[38;2;204;141;238m自\x1B[39m\x1B[38;2;200;143;241m动\x1B[39m\x1B[38;2;196;144;243m化\x1B[39m\x1B[38;2;193;146;246m脚\x1B[39m\x1B[38;2;189;147;249m本\x1B[39m
 
-当前版本: ${version}@e777d5
-Action: https://github.com/zju-health-report/action
-Demo: https://github.com/zju-health-report/zhr-action-demo
-如果有任何建议或意见，欢迎贡献代码！感兴趣的同学可以申请成为 zju-health-report 组织的 Member。
+当前版本: ${version}@310e63
+Action: https://github.com/upupming/zhr-action
+Demo: https://github.com/upupming/zhr-action-demo
+如果有任何建议或意见，欢迎贡献代码！
 `;
 
 // src/api.ts
@@ -28605,7 +28605,7 @@ ${this.responseErrMsg}
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
     2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
-    3. 登录异常，请改为 Cookie 方式登录，参考 https://github.com/zju-health-report/action#登录异常 进行配置。`;
+    3. 登录异常，请改为 Cookie 方式登录，参考 https://github.com/upupming/zhr-action#登录异常 进行配置。`;
     if (errMsg)
       throw new Error(`❌ 打卡提交失败，网页报错为：${this.chalk.red(errMsg)}
   ${this.dev ? `你前一次打卡的信息为：
@@ -28614,11 +28614,11 @@ ${this.responseErrMsg}
 
   ${errorGuide}
 
-  如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
+  如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/upupming/zhr-action/issues/new
   ` : `
   ${errorGuide}
 
-  将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
+  将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/upupming/zhr-action#报告问题`}
 `);
     this.console.log(`${this.chalk.green(`✅ 打卡成功！`)}
 `);
@@ -28662,10 +28662,10 @@ GitHub workflow: ${process.env.ACTION_URL}` : ""}
       dingtalkToken
     } = this.config;
     if (!username) {
-      throw new Error("❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+      throw new Error("❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/upupming/zhr-action");
     }
     if (!password && !cookieEaiSess) {
-      throw new Error("❌ 请配置环境变量 password 或者 eai-sess Cookie，详情请阅读项目 README.md: https://github.com/zju-health-report/action");
+      throw new Error("❌ 请配置环境变量 password 或者 eai-sess Cookie，详情请阅读项目 README.md: https://github.com/upupming/zhr-action");
     }
     this.chalk = new (await Promise.resolve().then(() => _chunkOKMUBGTUjs.__toESM.call(void 0, _chunkOKMUBGTUjs.__require.call(void 0, "./source-XNDADEMN.js")))).Chalk({
       level: 3
@@ -28767,4 +28767,4 @@ exports.ZjuHealthReporter = ZjuHealthReporter;
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-//# sourceMappingURL=chunk-STHDN5KP.js.map
+//# sourceMappingURL=chunk-6OQ7VSSJ.js.map
