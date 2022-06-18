@@ -1,4 +1,4 @@
-name: '@zju-health-report/action'
+name: '@upupming/zhr-action'
 description: '浙江大学健康打卡脚本'
 inputs:
   username:

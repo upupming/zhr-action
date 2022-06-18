@@ -252,7 +252,7 @@ ${this.responseErrMsg}
     let errorGuide = `常见错误：
     1. 今天已经打过卡了，可以忽略此报错。
     2. 表单可能新增了内容，请检查之前的提交是否缺少了什么信息，如有必要请手动打一次卡。
-    3. 登录异常，请改为 Cookie 方式登录，参考 https://github.com/zju-health-report/action#登录异常 进行配置。`
+    3. 登录异常，请改为 Cookie 方式登录，参考 https://github.com/upupming/zhr-action#登录异常 进行配置。`
     if (errMsg) throw new Error(`❌ 打卡提交失败，网页报错为：${this.chalk.red(errMsg)}
   ${this.dev ? `你前一次打卡的信息为：
 
@@ -260,11 +260,11 @@ ${this.responseErrMsg}
 
   ${errorGuide}
 
-  如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/zju-health-report/action/issues/new
+  如果遇到问题，请附上脱敏后的 oldInfo 前往 GitHub 提交 issue: https://github.com/upupming/zhr-action/issues/new
   ` : `
   ${errorGuide}
 
-  将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/zju-health-report/action#报告问题`}
+  将环境变量 NODE_ENV 设置为 development 可以获得 oldInfo 的详细信息，请参考官方文档: https://github.com/upupming/zhr-action#报告问题`}
 `)
     this.console.log(`${this.chalk.green(`✅ 打卡成功！`)}\n`)
   }
@@ -308,10 +308,10 @@ GitHub workflow: ${process.env.ACTION_URL}` : ''}
     } = this.config
 
     if (!username) {
-      throw new Error('❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
+      throw new Error('❌ 请配置环境变量 username，详情请阅读项目 README.md: https://github.com/upupming/zhr-action')
     }
     if (!password && !cookieEaiSess) {
-      throw new Error('❌ 请配置环境变量 password 或者 eai-sess Cookie，详情请阅读项目 README.md: https://github.com/zju-health-report/action')
+      throw new Error('❌ 请配置环境变量 password 或者 eai-sess Cookie，详情请阅读项目 README.md: https://github.com/upupming/zhr-action')
     }
 
     this.chalk = new (await import('chalk')).Chalk({
