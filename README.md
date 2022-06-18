@@ -69,8 +69,8 @@ npm i github:upupming/zhr-action#release
 async function main() {
   const username = '浙大通行证用户名'
   const password = '浙大通行证密码'
-  const dingtalkToken = process.env.dingtalk_token
-  const { ZjuHealthReporter } = await import('@upupming/zhr-action')
+  const dingtalkToken = '钉钉群助手 access_token'
+  const { ZjuHealthReporter } = await import('zhr-action')
 
   try {
     await new ZjuHealthReporter({ username, password, dingtalkToken }).runReport()
