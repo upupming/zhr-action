@@ -159,7 +159,7 @@ ${this.responseErrMsg}
     }
 
     await this.page.waitForFunction("Boolean(window?.vm?.oldInfo)");
-    this.console.log(`✅ ${this.config.username} ${this.chalk.green('登陆成功！')}\n`)
+    this.console.log(`✅ ${this.config.username} ${this.chalk.green('登录成功！')}\n`)
   }
 
   private async ocrRecognizeVerifyCode(): Promise<void> {
