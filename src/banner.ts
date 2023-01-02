@@ -19,6 +19,7 @@ export const banner = '\n' +
   `当前版本: ${version}@__commit_id__\n` +
   'Action: https://github.com/upupming/zhr-action\n' +
   'Demo: https://github.com/upupming/zhr-action-demo\n' +
-  '如果有任何建议或意见，欢迎贡献代码！\n'
+  '如果有任何建议或意见，欢迎贡献代码！\n' +
+  '学校已经不再要求健康打卡，可以自行停用此脚本。\n'
 
 // console.log(banner)
